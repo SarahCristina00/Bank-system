@@ -10,4 +10,5 @@
         <maven.compiler.release>21</maven.compiler.release>
         <exec.mainClass>com.mycompany.systembank.SystemBank</exec.mainClass>
     </properties>
+    <name>BankSystem</name>
 </project>
