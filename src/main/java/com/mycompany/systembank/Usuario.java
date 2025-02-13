@@ -9,11 +9,13 @@ package com.mycompany.systembank;
  * @author Lara
  */
 public class Usuario {
-            private String nome;
-            private String login;
-            private int senha;
-            private String cpf;
-            private String email;
+    private String nome;
+    private String cpf;
+    private String dataNascimento;
+    private String telefone;
+    private String email;
+    private String login;
+    private int senha;
 
 }
 
