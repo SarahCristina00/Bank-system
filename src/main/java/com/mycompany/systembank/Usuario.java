@@ -7,6 +7,7 @@ package com.mycompany.systembank;
 /**
  *
  * @author Lara
+ * @author Wilian
  */
 public class Usuario {
     private String nome;
@@ -17,6 +18,19 @@ public class Usuario {
     private String login;
     private int senha;
 
-}
+    // Construtor
+    public Usuario(String nome, String cpf, String dataNascimento, String telefone, String email, String login, int senha) {
+        this.nome = nome;
+        this.cpf = validarCpf(cpf) ? cpf : "CPF inválido"; //validarCpf(cpf) que retorna true se o CPF for válido e false caso contrário.
+        this.dataNascimento = dataNascimento;
+        this.telefone = telefone;
+        this.email = validarEmail(email) ? email : "Email inválido";//validarEmail(email) que retorna true se o CPF for válido e false caso contrário.
+        this.login = login;
+        this.senha = senha;
+    }
+     
+    
+  }
+
 
 

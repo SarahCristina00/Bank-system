@@ -11,4 +11,6 @@ package com.mycompany.systembank;
 public class Cliente  extends Usuario{
             private Endereco endereco;
             private ContaBancaria conta;
+            
+            
 }
