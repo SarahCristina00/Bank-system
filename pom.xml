@@ -11,8 +11,8 @@
         <exec.mainClass>com.mycompany.systembank.SystemBank</exec.mainClass>
     </properties>
     <name>BankSystem</name>
-</project>
-<dependencies>
+    
+   <dependencies>
     <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
@@ -42,4 +42,9 @@
             <artifactId>gson</artifactId>
             <version>2.12.1</version>
         </dependency>
+</dependencies>
+</project>
+
+
+
 
