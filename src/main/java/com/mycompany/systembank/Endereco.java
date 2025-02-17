@@ -8,7 +8,7 @@ package com.mycompany.systembank;
  *
  * @author Lara
  */
-class Endereco {
+public class Endereco {
     private String rua;
     private String bairro;
     private String cidade;

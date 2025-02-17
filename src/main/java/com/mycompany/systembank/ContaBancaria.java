@@ -8,13 +8,13 @@ package com.mycompany.systembank;
  *
  * @author Lara
  */
-class ContaBancaria {
+public class ContaBancaria {
     private int agencia;
     private int conta;
     private double saldo;
     
     private Extrato extrato;
-}
+
 
 public ContaBancaria (int agencia, int conta, int saldo, Extrato extrato){
             this.agencia = agencia;
