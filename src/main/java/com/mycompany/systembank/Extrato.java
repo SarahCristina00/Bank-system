@@ -9,15 +9,15 @@ package com.mycompany.systembank;
  * @author Lara
  */
 import java.util.ArrayList;
-import java.ultil.List;
+import java.util.List;
 public class Extrato {
-    private List<movimentacoes> movimentacoes;
+    private final List<movimentacoes> movimentacoes;
 
-    public Extrato{
+    public Extrato(){
     this.movimentacoes = new ArrayList<>();
     }
     public void registraMovimentacao(String tipo, double valor, double saldo){
-        Movimentacoes movimentacao = new Movimentacoes(tipo, valor, saldo);
+        movimentacoes movimentacao = new Movimentacoes(tipo, valor, saldo);
         movimentacoes.add(movimentacao);
     }
 }
