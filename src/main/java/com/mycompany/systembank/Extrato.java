@@ -16,6 +16,8 @@ public class Extrato {
     public Extrato{
     this.movimentacoes = new ArrayList<>();
     }
-    public void realizaMovimentacao(){
+    public void registraMovimentacao(String tipo, double valor, double saldo){
+        Movimentacoes movimentacao = new Movimentacoes(tipo, valor, saldo);
+        movimentacoes.add(movimentacao);
     }
 }
