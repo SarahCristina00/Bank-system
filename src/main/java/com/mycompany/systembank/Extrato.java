@@ -8,6 +8,14 @@ package com.mycompany.systembank;
  *
  * @author Lara
  */
-class Extrato {
-    
+import java.util.ArrayList;
+import java.ultil.List;
+public class Extrato {
+    private List<movimentacoes> movimentacoes;
+
+    public Extrato{
+    this.movimentacoes = new ArrayList<>();
+    }
+    public void realizaMovimentacao(){
+    }
 }
