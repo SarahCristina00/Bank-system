@@ -1,19 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+/**
+@author Lara da Silva Dias (202376010)
+@author Sarah Cristina (202376034)
+@author Wilian Santos (202276040)
  */
+
 package com.mycompany.systembank;
 
-/**
- *
- * @author Lara
- */
 public class Cliente  extends Usuario{
-            private Endereco endereco;
-            private ContaBancaria conta;
+    private Endereco endereco;
+    private ContaBancaria conta;
             
             
-             // Construtor que chama o super para inicializar os atributos 
+     // Construtor que chama o super para inicializar os atributos 
     public Cliente(String nome, String cpf, String dataNascimento, String telefone, String email, String login, int senha, Endereco endereco, ContaBancaria conta) {
         
         super(nome, cpf, dataNascimento, telefone, email, login, senha);
@@ -21,19 +19,8 @@ public class Cliente  extends Usuario{
         this.conta = conta;
     }
     
-     // Getters e Setters
-    public Endereco getEndereco(){
-        return endereco; 
-    }
-    public void setEndereco(Endereco endereco){
-        this.endereco = endereco; 
-    }
-
-    public ContaBancaria getConta(){
-        return conta; 
-    }
-    public void setConta(ContaBancaria conta){
-        this.conta = conta; 
+    public void consultarSaldo(){
+        conta.getSaldo();
     }
 }
 
