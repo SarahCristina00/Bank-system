@@ -27,5 +27,21 @@ public class Cliente  extends Usuario{
     public void consultarExtrato(){
         conta.imprimeExtrato();
     }
+    
+    public void investirRendaFixa(String opcao,Double valor){
+            if(conta.getSaldo()<valor){
+                System.out.println("Saldo insuficiente para investimento");
+                return;
+            }
+            conta.registraTransacao(opcao, valor, conta, conta);
+    }
+    
+     public void investirRendaVariavel(String opcao, Double valor){
+            if(conta.getSaldo()<valor){
+                System.out.println("Saldo insuficiente para investimento");
+                return;
+            }
+            conta.registraTransacao(opcao, valor, conta, conta);
+    }
 }
 

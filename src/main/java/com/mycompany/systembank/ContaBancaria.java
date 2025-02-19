@@ -12,7 +12,7 @@ public class ContaBancaria {
     private int agencia;
     private int conta;
     private double saldo;
-    private List<Transacao> extrato = null;
+    private List<Transacao> extrato;
 
 
     public ContaBancaria (int agencia, int conta, int saldo){
