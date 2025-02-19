@@ -20,4 +20,9 @@ public class Extrato {
         movimentacoes movimentacao = new Movimentacoes(tipo, valor, saldo);
         movimentacoes.add(movimentacao);
     }
+    public void imprimeExtrato(){
+        System.out.println("----------Extrato de Movimentações----------");
+        for(int i=0; i<movimentacoes.size(); i++){
+            Movimentacoes movimentacao = movimentacoes.get(i);
+            System.out.println(movimentacao);
 }
