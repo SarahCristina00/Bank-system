@@ -20,7 +20,12 @@ public class Cliente  extends Usuario{
     }
     
     public void consultarSaldo(){
-        conta.getSaldo();
+        System.out.println("=======Consulta de Saldo=======/n");
+        System.out.println("Saldo atual da conta " +conta.getConta() +": R$"+ conta.getSaldo());
+    }
+    
+    public void consultarExtrato(){
+        conta.imprimeExtrato();
     }
 }
 
