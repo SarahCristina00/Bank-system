@@ -6,10 +6,26 @@
 
 package com.mycompany.systembank;
 
-public class BankSystem {
+import java.util.*;
+import javax.swing.*;
+import com.mycompany.interfaces.*;
 
-    public static void main(String[] args) {
-        
-        System.out.println("Começa processo");
+public class BankSystem {
+    //cria lista de usuários
+    public static List<Usuario> usuarios = new ArrayList<>();
+    
+     //cria usuario padrão
+    private static void criarUsuarioPadrao(){
+       Usuario adm = new Usuario("Administrador","000.000.000-00","01/01/1999","(00) 00000-0000","adm@email.com","adm",1234);
+       usuarios.add(adm);
     }
+    
+    public static void main(String[] args) {
+       System.out.println("Iniciando o Sistema Bancario...");
+       criarUsuarioPadrao();
+       //chama construtor de tela
+       SwingUtilities.invokeLater(()->new Menu(usuarios));
+    }
+    
 }
+
