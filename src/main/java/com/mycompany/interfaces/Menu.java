@@ -9,6 +9,7 @@ package com.mycompany.interfaces;
 import com.mycompany.systembank.*;
 import java.awt.*;
 import javax.swing.*;
+import java.util.List;
 
 public class Menu extends JFrame {
     private JButton btnCriarUsuario, btnRemoverUsuario, btnListarUsuarios, btnSair;
@@ -26,7 +27,7 @@ public class Menu extends JFrame {
         
         btnCriarUsuario.addActionListener(e -> new MenuCriarUsuario());
         btnRemoverUsuario.addActionListener(e-> new MenuCriarUsuario());
-        btnListarUsuarios.addActionListener(e -> new MenuListarUsuarios());
+        btnListarUsuarios.addActionListener(e -> new MenuListarUsuarios(usuarios));
         btnSair.addActionListener(e -> System.exit(0));
         
         add(btnCriarUsuario);
@@ -89,16 +90,28 @@ class MenuListarUsuarios extends JFrame {
     
     private JList<Usuario> jlUsuarios;
     
-    public MenuListarUsuarios() {
+    public MenuListarUsuarios(List<Usuario> usuarios) {
+        setTitle("Lista de Usuários");
+        setSize(400, 300);
+        setLocationRelativeTo(null);
+        
         JPanel lista = new JPanel();
         lista.setBorder(BorderFactory.createTitledBorder("Lista de Usuários"));
         lista.setLayout(new BorderLayout());
         
         DefaultListModel<Usuario> model = new DefaultListModel<>();
         
-        jlUsuarios = new JList<>(model);
-        
-        lista.add(new JScrollPane(jlUsuarios), BorderLayout.CENTER);
+        for(Usuario usuario:usuarios){
+            model.addElement(usuario);
+        }
+            jlUsuarios = new JList<>(model);
+            
+            lista.add(new JScrollPane(jlUsuarios), BorderLayout.CENTER);
+            
+            add(lista);
+            
+            setVisible(true);
+       
     }
 }
 
