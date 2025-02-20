@@ -14,6 +14,7 @@ public class Usuario {
     private String email;
     private String login;
     private int senha;
+    private String tipoUsuario="usuario";
 
     // Construtor
     public Usuario(String nome, String cpf, String dataNascimento, String telefone, String email, String login, int senha) {
@@ -25,8 +26,10 @@ public class Usuario {
         this.login = login;
         this.senha = senha;
     }
-     
-     public String getNome() { return nome; } // retorna o nome do usuario
+    
+    public String getTipoUsuario(){return tipoUsuario;}
+    
+    public String getNome() { return nome; } // retorna o nome do usuario
     public void setNome(String nome) { this.nome = nome; }// recebe o nome do usuario
 
     public String getCpf() { return cpf; }// retorna o cpf do usuario

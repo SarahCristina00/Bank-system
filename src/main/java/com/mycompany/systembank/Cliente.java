@@ -6,7 +6,8 @@
 
 package com.mycompany.systembank;
 
-public class Cliente  extends Usuario{
+public class Cliente extends Usuario{
+    private String tipoUsuario = "cliente";
     private Endereco endereco;
     private ContaBancaria conta;
             
@@ -18,7 +19,7 @@ public class Cliente  extends Usuario{
         this.endereco = endereco;
         this.conta = conta;
     }
-    
+        
     public void consultarSaldo(){
         System.out.println("=======Consulta de Saldo=======/n");
         System.out.println("Saldo atual da conta " +conta.getConta() +": R$"+ conta.getSaldo());
