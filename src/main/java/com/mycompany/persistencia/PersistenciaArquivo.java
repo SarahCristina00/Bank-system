@@ -6,23 +6,23 @@ import java.io.*;
 public class PersistenciaArquivo {
 
     public static String leArquivo(String filePath) {
-        StringBuilder content = new StringBuilder();
+        StringBuilder conteudo = new StringBuilder();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                content.append(line).append("\n");
+            String linha;
+            while ((linha = reader.readLine()) != null) {
+                conteudo.append(linha).append("\n");
             }
         } catch (IOException e) {
             //e.printStackTrace();
         }
 
-        return content.toString();
+        return conteudo.toString();
     }
 
-    public static void salvaArquivo(String filePath, String content) {
+    public static void salvaArquivo(String filePath, String conteudo) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, false))) {
-            writer.write(content);
+            writer.write(conteudo);
         } catch (IOException e) {
             //e.printStackTrace();
         }
