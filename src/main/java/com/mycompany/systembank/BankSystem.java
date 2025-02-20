@@ -9,27 +9,18 @@ package com.mycompany.systembank;
 import java.util.*;
 import javax.swing.*;
 import com.mycompany.interfaces.*;
-import com.mycompany.persistencia.*;
 
 public class BankSystem {
      
-//carrega lista de usuários
+//inicializa
  public static List<Usuario> usuarios;
    
     public static void main(String[] args) {
        System.out.println("Iniciando o Sistema Bancario...");
-       
-       //instancia arquivo para carregar os dados
-        PersistenciaUsuarios persistencia = new PersistenciaUsuarios();
-        
-        //carrega os dados dos usuarios
-        usuarios = persistencia.carregarDados();
-                   
+                          
        //chama construtor de tela
-       SwingUtilities.invokeLater(()->new Menu(usuarios));
+       SwingUtilities.invokeLater(()->new Menu());
        
-        //atualiza os dados após execução
-       persistencia.salvarDados(usuarios);
     }
     
 }

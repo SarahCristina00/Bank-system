@@ -6,15 +6,21 @@
 
 package com.mycompany.interfaces;
 
+import com.mycompany.persistencia.PersistenciaUsuarios;
 import com.mycompany.systembank.*;
+import static com.mycompany.systembank.BankSystem.usuarios;
 import java.awt.*;
 import javax.swing.*;
-import java.util.List;
 
 public class Menu extends JFrame {
     private JButton btnCriarUsuario, btnRemoverUsuario, btnListarUsuarios, btnSair;
+    //instancia arquivo para carregar os dados
+     public  static PersistenciaUsuarios persistencia = new PersistenciaUsuarios();
     
-    public Menu(java.util.List<Usuario> usuarios) {
+    public Menu() {
+                
+        //carrega os dados dos usuarios
+        usuarios = persistencia.carregarDados();
         setTitle("Sistema Bancário - Menu Principal");
         setSize(400, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -27,12 +33,13 @@ public class Menu extends JFrame {
         
         btnCriarUsuario.addActionListener(e -> new MenuCriarUsuario());
         btnRemoverUsuario.addActionListener(e-> new MenuCriarUsuario());
-        btnListarUsuarios.addActionListener(e -> new MenuListarUsuarios(usuarios));
+        btnListarUsuarios.addActionListener(e -> new MenuListarUsuarios());
         btnSair.addActionListener(e -> System.exit(0));
         
         add(btnCriarUsuario);
         add(btnListarUsuarios);
         add(btnSair);
+        
         
         setVisible(true);
     }
@@ -79,6 +86,8 @@ class MenuCriarUsuario extends JFrame {
                 Integer.parseInt(new String(senhaField.getPassword()))
             );
             BankSystem.usuarios.add(novoUsuario);
+            //atualiza os dados após execução
+            Menu.persistencia.salvarDados(usuarios);
             JOptionPane.showMessageDialog(this, "Usuário criado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             dispose();
         });
@@ -90,7 +99,7 @@ class MenuListarUsuarios extends JFrame {
     
     private JList<Usuario> jlUsuarios;
     
-    public MenuListarUsuarios(List<Usuario> usuarios) {
+    public MenuListarUsuarios() {
         setTitle("Lista de Usuários");
         setSize(400, 300);
         setLocationRelativeTo(null);
