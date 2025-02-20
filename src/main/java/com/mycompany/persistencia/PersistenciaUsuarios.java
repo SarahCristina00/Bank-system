@@ -14,10 +14,11 @@ import java.util.*;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 
-public class PersistenciaUsuarios {
-    private static String DIRECTORY = "data";
+public class PersistenciaUsuarios implements Persistencia<Usuario>{
+    
     private static final String PATH = DIRECTORY+ File.separator +"usuarios.json";
 
+   @Override
    public void salvarDados(List<Usuario> usuarios) {
         Gson gson = new Gson();
         String json = gson.toJson(usuarios);
@@ -28,6 +29,8 @@ public class PersistenciaUsuarios {
 
         PersistenciaArquivo.salvaArquivo(PATH, json);
    }
+   
+   @Override
        
     public List<Usuario> carregarDados() {
         Gson gson = new Gson();
@@ -35,7 +38,7 @@ public class PersistenciaUsuarios {
         String json = PersistenciaArquivo.leArquivo(PATH);
 
         List<Usuario> usuarios = new ArrayList<>();
-        if(!json.trim().equals("")) {
+        if(json!=null && !json.trim().equals("")) {
 
             Type tipoLista = new TypeToken<List<Usuario>>() {
             }.getType();
