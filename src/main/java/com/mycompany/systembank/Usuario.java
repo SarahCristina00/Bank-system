@@ -56,6 +56,11 @@ public class Usuario {
     private boolean validarEmail(String email) {
         return email.matches("^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,}$");
     }
+    
+    @Override
+    public String toString() {
+        return nome + " - " + login; 
+    }
 
   }
 
