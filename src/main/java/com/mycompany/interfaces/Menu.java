@@ -6,6 +6,7 @@
 
 package com.mycompany.interfaces;
 
+import static com.mycompany.interfaces.Login.criarCampo;
 import com.mycompany.persistencia.PersistenciaUsuarios;
 import com.mycompany.systembank.*;
 import static com.mycompany.systembank.BankSystem.usuarios;
@@ -15,7 +16,7 @@ import javax.swing.*;
 public class Menu extends JFrame {
     private JButton btnCriarUsuario, btnRemoverUsuario, btnListarUsuarios, btnSair;
     //instancia arquivo para carregar os dados
-     public  static PersistenciaUsuarios persistencia = new PersistenciaUsuarios();
+     public static PersistenciaUsuarios persistencia = new PersistenciaUsuarios();
     
     public Menu() {
                 
@@ -25,8 +26,7 @@ public class Menu extends JFrame {
         setSize(500, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        JPanel painelMenu = new JPanel();
-        painelMenu.setLayout(new GridLayout(4,1,20,20));
+        JPanel painelMenu = new JPanel(new GridLayout(4,1,20,20));
         painelMenu.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         
         btnCriarUsuario = new JButton("Criar Usuário");
@@ -85,14 +85,14 @@ class MenuCriarUsuario extends JFrame {
         JButton criarBtn = new JButton("Criar");
         
         //adiciona no painel os campos juntamente com sua descrição 
-        painelInformacoes.add(new JLabel("Nome Completo:")); painelInformacoes.add(campoNome);
-        painelInformacoes.add(new JLabel("CPF:")); painelInformacoes.add(campoCPF);
-        painelInformacoes.add(new JLabel("Data de Nascimento:")); painelInformacoes.add(campoDataNascimento);
-        painelInformacoes.add(new JLabel("Telefone:")); painelInformacoes.add(campoTelefone);
-        painelInformacoes.add(new JLabel("Email:")); painelInformacoes.add(campoEmail);
-        painelInformacoes.add(new JLabel("Login:")); painelInformacoes.add(campoLogin);
-        painelInformacoes.add(new JLabel("Senha:")); painelInformacoes.add(campoSenha);
-        
+        painelInformacoes.add(criarCampo("Nome Completo: ",campoNome));
+        painelInformacoes.add(criarCampo("CPF: ",campoCPF));
+        painelInformacoes.add(criarCampo("Data de Nacimento: ",campoDataNascimento));
+        painelInformacoes.add(criarCampo("Telefone: ",campoTelefone));
+        painelInformacoes.add(criarCampo("Email: ",campoEmail));
+        painelInformacoes.add(criarCampo("Login: ",campoLogin));
+        painelInformacoes.add(criarCampo("Senha: ",campoSenha));
+
        //cria cmpos do cliente 
        JPanel painelCliente = new JPanel(new GridLayout(8,2,5,5));
        
@@ -105,14 +105,13 @@ class MenuCriarUsuario extends JFrame {
         JTextField campoCEP = new JTextField();
         JTextField campoConta = new JTextField();
         
-        painelCliente.add(new JLabel("Rua:")); painelCliente.add(campoRua);
-        painelCliente.add(new JLabel("Número:")); painelCliente.add(campoNumero);
-        painelCliente.add(new JLabel("Bairro:")); painelCliente.add(campoBairro);
-        painelCliente.add(new JLabel("Cidade")); painelCliente.add(campoCidade);
-        painelCliente.add(new JLabel("Estado:")); painelCliente.add(campoEstado);
-        painelCliente.add(new JLabel("Complemento")); painelCliente.add(campoComplemento);
-        painelCliente.add(new JLabel("CEP:")); painelCliente.add(campoCEP);
-        painelCliente.add(new JLabel("Número da Conta:")); painelCliente.add(campoConta);
+        painelCliente.add(criarCampo("Rua: ",campoRua));
+        painelCliente.add(criarCampo("Número: ",campoNumero));
+        painelCliente.add(criarCampo("Bairro: ",campoBairro));
+        painelCliente.add(criarCampo("Cidade: ",campoCidade));
+        painelCliente.add(criarCampo("Complemento: ",campoComplemento));
+        painelCliente.add(criarCampo("CEP: ",campoCEP));
+        painelCliente.add(criarCampo("Número da Conta: ",campoConta));
         painelCliente.setVisible(false);
        
         //adiciona a janela o painel principal
