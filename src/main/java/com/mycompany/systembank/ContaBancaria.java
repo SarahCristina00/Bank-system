@@ -23,7 +23,7 @@ public class ContaBancaria {
     public int  getAgencia() { return agencia; } 
     public int  getConta() { return conta; } 
     public double getSaldo() { return saldo; } 
-    public void setSaldo(int saldo) { this.saldo = saldo; }
+    public void setSaldo(double saldo) { this.saldo = saldo; }
      
     public void registraTransacao(String tipo, double valor, ContaBancaria origem, ContaBancaria destino){
         Transacao transacao = new Transacao(tipo, valor, origem, destino);

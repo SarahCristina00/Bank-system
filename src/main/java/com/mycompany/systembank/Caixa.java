@@ -16,8 +16,13 @@ public class Caixa extends Usuario {
     }
 
     public void processarSaque(Cliente cliente, Double valor) {
-        System.out.println("Saque de R$" + valor + 
-                           " processado para o cliente: " + cliente.getNome());
+        if (cliente.getConta().getSaldo() >= valor) {  // Acessando saldo pela conta para verificar se o cliente tem saldo suficiente para o saque
+            cliente.getConta().setSaldo(cliente.getConta().getSaldo() - valor);// atualização do saldo do cliente apos o saque
+            System.out.println("Saque de R$" + valor + 
+                               " realizado com sucesso para o cliente: " + cliente.getNome());
+        } else {
+            System.out.println("Saldo insuficiente para saque do cliente: " + cliente.getNome());
+        }
     }
 
     public void processarDeposito(Cliente cliente, Double valor) {
