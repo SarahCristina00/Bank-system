@@ -220,27 +220,32 @@ class MenuRemoverUsuario extends JFrame{
         setSize(500, 500);
         setLocationRelativeTo(null);
          
-        JPanel painelRemocao = new JPanel(new GridLayout(8, 8, 20, 20));
+        //cria painel com titulo
+        JPanel painelRemocao = new JPanel(new GridLayout(5,3,20,20));
         painelRemocao.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        JTextField campoNome = new JTextField();
-        painelRemocao.add(new JLabel("Nome do Usuário a ser removido:")); painelRemocao.add(campoNome);
+
+        painelRemocao.add(new JLabel("Selecione o usuário que deseja remover"));
        
+        //cria uma caixa de seleção com lista de usuários para remção
+        JComboBox<Usuario> comboBoxUsuarios = new JComboBox<>(usuarios.toArray(new Usuario[0]));
+        painelRemocao.add(comboBoxUsuarios);
+        
+        //botão para confirmar a ação
         JButton removerBtn = new JButton("Remover Usuário");
          painelRemocao.add(removerBtn);
         
         removerBtn.addActionListener(e -> {
-                String nome = campoNome.getText();
+               Usuario usuarioSelecionado = (Usuario) comboBoxUsuarios.getSelectedItem();
                 
-                for(Usuario usuario : usuarios){
-                    if(usuario.getNome().equals(nome)){
-                        usuarios.remove(usuario);
+               //verifica se houve seleção
+                    if(usuarioSelecionado!=null){
+                        usuarios.remove(usuarioSelecionado);
                         Menu.persistencia.salvarDados(usuarios);
                         JOptionPane.showMessageDialog(this, "Usuário removido com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                          dispose();
-                         return;
+                    }else{
+                         JOptionPane.showMessageDialog(this, "Nenhum usuário foi selecionado para remoção.", "Erro", JOptionPane.ERROR_MESSAGE);
                     }
-                }
-                    JOptionPane.showMessageDialog(this, "Usuário não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
             }
           );
             
