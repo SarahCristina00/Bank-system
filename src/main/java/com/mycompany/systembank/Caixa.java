@@ -26,8 +26,13 @@ public class Caixa extends Usuario {
     }
 
     public void processarDeposito(Cliente cliente, Double valor) {
-        System.out.println("Depósito de R$" + valor + 
-                           " processado para o cliente: " + cliente.getNome());
+       if (valor > 0) {  // se o valor do deposito for maior que 0 
+            cliente.getConta().setSaldo(cliente.getConta().getSaldo() + valor);// obtem o saldo atual do cliente e adiciona o valor do deposito 
+            System.out.println("Depósito de R$" + valor + 
+                               " realizado com sucesso para o cliente: " + cliente.getNome());
+        } else {
+            System.out.println("Valor de depósito inválido para o cliente: " + cliente.getNome());
+        }
     }
 
     public void processarTransferencia(Cliente cliente, ContaBancaria destino, Double valor) {
