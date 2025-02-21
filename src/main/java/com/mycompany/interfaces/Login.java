@@ -19,6 +19,7 @@ public class Login extends JFrame {
     private JButton botaoEntrar = new JButton("Entrar");
      public static PersistenciaUsuarios persistencia = new PersistenciaUsuarios();
     
+    @SuppressWarnings("null")
     public Login(){
         setTitle("Sistema Bancário - Login");
         setSize(500, 500);
@@ -28,6 +29,7 @@ public class Login extends JFrame {
         
         //cria painel na janela
         JPanel painel = new JPanel(new GridLayout(5,3,50,50));
+         painel.setBorder(BorderFactory.createEmptyBorder(100, 20, 20, 20));
         
         //adiciona os campos no painel
         painel.add(criarCampo("CPF: ",campoLogin));
@@ -41,9 +43,11 @@ public class Login extends JFrame {
            
            //verificacao dos dados informados
            boolean loginValido = false;
+           String tipoUsuario = null;
            for(Usuario usuario:usuarios){
                if(usuario.getCpf().equals(cpf) && usuario.getSenha() ==senha){
                    loginValido = true;
+                   tipoUsuario = usuario.getTipoUsuario();
                    break;
                }
            }
@@ -51,9 +55,28 @@ public class Login extends JFrame {
            //se o login for valido
            if(loginValido){
               JOptionPane.showMessageDialog(this, "Login bem-sucedido!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-              SwingUtilities.invokeLater(()->new Menu());
+              setVisible(false);
+              
+              //abre a tela de acordo com o usuario
+              switch(tipoUsuario){
+                  case "usuario":
+                      SwingUtilities.invokeLater(()->new Menu());
+                      break;
+                  case "gerente":
+                      SwingUtilities.invokeLater(()->new Menu());
+                      break;
+                case "caixa":
+                      SwingUtilities.invokeLater(()->new Menu());
+                      break;
+                case "cliente":
+                      SwingUtilities.invokeLater(()->new Menu());
+                      break;
+                  default:
+                      JOptionPane.showMessageDialog(this, "Tipo de usuário inválido.", "Erro", JOptionPane.INFORMATION_MESSAGE);
+                      break;
+              }
            }else{
-                           JOptionPane.showMessageDialog(this, "CPF ou senha inválidos, informe novamente.", "Erro", JOptionPane.INFORMATION_MESSAGE);
+               JOptionPane.showMessageDialog(this, "CPF ou senha inválidos, informe novamente.", "Erro", JOptionPane.INFORMATION_MESSAGE);
            }           
         });
         
