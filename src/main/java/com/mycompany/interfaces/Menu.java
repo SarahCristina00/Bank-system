@@ -25,9 +25,9 @@ public class Menu extends JFrame {
         setSize(500, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        
-        setLayout(new GridLayout(4,0,30,30));
-        setBorder(createEmptyBorder(20, 20, 20, 20));
+        JPanel painelMenu = new JPanel();
+        painelMenu.setLayout(new GridLayout(4,1,20,20));
+        painelMenu.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         
         btnCriarUsuario = new JButton("Criar Usuário");
         btnRemoverUsuario = new JButton("Remover Usuário");
@@ -39,11 +39,12 @@ public class Menu extends JFrame {
         btnListarUsuarios.addActionListener(e -> new MenuListarUsuarios());
         btnSair.addActionListener(e -> System.exit(0));
         
-        add(btnCriarUsuario);
-        add(btnRemoverUsuario);
-        add(btnListarUsuarios);
-        add(btnSair);
+        painelMenu.add(btnCriarUsuario);
+        painelMenu.add(btnRemoverUsuario);
+        painelMenu.add(btnListarUsuarios);
+        painelMenu.add(btnSair);
         
+        add(painelMenu);
         setVisible(true);
     }
 }
@@ -51,7 +52,7 @@ public class Menu extends JFrame {
 
 class MenuCriarUsuario extends JFrame {
     public MenuCriarUsuario() {
-        setTitle("Criar Usuário");
+        setTitle("Sistema Bancário - Criar Usuário");
         setSize(500, 500);
         setLocationRelativeTo(null);
 
@@ -100,17 +101,17 @@ class MenuCriarUsuario extends JFrame {
    
 class MenuRemoverUsuario extends JFrame{
     public MenuRemoverUsuario(){
-        setTitle("Sistema Bancário - Remoção de Usuário");
+        setTitle("Sistema Bancário - Remover Usuário");
         setSize(500, 500);
         setLocationRelativeTo(null);
          
-        JPanel panel = new JPanel(new GridLayout(2, 2, 20, 10));
-        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        JPanel painelRemocao = new JPanel(new GridLayout(8, 8, 20, 20));
+        painelRemocao.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         JTextField campoNome = new JTextField();
-        panel.add(new JLabel("Nome do Usuário a ser removido:")); panel.add(campoNome);
+        painelRemocao.add(new JLabel("Nome do Usuário a ser removido:")); painelRemocao.add(campoNome);
        
         JButton removerBtn = new JButton("Remover Usuário");
-         panel.add(removerBtn);
+         painelRemocao.add(removerBtn);
         
         removerBtn.addActionListener(e -> {
                 String nome = campoNome.getText();
@@ -129,7 +130,7 @@ class MenuRemoverUsuario extends JFrame{
           );
             
         
-        add(panel);
+        add(painelRemocao);
         setVisible(true);
     }
 }
