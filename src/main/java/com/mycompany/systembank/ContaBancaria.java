@@ -10,19 +10,18 @@ import java.util.List;
 
 public class ContaBancaria {
     private int agencia = 001;
-    private int conta;
+    private int conta = 1000;
     private double saldo;
     private List<Transacao> extrato;
 
 
-    public ContaBancaria (int conta){
-        this.conta = conta;
-        this.saldo = 0;
+    public ContaBancaria (){
+        conta = conta++;
+        saldo = 0;
     }
     
     public int  getAgencia() { return agencia; } 
     public int  getConta() { return conta; } 
-    public void setConta(int conta) { this.conta = conta; }
     public double getSaldo() { return saldo; } 
     public void setSaldo(int saldo) { this.saldo = saldo; }
      

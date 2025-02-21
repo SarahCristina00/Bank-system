@@ -104,7 +104,7 @@ class MenuCriarUsuario extends JFrame {
         JTextField campoEstado = new JTextField();
         JTextField campoComplemento = new JTextField();
         JTextField campoCEP = new JTextField();
-        JTextField campoConta = new JTextField();
+        
         
         painelCliente.add(criarCampo("Rua: ",campoRua));
         painelCliente.add(criarCampo("Número: ",campoNumero));
@@ -112,7 +112,6 @@ class MenuCriarUsuario extends JFrame {
         painelCliente.add(criarCampo("Cidade: ",campoCidade));
         painelCliente.add(criarCampo("Complemento: ",campoComplemento));
         painelCliente.add(criarCampo("CEP: ",campoCEP));
-        painelCliente.add(criarCampo("Número da Conta: ",campoConta));
         painelCliente.setVisible(false);
        
         //adiciona a janela o painel principal
@@ -152,13 +151,10 @@ class MenuCriarUsuario extends JFrame {
                         campoEmail.getText(),
                         Integer.parseInt(new String(campoSenha.getPassword()))
                     );
-                //adiciona novo usuario a lista de usuarios
-                usuarios.add(novoUsuario);
-                
-                //atualiza os dados após execução
-                Menu.persistencia.salvarDados(usuarios);
-                    JOptionPane.showMessageDialog(this, "Usuário criado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-                    setVisible(false);
+               //adiciona novo usuario a lista de usuarios
+               usuarios.add(novoUsuario);
+               JOptionPane.showMessageDialog(this, "Usuário Gerente criado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+               setVisible(false);
             } else if(botaoCaixa.isSelected()){
                  Caixa novoUsuario = new Caixa(
                         campoNome.getText(),
@@ -169,11 +165,12 @@ class MenuCriarUsuario extends JFrame {
                         Integer.parseInt(new String(campoSenha.getPassword()))
                     );
                 //adiciona novo usuario a lista de usuarios
-                usuarios.add(novoUsuario);        
+                usuarios.add(novoUsuario); 
+  
                 //atualiza os dados após execução
                  Menu.persistencia.salvarDados(usuarios);
-                  JOptionPane.showMessageDialog(this, "Usuário criado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-                  setVisible(false);
+                  JOptionPane.showMessageDialog(this, "Usuário caixa criado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                 setVisible(false);
             } else if(botaoCliente.isSelected()){
                Endereco endereco = new Endereco(
                    campoRua.getText(),
@@ -199,7 +196,7 @@ class MenuCriarUsuario extends JFrame {
                 usuarios.add(novoUsuario);    
                 //atualiza os dados após execução
                 Menu.persistencia.salvarDados(usuarios);
-                JOptionPane.showMessageDialog(this, "Usuário criado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                 JOptionPane.showMessageDialog(this, "Usuário cliente criado com sucesso! " + "Agência: "+ novoUsuario.getConta().getAgencia() + "Conta: "+  novoUsuario.getConta().getConta(),  "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                 setVisible(false);
             }
         });
@@ -243,8 +240,7 @@ class MenuEditarUsuario extends JFrame {
         JTextField campoEstado = new JTextField();
         JTextField campoComplemento = new JTextField();
         JTextField campoCEP = new JTextField();
-        JTextField campoConta = new JTextField();
-        
+                
         //adiciona campos do cliente ao painel
         painelCliente.add(criarCampo("Rua: ", campoRua));
         painelCliente.add(criarCampo("Número: ", campoNumero));
@@ -253,7 +249,6 @@ class MenuEditarUsuario extends JFrame {
         painelCliente.add(criarCampo("Estado: ", campoEstado));
         painelCliente.add(criarCampo("Complemento: ", campoComplemento));
         painelCliente.add(criarCampo("CEP: ", campoCEP));
-        painelCliente.add(criarCampo("Conta: ", campoConta));
 
         painelCliente.setVisible(false);
 
@@ -274,6 +269,7 @@ class MenuEditarUsuario extends JFrame {
         comboBoxUsuarios.addActionListener(e -> {
             Usuario usuarioSelecionado = (Usuario) comboBoxUsuarios.getSelectedItem();
             if (usuarioSelecionado != null) {
+                painelCliente.setVisible(false);
                 campoNome.setText(usuarioSelecionado.getNome());
                 campoCPF.setText(usuarioSelecionado.getCpf());
                 campoDataNascimento.setText(usuarioSelecionado.getDataNascimento());
@@ -293,7 +289,8 @@ class MenuEditarUsuario extends JFrame {
                     campoEstado.setText(cliente.getEndereco().getEstado());
                     campoComplemento.setText(cliente.getEndereco().getComplemento());
                     campoCEP.setText(cliente.getEndereco().getCep());
-                     campoConta.setText(String.valueOf(cliente.getConta()));
+                    ContaBancaria conta = cliente.getConta();
+                    painelCliente.add(new JLabel("Conta: " + conta));
                 }
             }
         });
@@ -313,7 +310,7 @@ class MenuEditarUsuario extends JFrame {
                 usuarioSelecionado.setSenha(Integer.parseInt(new String(campoSenha.getPassword())));
 
                 if(usuarioSelecionado.getTipoUsuario().equals("cliente")) {
-                    Cliente cliente = (Cliente) usuarioSelecionado;
+                    Cliente cliente =  (Cliente) comboBoxUsuarios.getSelectedItem();
                     cliente.getEndereco().setRua(campoRua.getText());
                     cliente.getEndereco().setNumero(Integer.parseInt(campoNumero.getText()));
                     cliente.getEndereco().setBairro(campoBairro.getText());

@@ -12,12 +12,20 @@ public class Cliente extends Usuario{
             
             
      // Construtor que chama o super para inicializar os atributos 
-    public Cliente(String nome, String cpf, String dataNascimento, String telefone, String email, int senha, Endereco endereco, ContaBancaria conta) {
+    public Cliente(String nome, String cpf, String dataNascimento, String telefone, String email, int senha, Endereco endereco) {
         
         super(nome, cpf, dataNascimento, telefone, email, senha);
         this.endereco = endereco;
-        this.conta = conta;
+        this.conta = new ContaBancaria();
          super.setTipoUsuario("cliente");
+    }
+    
+   public ContaBancaria getConta() {
+        return conta;
+    }
+    
+     public Endereco getEndereco() {
+        return endereco;
     }
     
     public void consultarSaldo(){
