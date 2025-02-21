@@ -62,7 +62,7 @@ public class Usuario {
     
     @Override
     public String toString() {
-        return nome + " - " + login; 
+        return tipoUsuario +nome + " - " + login; 
     }
 
   }
