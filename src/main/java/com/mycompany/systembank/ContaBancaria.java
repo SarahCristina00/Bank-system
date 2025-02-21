@@ -9,20 +9,18 @@ package com.mycompany.systembank;
 import java.util.List;
 
 public class ContaBancaria {
-    private int agencia;
+    private int agencia = 001;
     private int conta;
     private double saldo;
     private List<Transacao> extrato;
 
 
-    public ContaBancaria (int agencia, int conta, int saldo){
-        this.agencia = agencia;
+    public ContaBancaria (int conta){
         this.conta = conta;
-        this.saldo = saldo;
+        this.saldo = 0;
     }
     
     public int  getAgencia() { return agencia; } 
-    public void setAgencia(int agencia) { this.agencia = agencia; }
     public int  getConta() { return conta; } 
     public void setConta(int conta) { this.conta = conta; }
     public double getSaldo() { return saldo; } 
