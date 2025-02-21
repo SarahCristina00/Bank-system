@@ -36,8 +36,14 @@ public class Caixa extends Usuario {
     }
 
     public void processarTransferencia(Cliente cliente, ContaBancaria destino, Double valor) {
-        System.out.println("Transferência de R$" + valor + 
-                           " do cliente " + cliente.getNome());
+       if (cliente.getConta().getSaldo() >= valor) {  //Verifica saldo atual do cliente se é maior que o valor da transferencia
+            cliente.getConta().setSaldo(cliente.getConta().getSaldo() - valor);// retira o valor de trasferencia da  conta do cliente 
+          //  destino.receberTransferencia(valor);// PRA ONDE VAMOS TRANSFERIR O DINHEIRO? PARA UMA OUTRA CONTA QUE CADASTRAMOS? PARA UMA CONTA QUE CRIAREMOS SÓ PRA RECEBER A TRABSFERENCIA?
+            System.out.println("Transferência de R$" + valor + 
+                               " realizada com sucesso do cliente " + cliente.getNome() + 
+                               " para a conta de destino.");
+        } else {
+            System.out.println("Saldo insuficiente para transferência do cliente: " + cliente.getNome());
+        }
     }
-   
 }
