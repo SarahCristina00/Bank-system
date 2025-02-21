@@ -183,7 +183,7 @@ class MenuCriarUsuario extends JFrame {
                    campoCidade.getText(),
                    campoEstado.getText(),
                    campoComplemento.getText(),
-                   Integer.parseInt(campoCEP.getText())
+                   campoCEP.getText()
                );
                
                ContaBancaria conta = new ContaBancaria(

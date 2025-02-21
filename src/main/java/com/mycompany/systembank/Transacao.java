@@ -6,15 +6,14 @@
 
 package com.mycompany.systembank;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 
 public class Transacao {
     static int id=0;
     private String tipo;
     private double valor;
     private double saldoFinal;
-    private LocalDateTime data;
+    private Calendar data;
     private ContaBancaria origem;
     private ContaBancaria destino;
      
@@ -24,15 +23,13 @@ public class Transacao {
         this.tipo = tipo;
         this.valor = valor;
         this.saldoFinal = contaOrigem.getSaldo() + valor;
-        this.data = LocalDateTime.now();
+        this.data = Calendar.getInstance();
         origem =contaOrigem;
         destino = contaDestino;
     }
 
     public String exibirTransacao(){
-        DateTimeFormatter formatoData =  DateTimeFormatter.ofPattern("MM/yyyy");
-        String mesAno = data.format(formatoData);
-            return String.format("%s | %s | Valor: R$ %.2f | Saldo: R$ %.2f", mesAno, tipo, valor, saldoFinal);
+                return String.format("%s | %s | Valor: R$ %.2f | Saldo: R$ %.2f", data, tipo, valor, saldoFinal);
     }
     
 }
