@@ -81,7 +81,6 @@ class MenuCriarUsuario extends JFrame {
         JButton criarBtn = new JButton("Criar");
         
         //adiciona no painel os campos juntamente com sua descrição 
-        painelInformacoes.add(new JLabel("Tipo Usuário:")); painelInformacoes.add(tipoUsuario);
         painelInformacoes.add(new JLabel("Nome Completo:")); painelInformacoes.add(campoNome);
         painelInformacoes.add(new JLabel("CPF:")); painelInformacoes.add(campoCPF);
         painelInformacoes.add(new JLabel("Data de Nascimento:")); painelInformacoes.add(campoDataNascimento);
@@ -91,25 +90,89 @@ class MenuCriarUsuario extends JFrame {
         painelInformacoes.add(new JLabel("Senha:")); painelInformacoes.add(campoSenha);
         painelInformacoes.add(criarBtn);
         
+       //cria cmpos do cliente 
+       JPanel painelCliente = new JPanel(new GridLayout(5,2,10,10));
+       painelCliente.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
+       
+        JTextField campoRua = new JTextField();
+        JTextField campoNumero = new JTextField();
+        JTextField campoBairro = new JTextField();
+        JTextField campoCidade = new JTextField();
+        JTextField campoEstado = new JTextField();
+        JTextField campoComplemento = new JTextField();
+        JTextField campoCEP = new JTextField();
+        JTextField campoConta = new JTextField();
+        
+        painelCliente.add(new JLabel("Rua:")); painelInformacoes.add(campoRua);
+        painelCliente.add(new JLabel("Número:")); painelInformacoes.add(campoNumero);
+        painelCliente.add(new JLabel("Bairro:")); painelInformacoes.add(campoBairro);
+        painelCliente.add(new JLabel("Cidade")); painelInformacoes.add(campoCidade);
+        painelCliente.add(new JLabel("Estado:")); painelInformacoes.add(campoEstado);
+        painelCliente.add(new JLabel("Complemento")); painelInformacoes.add(campoComplemento);
+        painelCliente.add(new JLabel("CEP:")); painelInformacoes.add(campoCEP);
+        painelCliente.add(new JLabel("Número da Conta:")); painelInformacoes.add(campoConta);
+       
+        
         //adiciona a janela o painel com as informações
         add(painelInformacoes);
         setVisible(true);
         
         //evento que será acionado ao clicar no botão criar chamando o construtor do usuário
         criarBtn.addActionListener(e -> {
-            Usuario novoUsuario = new Usuario(
-                campoNome.getText(),
-                campoCPF.getText(),
-                campoDataNascimento.getText(),
-                campoTelefone.getText(),
-                campoEmail.getText(),
-                campoLogin.getText(),
-                Integer.parseInt(new String(campoSenha.getPassword()))
-            );
-            
-            //adiciona novo usuario a lista de usuarios
-            usuarios.add(novoUsuario);
-            
+            //if verifica qual tipo de usuário será criado
+            if(botaoGerente.isSelected()){
+                 Gerente novoUsuario = new Gerente(
+                        campoNome.getText(),
+                        campoCPF.getText(),
+                        campoDataNascimento.getText(),
+                        campoTelefone.getText(),
+                        campoEmail.getText(),
+                        campoLogin.getText(),
+                        Integer.parseInt(new String(campoSenha.getPassword()))
+                    );
+                //adiciona novo usuario a lista de usuarios
+                usuarios.add(novoUsuario);
+            } else if(botaoCaixa.isSelected()){
+                 Caixa novoUsuario = new Caixa(
+                        campoNome.getText(),
+                        campoCPF.getText(),
+                        campoDataNascimento.getText(),
+                        campoTelefone.getText(),
+                        campoEmail.getText(),
+                        campoLogin.getText(),
+                        Integer.parseInt(new String(campoSenha.getPassword()))
+                    );
+                //adiciona novo usuario a lista de usuarios
+                usuarios.add(novoUsuario);                
+            } else if(botaoCliente.isSelected()){
+               add(painelCliente);
+               Endereco endereco = new Endereco(
+                   campoRua.getText(),
+                   Integer.parseInt(new String(campoNumero.getText())),
+                   campoBairro.getText(),
+                   campoCidade.getText(),
+                   campoEstado.getText(),
+                   campoComplemento.getText(),
+                   Integer.parseInt(new String(campoCEP.getText())),
+               );
+               
+               
+               Cliente novoUsuario = new Cliente(
+                        campoNome.getText(),
+                        campoCPF.getText(),
+                        campoDataNascimento.getText(),
+                        campoTelefone.getText(),
+                        campoEmail.getText(),
+                        campoLogin.getText(),
+                        Integer.parseInt(new String(campoSenha.getPassword())),
+                        endereco,
+                         conta
+                    );
+                //adiciona novo usuario a lista de usuarios
+                usuarios.add(novoUsuario);                
+            }
+
+          
             //atualiza os dados após execução
             Menu.persistencia.salvarDados(usuarios);
             JOptionPane.showMessageDialog(this, "Usuário criado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
