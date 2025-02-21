@@ -9,8 +9,8 @@ package com.mycompany.systembank;
 public class Gerente extends Usuario {
 
     // Construtor 
-    public Gerente(String nome, String cpf, String dataNascimento, String telefone, String email, String login, int senha) {
-        super(nome, cpf, dataNascimento, telefone, email, login, senha);
+    public Gerente(String nome, String cpf, String dataNascimento, String telefone, String email, int senha) {
+        super(nome, cpf, dataNascimento, telefone, email, senha);
          super.setTipoUsuario("gerente");
     }
    

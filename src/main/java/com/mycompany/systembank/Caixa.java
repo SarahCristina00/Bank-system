@@ -10,8 +10,8 @@ public class Caixa extends Usuario {
     
     // Construtor 
     public Caixa(String nome, String cpf, String dataNascimento, String telefone, 
-                 String email, String login, int senha) {
-        super(nome, cpf, dataNascimento, telefone, email, login, senha);
+                 String email, int senha) {
+        super(nome, cpf, dataNascimento, telefone, email, senha);
          super.setTipoUsuario("caixa");
     }
 

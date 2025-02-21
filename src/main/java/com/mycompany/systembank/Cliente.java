@@ -12,9 +12,9 @@ public class Cliente extends Usuario{
             
             
      // Construtor que chama o super para inicializar os atributos 
-    public Cliente(String nome, String cpf, String dataNascimento, String telefone, String email, String login, int senha, Endereco endereco, ContaBancaria conta) {
+    public Cliente(String nome, String cpf, String dataNascimento, String telefone, String email, int senha, Endereco endereco, ContaBancaria conta) {
         
-        super(nome, cpf, dataNascimento, telefone, email, login, senha);
+        super(nome, cpf, dataNascimento, telefone, email, senha);
         this.endereco = endereco;
         this.conta = conta;
          super.setTipoUsuario("cliente");

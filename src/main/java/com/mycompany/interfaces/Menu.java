@@ -80,7 +80,6 @@ class MenuCriarUsuario extends JFrame {
         JTextField campoDataNascimento = new JTextField();
         JTextField campoTelefone = new JTextField();
         JTextField campoEmail = new JTextField();
-        JTextField campoLogin = new JTextField();
         JPasswordField campoSenha = new JPasswordField();
         JButton criarBtn = new JButton("Criar");
         
@@ -90,7 +89,6 @@ class MenuCriarUsuario extends JFrame {
         painelInformacoes.add(criarCampo("Data de Nacimento: ",campoDataNascimento));
         painelInformacoes.add(criarCampo("Telefone: ",campoTelefone));
         painelInformacoes.add(criarCampo("Email: ",campoEmail));
-        painelInformacoes.add(criarCampo("Login: ",campoLogin));
         painelInformacoes.add(criarCampo("Senha: ",campoSenha));
 
        //cria cmpos do cliente 
@@ -149,7 +147,6 @@ class MenuCriarUsuario extends JFrame {
                         campoDataNascimento.getText(),
                         campoTelefone.getText(),
                         campoEmail.getText(),
-                        campoLogin.getText(),
                         Integer.parseInt(new String(campoSenha.getPassword()))
                     );
                 //adiciona novo usuario a lista de usuarios
@@ -166,7 +163,6 @@ class MenuCriarUsuario extends JFrame {
                         campoDataNascimento.getText(),
                         campoTelefone.getText(),
                         campoEmail.getText(),
-                        campoLogin.getText(),
                         Integer.parseInt(new String(campoSenha.getPassword()))
                     );
                 //adiciona novo usuario a lista de usuarios
@@ -196,8 +192,7 @@ class MenuCriarUsuario extends JFrame {
                         campoDataNascimento.getText(),
                         campoTelefone.getText(),
                         campoEmail.getText(),
-                        campoLogin.getText(),
-                        Integer.parseInt(new String(campoSenha.getPassword())),
+                       Integer.parseInt(new String(campoSenha.getPassword())),
                         endereco,
                          conta
                     );
