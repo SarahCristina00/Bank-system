@@ -7,12 +7,13 @@
 package com.mycompany.systembank;
 
 public class Gerente extends Usuario {
-    private String tipoUsuario="gerente";
 
     // Construtor 
     public Gerente(String nome, String cpf, String dataNascimento, String telefone, String email, String login, int senha) {
         super(nome, cpf, dataNascimento, telefone, email, login, senha);
+         super.setTipoUsuario("gerente");
     }
+   
 
     public void apoiarMovimentacao(Cliente cliente, Double valor) {
         System.out.println("Gerente apoiando movimentação de R$" + valor + 
@@ -35,4 +36,5 @@ public class Gerente extends Usuario {
         System.out.println("Gerente avaliando crédito de R$" + valor + 
                            " para o cliente: " + cliente.getNome());
     }
+
 }

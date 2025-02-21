@@ -14,7 +14,7 @@ public class Usuario {
     private String email;
     private String login;
     private int senha;
-    private String tipoUsuario="usuario";
+    private String tipoUsuario;
 
     // Construtor
     public Usuario(String nome, String cpf, String dataNascimento, String telefone, String email, String login, int senha) {
@@ -25,9 +25,10 @@ public class Usuario {
         this.email = validarEmail(email) ? email : "Email inválido";//validarEmail(email) que retorna true se o CPF for válido e false caso contrário.
         this.login = login;
         this.senha = senha;
+        tipoUsuario = "usuario";
     }
-    
-    public String getTipoUsuario(){return tipoUsuario;}
+     public void setTipoUsuario(String tipo) {tipoUsuario = tipo; }
+     public String getTipoUsuario() { return tipoUsuario; }
     
     public String getNome() { return nome; } // retorna o nome do usuario
     public void setNome(String nome) { this.nome = nome; }// recebe o nome do usuario
@@ -62,7 +63,7 @@ public class Usuario {
     
     @Override
     public String toString() {
-        return tipoUsuario +nome + " - " + login; 
+        return tipoUsuario + " - "+nome; 
     }
 
   }

@@ -8,12 +8,11 @@ package com.mycompany.systembank;
 
 public class Caixa extends Usuario {
     
-    private String tipoUsuario = "caixa";
-
     // Construtor 
     public Caixa(String nome, String cpf, String dataNascimento, String telefone, 
                  String email, String login, int senha) {
         super(nome, cpf, dataNascimento, telefone, email, login, senha);
+         super.setTipoUsuario("caixa");
     }
 
     public void processarSaque(Cliente cliente, Double valor) {
@@ -30,6 +29,5 @@ public class Caixa extends Usuario {
         System.out.println("Transferência de R$" + valor + 
                            " do cliente " + cliente.getNome());
     }
-    
    
 }
