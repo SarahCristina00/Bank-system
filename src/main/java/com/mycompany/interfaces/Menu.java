@@ -55,10 +55,22 @@ class MenuCriarUsuario extends JFrame {
         setTitle("Sistema Bancário - Criar Usuário");
         setSize(500, 500);
         setLocationRelativeTo(null);
-
+        
+        //adiciona na janela um painel que vai conter os campos para inserir as informações
         JPanel painelInformacoes = new JPanel(new GridLayout(8, 2, 5, 5));
         painelInformacoes.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         
+        //cria caixa de seleção de tipo de usuário
+        JRadioButton botaoGerente = new JRadioButton("Gerente");
+        JRadioButton botaoCaixa = new JRadioButton("Caixa");
+        JRadioButton botaoCliente = new JRadioButton("Cliente");
+        ButtonGroup tipoUsuario = new ButtonGroup();
+        
+        tipoUsuario.add(botaoGerente);
+        tipoUsuario.add(botaoCaixa);
+        tipoUsuario.add(botaoCliente);
+        
+        //cria os campos que vão receber as informações
         JTextField campoNome = new JTextField();
         JTextField campoCPF = new JTextField();
         JTextField campoDataNascimento = new JTextField();
@@ -68,6 +80,8 @@ class MenuCriarUsuario extends JFrame {
         JPasswordField campoSenha = new JPasswordField();
         JButton criarBtn = new JButton("Criar");
         
+        //adiciona no painel os campos juntamente com sua descrição 
+        painelInformacoes.add(new JLabel("Tipo Usuário:")); painelInformacoes.add(tipoUsuario);
         painelInformacoes.add(new JLabel("Nome Completo:")); painelInformacoes.add(campoNome);
         painelInformacoes.add(new JLabel("CPF:")); painelInformacoes.add(campoCPF);
         painelInformacoes.add(new JLabel("Data de Nascimento:")); painelInformacoes.add(campoDataNascimento);
@@ -77,9 +91,11 @@ class MenuCriarUsuario extends JFrame {
         painelInformacoes.add(new JLabel("Senha:")); painelInformacoes.add(campoSenha);
         painelInformacoes.add(criarBtn);
         
+        //adiciona a janela o painel com as informações
         add(painelInformacoes);
         setVisible(true);
         
+        //evento que será acionado ao clicar no botão criar chamando o construtor do usuário
         criarBtn.addActionListener(e -> {
             Usuario novoUsuario = new Usuario(
                 campoNome.getText(),
@@ -90,7 +106,10 @@ class MenuCriarUsuario extends JFrame {
                 campoLogin.getText(),
                 Integer.parseInt(new String(campoSenha.getPassword()))
             );
-            BankSystem.usuarios.add(novoUsuario);
+            
+            //adiciona novo usuario a lista de usuarios
+            usuarios.add(novoUsuario);
+            
             //atualiza os dados após execução
             Menu.persistencia.salvarDados(usuarios);
             JOptionPane.showMessageDialog(this, "Usuário criado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
