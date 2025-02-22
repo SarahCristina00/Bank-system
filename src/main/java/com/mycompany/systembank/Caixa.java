@@ -15,6 +15,7 @@ public class Caixa extends Usuario {
          super.setTipoUsuario("caixa");
     }
 
+    //CAIXA APOS FAZER LOGIN NO SISTEMA
     public void processarSaque(Cliente cliente, Double valor) {
         if (cliente.getConta().getSaldo() >= valor) {  // Acessando saldo pela conta para verificar se o cliente tem saldo suficiente para o saque
             cliente.getConta().setSaldo(cliente.getConta().getSaldo() - valor);// atualização do saldo do cliente apos o saque

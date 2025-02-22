@@ -14,10 +14,21 @@ public class Gerente extends Usuario {
          super.setTipoUsuario("gerente");
     }
    
+    //GERENTE APOS FAZER O LOGIN NO SISTEMA 
 
-    public void apoiarMovimentacao(Cliente cliente, Double valor) {
-        System.out.println("Gerente apoiando movimentação de R$" + valor + 
-                " para o cliente: " + cliente.getNome());
+    public void apoiarMovimentacao(Cliente cliente, Double valor,  String tipoMovimentacao) {
+       // Condicional para verificar se a movimentação é um saque acima de 1 milhão ou uma transferência
+        if (tipoMovimentacao.equals("saque") && valor > 1000000) {
+            System.out.println("Gerente auxiliando no saque de R$" + valor + " para o cliente: " + cliente.getNome());
+            // O cliente confirma a operação (AQUI PEDE A SENHA DO CLIENTE )
+            System.out.println("Saque autorizado. A operação foi concluída com sucesso.");
+        } else if (tipoMovimentacao.equals("transferencia")) {
+            System.out.println("Gerente auxiliando na transferência de R$" + valor + " para o cliente: " + cliente.getNome());
+            // AQUI PEDE A SENHA DO CLIENTE
+            System.out.println("Transferência realizada com sucesso.");
+        } else {
+            System.out.println("Apoio de movimentação não permitido para este tipo de operação.");
+        }
     }
 
     public void cadastrarOpcaoRendaFixa(String descricao, Double taxa, Double rentabilidade) {
