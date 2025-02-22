@@ -48,6 +48,8 @@ public class Gerente extends Usuario {
     public void avaliarCredito(Cliente cliente, Double valor) {
         System.out.println("Gerente avaliando crédito de R$" + valor + 
                            " para o cliente: " + cliente.getNome());
+         System.out.println("Crédito aprovado! O cliente pode utilizar este valor.");
+         //apos a aprovação cliente deve confirmar a operação informando sua senha pessoal.
     }
 
 }

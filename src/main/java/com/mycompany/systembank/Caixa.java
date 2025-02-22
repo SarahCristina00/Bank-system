@@ -18,6 +18,8 @@ public class Caixa extends Usuario {
     //CAIXA APOS FAZER LOGIN NO SISTEMA
     public void processarSaque(Cliente cliente, Double valor) {
         if (cliente.getConta().getSaldo() >= valor) {  // Acessando saldo pela conta para verificar se o cliente tem saldo suficiente para o saque
+            
+   // Apos acessar o saldo, solicita que o cliente insira sua senha pessoal para validar a operação antes de liberar o dinheiro.
             cliente.getConta().setSaldo(cliente.getConta().getSaldo() - valor);// atualização do saldo do cliente apos o saque
             System.out.println("Saque de R$" + valor + 
                                " realizado com sucesso para o cliente: " + cliente.getNome());
@@ -40,7 +42,8 @@ public class Caixa extends Usuario {
        if (cliente.getConta().getSaldo() >= valor) {  //Verifica saldo atual do cliente se é maior que o valor da transferencia
             cliente.getConta().setSaldo(cliente.getConta().getSaldo() - valor);// retira o valor de trasferencia da  conta do cliente 
           //  destino.receberTransferencia(valor);// PRA ONDE VAMOS TRANSFERIR O DINHEIRO? PARA UMA OUTRA CONTA QUE CADASTRAMOS? PARA UMA CONTA QUE CRIAREMOS SÓ PRA RECEBER A TRABSFERENCIA?
-            System.out.println("Transferência de R$" + valor + 
+          //  aqui o cliente confirma a operação informando sua senha pessoal. 
+          System.out.println("Transferência de R$" + valor + 
                                " realizada com sucesso do cliente " + cliente.getNome() + 
                                " para a conta de destino.");
         } else {
