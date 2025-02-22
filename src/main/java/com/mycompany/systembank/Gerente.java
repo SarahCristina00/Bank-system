@@ -31,10 +31,12 @@ public class Gerente extends Usuario {
         }
     }
 
-    public void cadastrarOpcaoRendaFixa(String descricao, Double taxa, Double rentabilidade) {
+    public void cadastrarOpcaoRendaFixa(String descricao, Double taxa, Double rentabilidade,  int prazoMinimo, int prazoMaximo) {
         System.out.println("Opção de renda fixa cadastrada: " + descricao + 
                            " | Taxa: " + taxa + "%" + 
-                           " | Rentabilidade esperada: " + rentabilidade + "%");
+                           " | Rentabilidade esperada: " + rentabilidade + "%" + 
+                           " | Prazo mínimo: " + prazoMinimo + " meses" + 
+                           " | Prazo máximo: " + prazoMaximo + " meses");
     }
 
     public void cadastrarOpcaoRendaVariavel(String descricao, Double risco, Double rentabilidade) {
