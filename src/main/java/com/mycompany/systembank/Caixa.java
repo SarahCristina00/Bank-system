@@ -5,6 +5,9 @@
  */
 
 package com.mycompany.systembank;
+import javax.swing.JPasswordField;
+import javax.swing.JOptionPane;
+
 
 public class Caixa extends Usuario {
     
@@ -50,4 +53,15 @@ public class Caixa extends Usuario {
             System.out.println("Saldo insuficiente para transferência do cliente: " + cliente.getNome());
         }
     }
+    
+    private String solicitarSenha() {
+    JPasswordField campoSenha = new JPasswordField();
+    int option = JOptionPane.showConfirmDialog(null, campoSenha, "Digite sua Senha Pessoal", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+    
+    if (option == JOptionPane.OK_OPTION) {
+        return new String(campoSenha.getPassword());
+    }
+    return null;  // Retorna null se o usuário cancelar a operação
+}
+
 }
