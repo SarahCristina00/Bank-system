@@ -7,6 +7,8 @@
 package com.mycompany.systembank;
 import javax.swing.JPasswordField;
 import javax.swing.JOptionPane;
+import com.mycompany.interfaces.Login;
+
 
 
 public class Caixa extends Usuario {
@@ -20,16 +22,31 @@ public class Caixa extends Usuario {
 
     //CAIXA APOS FAZER LOGIN NO SISTEMA
     public void processarSaque(Cliente cliente, Double valor) {
-        if (cliente.getConta().getSaldo() >= valor) {  // Acessando saldo pela conta para verificar se o cliente tem saldo suficiente para o saque
-            
-   // Apos acessar o saldo, solicita que o cliente insira sua senha pessoal para validar a operação antes de liberar o dinheiro.
-            cliente.getConta().setSaldo(cliente.getConta().getSaldo() - valor);// atualização do saldo do cliente apos o saque
-            System.out.println("Saque de R$" + valor + 
-                               " realizado com sucesso para o cliente: " + cliente.getNome());
+    if (cliente.getConta().getSaldo() >= valor) {  // Acessando saldo pela conta para verificar se o cliente tem saldo suficiente para o saque
+        
+        // Solicitar senha para validar a operação
+        String senhaInserida = solicitarSenha();
+        if (senhaInserida != null && Integer.parseInt(senhaInserida) == cliente.getSenha()) {
+            // Senha correta, proceder com o saque
+            cliente.getConta().setSaldo(cliente.getConta().getSaldo() - valor); // Atualização do saldo do cliente após o saque
+            JOptionPane.showMessageDialog(null, 
+                "Saque de R$" + valor + " realizado com sucesso para o cliente: " + cliente.getNome(), 
+                "Operação Realizada", 
+                JOptionPane.INFORMATION_MESSAGE);
         } else {
-            System.out.println("Saldo insuficiente para saque do cliente: " + cliente.getNome());
+            JOptionPane.showMessageDialog(null, 
+                "Senha incorreta! A operação foi cancelada.", 
+                "Erro", 
+                JOptionPane.ERROR_MESSAGE);
         }
+    } else {
+        JOptionPane.showMessageDialog(null, 
+            "Saldo insuficiente para saque do cliente: " + cliente.getNome(), 
+            "Erro", 
+            JOptionPane.ERROR_MESSAGE);
     }
+}
+
 
     public void processarDeposito(Cliente cliente, Double valor) {
        if (valor > 0) {  // se o valor do deposito for maior que 0 
@@ -55,13 +72,13 @@ public class Caixa extends Usuario {
     }
     
     private String solicitarSenha() {
-    JPasswordField campoSenha = new JPasswordField();
-    int option = JOptionPane.showConfirmDialog(null, campoSenha, "Digite sua Senha Pessoal", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-    
-    if (option == JOptionPane.OK_OPTION) {
-        return new String(campoSenha.getPassword());
+        JPasswordField campoSenha = new JPasswordField();
+        int option = JOptionPane.showConfirmDialog(null, campoSenha, "Digite sua Senha Pessoal", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        
+        if (option == JOptionPane.OK_OPTION) {
+            return new String(campoSenha.getPassword());
+        }
+        return null;
     }
-    return null;  // Retorna null se o usuário cancelar a operação
-}
 
 }

@@ -1,4 +1,4 @@
-/**
+    /**
 @author Lara da Silva Dias (202376010)
 @author Sarah Cristina (202376034)
 @author Wilian Santos (202276040)
@@ -48,6 +48,7 @@ public class Login extends JFrame {
                if(usuario.getCpf().equals(cpf) && usuario.getSenha() ==senha){
                    loginValido = true;
                    tipoUsuario = usuario.getTipoUsuario();
+                   
                    break;
                }
            }
