@@ -64,17 +64,32 @@ public class Caixa extends Usuario {
 }
 
     public void processarTransferencia(Cliente cliente, ContaBancaria destino, Double valor) {
-       if (cliente.getConta().getSaldo() >= valor) {  //Verifica saldo atual do cliente se é maior que o valor da transferencia
-            cliente.getConta().setSaldo(cliente.getConta().getSaldo() - valor);// retira o valor de trasferencia da  conta do cliente 
-          //  destino.receberTransferencia(valor);// PRA ONDE VAMOS TRANSFERIR O DINHEIRO? PARA UMA OUTRA CONTA QUE CADASTRAMOS? PARA UMA CONTA QUE CRIAREMOS SÓ PRA RECEBER A TRABSFERENCIA?
-          //  aqui o cliente confirma a operação informando sua senha pessoal. 
-          System.out.println("Transferência de R$" + valor + 
-                               " realizada com sucesso do cliente " + cliente.getNome() + 
-                               " para a conta de destino.");
+    if (cliente.getConta().getSaldo() >= valor) {  // Verifica saldo atual do cliente se é maior que o valor da transferência
+        // Solicitar senha para validar a operação
+        String senhaInserida = solicitarSenha();
+        if (senhaInserida != null && Integer.parseInt(senhaInserida) == cliente.getSenha()) {
+            // Senha correta, proceder com a transferência
+            cliente.getConta().setSaldo(cliente.getConta().getSaldo() - valor); // Retira o valor de transferência da conta do cliente
+            // Destino.receberTransferencia(valor); // Para onde transferir?
+            JOptionPane.showMessageDialog(null, 
+                "Transferência de R$" + valor + 
+                " realizada com sucesso do cliente " + cliente.getNome() + 
+                " para a conta de destino.", 
+                "Operação Realizada", 
+                JOptionPane.INFORMATION_MESSAGE);
         } else {
-            System.out.println("Saldo insuficiente para transferência do cliente: " + cliente.getNome());
+            JOptionPane.showMessageDialog(null, 
+                "Senha incorreta! A operação foi cancelada.", 
+                "Erro", 
+                JOptionPane.ERROR_MESSAGE);
         }
+    } else {
+        JOptionPane.showMessageDialog(null, 
+            "Saldo insuficiente para transferência do cliente: " + cliente.getNome(), 
+            "Erro", 
+            JOptionPane.ERROR_MESSAGE);
     }
+}
     
     private String solicitarSenha() {
         JPasswordField campoSenha = new JPasswordField();
