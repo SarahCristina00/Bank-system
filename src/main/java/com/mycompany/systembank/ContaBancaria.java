@@ -6,7 +6,7 @@
 
 package com.mycompany.systembank;
 
-import java.util.List;
+import java.util.*;
 
 public class ContaBancaria {
     private int agencia = 001;
@@ -18,6 +18,7 @@ public class ContaBancaria {
     public ContaBancaria (){
         conta = conta++;
         saldo = 0;
+        this.extrato = new ArrayList<>();
     }
     
     public int  getAgencia() { return agencia; } 
@@ -28,6 +29,17 @@ public class ContaBancaria {
     public void registraTransacao(String tipo, double valor, ContaBancaria origem, ContaBancaria destino){
         Transacao transacao = new Transacao(tipo, valor, origem, destino);
         extrato.add(transacao);
+    }
+    
+    public boolean transfereSaldo(double valor, ContaBancaria destino){
+        //retira valor da conta
+        this.saldo -= valor;
+        //adiciona valor na conta origem
+        destino.saldo += valor;
+        //registra a transferencia nos extratos das duas contas
+        this.registraTransacao("Transferência enviada", valor, this, destino);
+        destino.registraTransacao("Transferência recebida", valor, this, destino);
+        return true;
     }
         
     public void imprimeExtrato(){
