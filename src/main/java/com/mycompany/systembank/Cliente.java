@@ -27,6 +27,10 @@ public class Cliente extends Usuario{
      public Endereco getEndereco() {
         return endereco;
     }
+     
+     public boolean transferir(double valor, Cliente destinatario){
+         return this.conta.transfereSaldo(valor, destinatario.getConta());
+     }
     
     public void consultarSaldo(){
         System.out.println("=======Consulta de Saldo=======/n");
@@ -52,6 +56,7 @@ public class Cliente extends Usuario{
             }
             conta.registraTransacao(opcao, valor, conta, conta);
     }
+     
 
 }
 

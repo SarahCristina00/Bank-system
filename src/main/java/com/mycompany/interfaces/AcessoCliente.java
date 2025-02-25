@@ -57,7 +57,7 @@ class Transferencia extends JFrame {
         setLocationRelativeTo(null);
 
         // cria painel
-        JPanel painelInformacoes = new JPanel(new GridLayout(3, 2, 5, 5));
+        JPanel painelInformacoes = new JPanel(new GridLayout(3, 2, 20, 20));
 
         // campos
         JTextField campoOrigem = new JTextField();
@@ -69,7 +69,17 @@ class Transferencia extends JFrame {
         painelInformacoes.add(criarCampo("Informe a Conta de Origem: ", campoOrigem));
         painelInformacoes.add(criarCampo("Informe a Conta de Destino: ", campoDestino));
         painelInformacoes.add(criarCampo("Informe o valor a ser transferido: ", campoValor));
+        
+        botaoRealizarTransferencia.addActionListener(e -> {
+            int contaOrigem = Integer.parseInt(campoOrigem.getText());
+            int contaDestino = Integer.parseInt(campoDestino.getText());
+            double valor = Double.parseDouble(campoValor.getText());
 
+            Cliente clienteOrigem = BankSystem.getCliente(contaOrigem);
+            Cliente clienteDestino = BankSystem.getCliente(contaDestino);
+
+            clienteOrigem.transferir(valor, clienteDestino);
+        });
 
         // Adiciona os componentes na tela
         JPanel painelPrincipal = new JPanel(new BorderLayout());

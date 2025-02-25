@@ -14,6 +14,20 @@ public class BankSystem {
      
 //inicializa
  public static List<Usuario> usuarios = persistencia.carregarDados();
+ 
+ public static Cliente getCliente(int numeroConta) {
+     //percorre lista para encontrar cliente
+    for (Usuario usuario : usuarios) {
+        if(!(usuario instanceof Cliente)) {
+        } else {
+            Cliente cliente = (Cliente) usuario;
+            if (cliente.getConta().getConta() == numeroConta) {
+                return cliente;
+            }
+        }
+    }
+    return null; 
+}
    
     public static void main(String[] args) {
 
