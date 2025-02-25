@@ -20,12 +20,10 @@ public class Menu extends JFrame {
         botaoListarUsuarios = new JButton("Listar Usuários"),
         botaoSair = new JButton("Sair");
     //instancia arquivo para carregar os dados
-     public static PersistenciaUsuarios persistencia = new PersistenciaUsuarios();
     
     public Menu() {
                 
         //carrega os dados dos usuarios
-        usuarios = persistencia.carregarDados();
         setTitle("Sistema Bancário - Menu Principal");
         setSize(500, 500);
         setLocationRelativeTo(null);
@@ -153,6 +151,8 @@ class MenuCriarUsuario extends JFrame {
                     );
                //adiciona novo usuario a lista de usuarios
                usuarios.add(novoUsuario);
+               Login.persistenciaUsuarios.salvarDados(usuarios);
+
                JOptionPane.showMessageDialog(this, "Usuário Gerente criado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                setVisible(false);
             } else if(botaoCaixa.isSelected()){
@@ -168,7 +168,7 @@ class MenuCriarUsuario extends JFrame {
                 usuarios.add(novoUsuario); 
   
                 //atualiza os dados após execução
-                 Menu.persistencia.salvarDados(usuarios);
+                 Login.persistenciaUsuarios.salvarDados(usuarios);
                   JOptionPane.showMessageDialog(this, "Usuário caixa criado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                  setVisible(false);
             } else if(botaoCliente.isSelected()){
@@ -195,7 +195,7 @@ class MenuCriarUsuario extends JFrame {
                 //adiciona novo usuario a lista de usuarios
                 usuarios.add(novoUsuario);    
                 //atualiza os dados após execução
-                Menu.persistencia.salvarDados(usuarios);
+                Login.persistenciaUsuarios.salvarDados(usuarios);
                  JOptionPane.showMessageDialog(this, "Usuário cliente criado com sucesso! " + "Agência: "+ novoUsuario.getConta().getAgencia() + "Conta: "+  novoUsuario.getConta().getConta(),  "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                 setVisible(false);
             }
@@ -321,7 +321,7 @@ class MenuEditarUsuario extends JFrame {
                 }
 
                 // att os dados após a edição
-                Menu.persistencia.salvarDados(usuarios);
+                Login.persistenciaUsuarios.salvarDados(usuarios);
                 JOptionPane.showMessageDialog(this, "Usuário editado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                 setVisible(false);
             }
@@ -357,7 +357,7 @@ class MenuRemoverUsuario extends JFrame{
                //verifica se houve seleção
                     if(usuarioSelecionado!=null){
                         usuarios.remove(usuarioSelecionado);
-                        Menu.persistencia.salvarDados(usuarios);
+                        Login.persistenciaUsuarios.salvarDados(usuarios);
                         JOptionPane.showMessageDialog(this, "Usuário removido com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                          dispose();
                     }else{

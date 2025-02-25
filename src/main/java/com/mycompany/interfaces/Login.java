@@ -6,7 +6,7 @@
 
 package com.mycompany.interfaces;
 
-import com.mycompany.persistencia.PersistenciaUsuarios;
+import com.mycompany.persistencia.*;
 import com.mycompany.systembank.*;
 import static com.mycompany.systembank.BankSystem.usuarios;
 import java.awt.*;
@@ -17,7 +17,8 @@ public class Login extends JFrame {
     private JTextField campoLogin  = new JTextField();
     private JPasswordField campoSenha = new JPasswordField();
     private JButton botaoEntrar = new JButton("Entrar");
-     public static PersistenciaUsuarios persistencia = new PersistenciaUsuarios();
+    public static PersistenciaUsuarios persistenciaUsuarios = new PersistenciaUsuarios();
+    public static PersistenciaContas persistenciaContas = new PersistenciaContas();
     
     @SuppressWarnings("null")
     public Login(){

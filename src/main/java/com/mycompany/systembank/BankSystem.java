@@ -9,11 +9,11 @@ package com.mycompany.systembank;
 import java.util.*;
 import javax.swing.*;
 import com.mycompany.interfaces.*;
-import static com.mycompany.interfaces.Login.persistencia;
 public class BankSystem {
      
 //inicializa
- public static List<Usuario> usuarios = persistencia.carregarDados();
+ public static List<Usuario> usuarios = Login.persistenciaUsuarios.carregarDados();
+ public static List<ContaBancaria> contasBancarias = Login.persistenciaContas.carregarDados();
  
  public static Cliente getCliente(int numeroConta) {
      //percorre lista para encontrar cliente
