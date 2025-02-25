@@ -70,7 +70,7 @@ public class Login extends JFrame {
                       SwingUtilities.invokeLater(()->new Menu());
                       break;
                 case "cliente":
-                      SwingUtilities.invokeLater(()->new Menu());
+                      SwingUtilities.invokeLater(()->new AcessoCliente());
                       break;
                   default:
                       JOptionPane.showMessageDialog(this, "Tipo de usuário inválido.", "Erro", JOptionPane.INFORMATION_MESSAGE);
