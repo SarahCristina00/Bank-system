@@ -19,7 +19,8 @@ public class Menu extends JFrame {
         botaoRemoverUsuario = new JButton("Remover Usuário"),
         botaoListarUsuarios = new JButton("Listar Usuários"),
         botaoSair = new JButton("Sair"),    
-        botaoAcessoCliente = new JButton("Acesso Cliente");
+        botaoAcessoCliente = new JButton("Acesso Cliente"),
+       botaoAcessoCaixa = new JButton("Acesso Caixa");
     //instancia arquivo para carregar os dados
     
     public Menu() {
@@ -40,6 +41,7 @@ public class Menu extends JFrame {
         botaoListarUsuarios.addActionListener(e -> new MenuListarUsuarios());
         botaoSair.addActionListener(e -> new Login());
         botaoAcessoCliente.addActionListener(e -> new AcessoCliente());
+        botaoAcessoCaixa.addActionListener(e -> new AcessoCaixa());
         
         painelMenu.add(botaoCriarUsuario);
         painelMenu.add(botaoEditarUsuario);
@@ -47,6 +49,7 @@ public class Menu extends JFrame {
         painelMenu.add(botaoListarUsuarios);
         painelMenu.add(botaoSair);
         painelMenu.add(botaoAcessoCliente);
+         painelMenu.add(botaoAcessoCaixa);
         
         add(painelMenu);
         setVisible(true);
