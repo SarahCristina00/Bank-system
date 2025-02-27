@@ -68,7 +68,7 @@ public class Login extends JFrame {
                       SwingUtilities.invokeLater(()->new Menu());
                       break;
                 case "caixa":
-                      SwingUtilities.invokeLater(()->new Menu());
+                      SwingUtilities.invokeLater(()->new AcessoCaixa());
                       break;
                 case "cliente":
                       SwingUtilities.invokeLater(()->new AcessoCliente());

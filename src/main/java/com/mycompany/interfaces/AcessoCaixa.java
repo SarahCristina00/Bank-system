@@ -16,8 +16,8 @@ public class AcessoCaixa extends JFrame {
 
     private JButton botaoSaque = new JButton("Realizar Saque"),
             botaoDeposito = new JButton("Realizar Depósito"),
-            botaoTransferencia = new JButton("Processar Transferência"),
-            botaoVoltar = new JButton("Voltar ao Menu");
+            botaoTransferencia = new JButton("Processar Transferência");
+           
 
     public AcessoCaixa() {
         setTitle("Sistema Bancário - Área do Caixa");
@@ -31,12 +31,12 @@ public class AcessoCaixa extends JFrame {
         botaoSaque.addActionListener(e -> new Saque());
         botaoDeposito.addActionListener(e -> new Deposito());
         botaoTransferencia.addActionListener(e -> new TransferenciaCaixa());
-        botaoVoltar.addActionListener(e -> new Menu());
+       
 
         painelMenu.add(botaoSaque);
         painelMenu.add(botaoDeposito);
         painelMenu.add(botaoTransferencia);
-        painelMenu.add(botaoVoltar);
+        
 
         add(painelMenu);
         setVisible(true);
