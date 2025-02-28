@@ -9,15 +9,16 @@ package com.mycompany.systembank;
 import java.util.*;
 
 public class ContaBancaria {
-    private int agencia = 001;
-    private int conta = 1000;
+    private static int agencia = 001;
+    private static int proximaConta = 1000;
+     private int conta;
     private double saldo;
     private List<Transacao> extrato;
 
 
     public ContaBancaria (){
-        conta++;
-        saldo = 0;
+        this.conta = proximaConta++; // Atribui o próximo número de conta e incrementa
+        this.saldo = 0;
         this.extrato = new ArrayList<>();
     }
     
