@@ -12,6 +12,8 @@ import com.mycompany.systembank.*;
 import static com.mycompany.systembank.BankSystem.usuarios;
 import java.awt.*;
 import javax.swing.*;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Menu extends JFrame {
     private JButton botaoCriarUsuario = new JButton("Criar Usuário"),
@@ -144,68 +146,51 @@ class MenuCriarUsuario extends JFrame {
         });
         
         //evento que será acionado ao clicar no botão criar chamando o construtor do usuário
-        criarBtn.addActionListener(e -> {
-            //if verifica qual tipo de usuário será criado
-            if(botaoGerente.isSelected()){
-                 Gerente novoUsuario = new Gerente(
-                        campoNome.getText(),
-                        campoCPF.getText(),
-                        campoDataNascimento.getText(),
-                        campoTelefone.getText(),
-                        campoEmail.getText(),
-                        Integer.parseInt(new String(campoSenha.getPassword()))
-                    );
-               //adiciona novo usuario a lista de usuarios
-               usuarios.add(novoUsuario);
-               Login.persistenciaUsuarios.salvarDados(usuarios);
+       criarBtn.addActionListener(e -> {
+    if (botaoCliente.isSelected()) {
+        Endereco endereco = new Endereco(
+            campoRua.getText(),
+            Integer.parseInt(campoNumero.getText()),
+            campoBairro.getText(),
+            campoCidade.getText(),
+            campoEstado.getText(),
+            campoComplemento.getText(),
+            campoCEP.getText()
+        );
 
-               JOptionPane.showMessageDialog(this, "Usuário Gerente criado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-               setVisible(false);
-            } else if(botaoCaixa.isSelected()){
-                 Caixa novoUsuario = new Caixa(
-                        campoNome.getText(),
-                        campoCPF.getText(),
-                        campoDataNascimento.getText(),
-                        campoTelefone.getText(),
-                        campoEmail.getText(),
-                        Integer.parseInt(new String(campoSenha.getPassword()))
-                    );
-                //adiciona novo usuario a lista de usuarios
-                usuarios.add(novoUsuario); 
-  
-                //atualiza os dados após execução
-                 Login.persistenciaUsuarios.salvarDados(usuarios);
-                  JOptionPane.showMessageDialog(this, "Usuário caixa criado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-                 setVisible(false);
-            } else if(botaoCliente.isSelected()){
-               Endereco endereco = new Endereco(
-                   campoRua.getText(),
-                   Integer.parseInt(campoNumero.getText()),
-                   campoBairro.getText(),
-                   campoCidade.getText(),
-                   campoEstado.getText(),
-                   campoComplemento.getText(),
-                   campoCEP.getText()
-               );
-               
-               
-               Cliente novoUsuario = new Cliente(
-                        campoNome.getText(),
-                        campoCPF.getText(),
-                        campoDataNascimento.getText(),
-                        campoTelefone.getText(),
-                        campoEmail.getText(),
-                       Integer.parseInt(new String(campoSenha.getPassword())),
-                       endereco
-                    );
-                //adiciona novo usuario a lista de usuarios
-                usuarios.add(novoUsuario);    
-                //atualiza os dados após execução
-                Login.persistenciaUsuarios.salvarDados(usuarios);
-                 JOptionPane.showMessageDialog(this, "Usuário cliente criado com sucesso! " + "Agência: "+ novoUsuario.getConta().getAgencia() + "Conta: "+  novoUsuario.getConta().getConta(),  "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-                setVisible(false);
+        Cliente novoUsuario = new Cliente(
+            campoNome.getText(),
+            campoCPF.getText(),
+            campoDataNascimento.getText(),
+            campoTelefone.getText(),
+            campoEmail.getText(),
+            Integer.parseInt(new String(campoSenha.getPassword())),
+            endereco
+        );
+
+        // Adiciona o novo usuário à lista de usuários
+        usuarios.add(novoUsuario);
+
+        // Salva os usuários no arquivo usuarios.json
+        Login.persistenciaUsuarios.salvarDados(usuarios);
+
+        // Salva as contas no arquivo contas.json
+        List<ContaBancaria> contas = new ArrayList<>();
+        for (Usuario usuario : usuarios) {
+            if (usuario instanceof Cliente) {
+                Cliente cliente = (Cliente) usuario;
+                contas.add(cliente.getConta());
             }
-        });
+        }
+        Login.persistenciaContas.salvarDados(contas);
+
+        JOptionPane.showMessageDialog(this, "Usuário cliente criado com sucesso! " +
+            "Agência: " + novoUsuario.getConta().getAgencia() + 
+            " Conta: " + novoUsuario.getConta().getConta(),  
+            "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+        setVisible(false);
+    }
+  });
         
         setVisible(true);
     }
