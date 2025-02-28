@@ -16,7 +16,7 @@ public class ContaBancaria {
 
 
     public ContaBancaria (){
-        conta = conta++;
+        conta++;
         saldo = 0;
         this.extrato = new ArrayList<>();
     }
