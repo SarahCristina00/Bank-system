@@ -6,6 +6,7 @@
 
 package com.mycompany.interfaces;
 
+
 import com.mycompany.persistencia.*;
 import com.mycompany.systembank.*;
 import static com.mycompany.systembank.BankSystem.usuarios;
@@ -65,7 +66,7 @@ public class Login extends JFrame {
                       SwingUtilities.invokeLater(()->new Menu());
                       break;
                   case "gerente":
-                      SwingUtilities.invokeLater(()->new Menu());
+                      SwingUtilities.invokeLater(()->new AcessoGerente());
                       break;
                 case "caixa":
                       SwingUtilities.invokeLater(()->new AcessoCaixa());
