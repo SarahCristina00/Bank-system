@@ -1,55 +1,65 @@
-/**
-@author Lara da Silva Dias (202376010)
-@author Sarah Cristina (202376034)
-@author Wilian Santos (202276040)
- */
-
 package com.mycompany.systembank;
+
+import javax.swing.JOptionPane;
 
 public class Gerente extends Usuario {
 
     // Construtor 
     public Gerente(String nome, String cpf, String dataNascimento, String telefone, String email, int senha) {
         super(nome, cpf, dataNascimento, telefone, email, senha);
-         super.setTipoUsuario("gerente");
+        super.setTipoUsuario("gerente");
     }
    
-    //GERENTE APOS FAZER O LOGIN NO SISTEMA 
-
-    public void apoiarMovimentacao(Cliente cliente, Double valor,  String tipoMovimentacao) {
-       // Condicional para verificar se a movimentação é um saque acima de 1 milhão ou uma transferência
+    // GERENTE APÓS FAZER O LOGIN NO SISTEMA 
+    public void apoiarMovimentacao(Usuario usuario, Double valor, String tipoMovimentacao) {
         if (tipoMovimentacao.equals("saque") && valor > 1000000) {
-            System.out.println("Gerente auxiliando no saque de R$" + valor + " para o cliente: " + cliente.getNome());
-            // O cliente confirma a operação (AQUI PEDE A SENHA DO CLIENTE )
-            System.out.println("Saque autorizado. A operação foi concluída com sucesso.");
+            JOptionPane.showMessageDialog(null, "Gerente auxiliando no saque de R$" + valor + " para o cliente: " + usuario.getNome(), "Apoio de Movimentação", JOptionPane.INFORMATION_MESSAGE);
+            
+            // Solicita a senha do cliente para autorizar
+            int senhaCliente = Integer.parseInt(JOptionPane.showInputDialog("Digite a senha do cliente para confirmar:"));
+            if (senhaCliente == usuario.getSenha()) {
+                JOptionPane.showMessageDialog(null, "Saque autorizado. A operação foi concluída com sucesso.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Senha incorreta! Operação cancelada.", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
         } else if (tipoMovimentacao.equals("transferencia")) {
-            System.out.println("Gerente auxiliando na transferência de R$" + valor + " para o cliente: " + cliente.getNome());
-            // AQUI PEDE A SENHA DO CLIENTE
-            System.out.println("Transferência realizada com sucesso.");
+            JOptionPane.showMessageDialog(null, "Gerente auxiliando na transferência de R$" + valor + " para o cliente: " + usuario.getNome(), "Apoio de Movimentação", JOptionPane.INFORMATION_MESSAGE);
+            
+            // Solicita a senha do cliente para autorizar
+            int senhaCliente = Integer.parseInt(JOptionPane.showInputDialog("Digite a senha do cliente para confirmar:"));
+            if (senhaCliente == usuario.getSenha()) {
+                JOptionPane.showMessageDialog(null, "Transferência realizada com sucesso.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Senha incorreta! Operação cancelada.", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
         } else {
-            System.out.println("Apoio de movimentação não permitido para este tipo de operação.");
+            JOptionPane.showMessageDialog(null, "Apoio de movimentação não permitido para este tipo de operação.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    public void cadastrarOpcaoRendaFixa(String descricao, Double taxa, Double rentabilidade,  int prazoMinimo, int prazoMaximo) {
-        System.out.println("Opção de renda fixa cadastrada: " + descricao + 
-                           " | Taxa: " + taxa + "%" + 
-                           " | Rentabilidade esperada: " + rentabilidade + "%" + 
-                           " | Prazo mínimo: " + prazoMinimo + " meses" + 
-                           " | Prazo máximo: " + prazoMaximo + " meses");
+    public void cadastrarOpcaoRendaFixa(String descricao, Double taxa, Double rentabilidade, int prazoMinimo, int prazoMaximo) {
+        JOptionPane.showMessageDialog(null, "Opção de renda fixa cadastrada: " + descricao +
+                " | Taxa: " + taxa + "%" +
+                " | Rentabilidade esperada: " + rentabilidade + "%" +
+                " | Prazo mínimo: " + prazoMinimo + " meses" +
+                " | Prazo máximo: " + prazoMaximo + " meses", "Cadastro de Renda Fixa", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void cadastrarOpcaoRendaVariavel(String descricao, Double risco, Double rentabilidade) {
-        System.out.println("Opção de renda variável cadastrada: " + descricao + 
-                           " | Risco: " + risco + 
-                           " | Rentabilidade esperada: " + rentabilidade + "%");
+        JOptionPane.showMessageDialog(null, "Opção de renda variável cadastrada: " + descricao +
+                " | Risco: " + risco +
+                " | Rentabilidade esperada: " + rentabilidade + "%", "Cadastro de Renda Variável", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public void avaliarCredito(Cliente cliente, Double valor) {
-        System.out.println("Gerente avaliando crédito de R$" + valor + 
-                           " para o cliente: " + cliente.getNome());
-         System.out.println("Crédito aprovado! O cliente pode utilizar este valor.");
-         //apos a aprovação cliente deve confirmar a operação informando sua senha pessoal.
+    public void avaliarCredito(Usuario usuario, Double valor) {
+        JOptionPane.showMessageDialog(null, "Gerente avaliando crédito de R$" + valor + " para o cliente: " + usuario.getNome(), "Avaliação de Crédito", JOptionPane.INFORMATION_MESSAGE);
+        
+        // Solicita a senha do cliente para confirmar a aprovação do crédito
+        int senhaCliente = Integer.parseInt(JOptionPane.showInputDialog("Digite a senha do cliente para confirmar:"));
+        if (senhaCliente == usuario.getSenha()) {
+            JOptionPane.showMessageDialog(null, "Crédito aprovado! O cliente pode utilizar este valor.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Senha incorreta! Operação cancelada.", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }
-
 }
