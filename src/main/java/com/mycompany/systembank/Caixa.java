@@ -70,11 +70,14 @@ public class Caixa extends Usuario {
         if (senhaInserida != null && Integer.parseInt(senhaInserida) == cliente.getSenha()) {
             // Senha correta, proceder com a transferência
             cliente.getConta().setSaldo(cliente.getConta().getSaldo() - valor); // Retira o valor de transferência da conta do cliente
-            // Destino.receberTransferencia(valor); // Para onde transferir?
+             
+// Aqui, você acessa o nome do cliente de destino
+            Cliente clienteDestino = BankSystem.getCliente(destino.getConta());
+         // Destino.receberTransferencia(valor); // Para onde transferir?
             JOptionPane.showMessageDialog(null, 
                 "Transferência de R$" + valor + 
-                " realizada com sucesso do cliente " + cliente.getNome() + 
-                " para a conta de destino.", 
+                " realizada com sucesso de " + cliente.getNome() + 
+                " para " + clienteDestino.getNome(),
                 "Operação Realizada", 
                 JOptionPane.INFORMATION_MESSAGE);
         } else {
