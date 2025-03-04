@@ -3,7 +3,6 @@ package com.mycompany.interfaces;
 import com.mycompany.systembank.*;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import static com.mycompany.systembank.BankSystem.usuarios;
 import java.util.List;
 
@@ -15,7 +14,7 @@ public class AcessoGerente extends JFrame {
     private JButton botaoAvaliarCredito = new JButton("Avaliar Crédito");
     private JButton botaoApoiarMovimentacao = new JButton("Apoiar Movimentação");
     
-      private List<Gerente> listaGerentes;
+   // private List<Gerente> listaGerentes;
 
     public AcessoGerente() {
         setTitle("Área do Gerente");
@@ -23,130 +22,188 @@ public class AcessoGerente extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         
-        // Carregar os dados dos gerentes ao iniciar
-        PersistenciaGerente persistenciaGerente = new PersistenciaGerente();
-        listaGerentes = persistenciaGerente.carregarDados();
-
+        //PersistenciaGerente persistenciaGerente = new PersistenciaGerente();
+        //listaGerentes = persistenciaGerente.carregarDados();
+        
         JPanel painelMenu = new JPanel(new GridLayout(4, 1, 20, 20));
         painelMenu.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 
-        // Adicionando ações aos botões
-        botaoCadastrarRendaVariavel.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                processarOperacao("Cadastro Renda Variável");
-            }
-        });
-
-        botaoCadastrarRendaFixa.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                processarOperacao("Cadastro Renda Fixa");
-            }
-        });
-
-        botaoAvaliarCredito.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                processarOperacao("Avaliar Crédito");
-            }
-        });
-
-        botaoApoiarMovimentacao.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                processarOperacao("Apoiar Movimentação");
-            }
-        });
-
-        // Adicionando botões ao painel
+        botaoCadastrarRendaVariavel.addActionListener(e -> new CadastroRendaVariavel());
+        botaoCadastrarRendaFixa.addActionListener(e -> new CadastroRendaFixa());
+        botaoAvaliarCredito.addActionListener(e -> new AvaliarCredito());
+        botaoApoiarMovimentacao.addActionListener(e -> new ApoiarMovimentacao());
+        
         painelMenu.add(botaoCadastrarRendaVariavel);
         painelMenu.add(botaoCadastrarRendaFixa);
         painelMenu.add(botaoAvaliarCredito);
         painelMenu.add(botaoApoiarMovimentacao);
-
+        
         add(painelMenu);
         setVisible(true);
     }
+}
 
-    // Método genérico para processar todas as operações
-    private void processarOperacao(String tipoOperacao) {
-        String dados = "";
-        switch (tipoOperacao) {
-            case "Cadastro Renda Variável":
-                String descricaoRendaVariavel = JOptionPane.showInputDialog("Descrição da renda variável:");
-                double riscoRendaVariavel = Double.parseDouble(JOptionPane.showInputDialog("Nível de risco (1-10):"));
-                double rentabilidadeRendaVariavel = Double.parseDouble(JOptionPane.showInputDialog("Rentabilidade esperada (%):"));
-                dados = "Descrição: " + descricaoRendaVariavel + " | Risco: " + riscoRendaVariavel + " | Rentabilidade: " + rentabilidadeRendaVariavel + "%";
-                JOptionPane.showMessageDialog(this, tipoOperacao + " registrada com sucesso.");
-                
-                break;
+class CadastroRendaVariavel extends JFrame {
+    public CadastroRendaVariavel() {
+        setTitle("Cadastro Renda Variável");
+        setSize(400, 300);
+        setLocationRelativeTo(null);
 
-            case "Cadastro Renda Fixa":
-                String descricaoRendaFixa = JOptionPane.showInputDialog("Descrição da renda fixa:");
-                double taxaRendaFixa = Double.parseDouble(JOptionPane.showInputDialog("Taxa (%):"));
-                double rentabilidadeRendaFixa = Double.parseDouble(JOptionPane.showInputDialog("Rentabilidade esperada (%):"));
-                int prazoMinimoRendaFixa = Integer.parseInt(JOptionPane.showInputDialog("Prazo mínimo (meses):"));
-                int prazoMaximoRendaFixa = Integer.parseInt(JOptionPane.showInputDialog("Prazo máximo (meses):"));
-                dados = "Descrição: " + descricaoRendaFixa + " | Taxa: " + taxaRendaFixa + "% | Rentabilidade: " + rentabilidadeRendaFixa + "% | Prazo: " + prazoMinimoRendaFixa + " a " + prazoMaximoRendaFixa + " meses";
-               JOptionPane.showMessageDialog(this, tipoOperacao + " registrada com sucesso.");
-                break;
+        JPanel painel = new JPanel(new GridLayout(3, 2, 20, 20));
+        JTextField campoDescricao = new JTextField();
+        JTextField campoRisco = new JTextField();
+        JTextField campoRentabilidade = new JTextField();
+        JButton botaoConfirmar = new JButton("Confirmar Cadastro");
 
-            case "Avaliar Crédito":
-            String cpfClienteCredito = JOptionPane.showInputDialog("Informe o CPF do cliente:");
+        painel.add(new JLabel("Descrição: "));
+        painel.add(campoDescricao);
+        painel.add(new JLabel("Risco: "));
+        painel.add(campoRisco);
+        painel.add(new JLabel("Rentabilidade: "));
+        painel.add(campoRentabilidade);
 
-            // Encontre o usuário pelo CPF
-            Usuario usuarioCredito = encontrarUsuarioPorCPF(cpfClienteCredito);
+        botaoConfirmar.addActionListener(e -> {
+            String descricao = campoDescricao.getText();
+            double risco = Double.parseDouble(campoRisco.getText());
+            double rentabilidade = Double.parseDouble(campoRentabilidade.getText());
+            Gerente gerente = new Gerente("Gerente", "", "", "", "", 0);
+            gerente.cadastrarOpcaoRendaVariavel(descricao, risco, rentabilidade);
+        });
 
-            if (usuarioCredito != null) {
-                double valorCredito = Double.parseDouble(JOptionPane.showInputDialog("Digite o valor do crédito solicitado:"));
-                dados = "CPF: " + cpfClienteCredito + " | Crédito: " + valorCredito;
+        add(painel, BorderLayout.CENTER);
+        add(botaoConfirmar, BorderLayout.SOUTH);
+        setVisible(true);
+    }
+}
 
-                // Exibindo a mensagem de crédito aprovado com o nome do cliente
-                JOptionPane.showMessageDialog(this, "Crédito de R$" + valorCredito + " aprovado com sucesso para o cliente: " + usuarioCredito.getNome() + " (CPF: " + cpfClienteCredito + ").", "Avaliação de Crédito", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(this, "Cliente não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
+class CadastroRendaFixa extends JFrame {
+    public CadastroRendaFixa() {
+        setTitle("Cadastro Renda Fixa");
+        setSize(400, 300);
+        setLocationRelativeTo(null);
+
+        JPanel painel = new JPanel(new GridLayout(5, 2, 20, 20));
+        JTextField campoDescricao = new JTextField();
+        JTextField campoTaxa = new JTextField();
+        JTextField campoRentabilidade = new JTextField();
+        JTextField campoPrazoMinimo = new JTextField();
+        JTextField campoPrazoMaximo = new JTextField();
+        JButton botaoConfirmar = new JButton("Confirmar Cadastro");
+
+        painel.add(new JLabel("Descrição: "));
+        painel.add(campoDescricao);
+        painel.add(new JLabel("Taxa: "));
+        painel.add(campoTaxa);
+        painel.add(new JLabel("Rentabilidade: "));
+        painel.add(campoRentabilidade);
+        painel.add(new JLabel("Prazo Mínimo: "));
+        painel.add(campoPrazoMinimo);
+        painel.add(new JLabel("Prazo Máximo: "));
+        painel.add(campoPrazoMaximo);
+
+        botaoConfirmar.addActionListener(e -> {
+            String descricao = campoDescricao.getText();
+            double taxa = Double.parseDouble(campoTaxa.getText());
+            double rentabilidade = Double.parseDouble(campoRentabilidade.getText());
+            int prazoMinimo = Integer.parseInt(campoPrazoMinimo.getText());
+            int prazoMaximo = Integer.parseInt(campoPrazoMaximo.getText());
+            Gerente gerente = new Gerente("Gerente", "", "", "", "", 0);
+            gerente.cadastrarOpcaoRendaFixa(descricao, taxa, rentabilidade, prazoMinimo, prazoMaximo);
+        });
+
+        add(painel, BorderLayout.CENTER);
+        add(botaoConfirmar, BorderLayout.SOUTH);
+        setVisible(true);
+    }
+}
+
+class AvaliarCredito extends JFrame {
+    
+    public static Usuario encontrarUsuarioPorCPF(String cpf) { 
+        for (Usuario usuario : usuarios) { 
+            if (usuario.getCpf().equals(cpf)) {
+                return usuario;
             }
-            break;
-
-
-           case "Apoiar Movimentação":
-            String cpfClienteApoio = JOptionPane.showInputDialog("Informe o CPF do cliente:");
-
-            // Encontre o usuário pelo CPF
-            Usuario usuarioApoio = encontrarUsuarioPorCPF(cpfClienteApoio);
-
-            if (usuarioApoio != null) {
-                String tipoApoio = JOptionPane.showInputDialog("Digite o tipo de movimentação (saque/transferencia):");
-                double valorApoio = Double.parseDouble(JOptionPane.showInputDialog("Digite o valor da movimentação:"));
-                dados = "CPF: " + cpfClienteApoio + " | Tipo: " + tipoApoio + " | Valor: " + valorApoio;
-
-                // Exibindo a mensagem de sucesso com o nome do cliente
-                JOptionPane.showMessageDialog(this, tipoApoio.substring(0, 1).toUpperCase() + tipoApoio.substring(1) + " de R$" + valorApoio + " realizada com sucesso para o cliente: " + usuarioApoio.getNome() + " (CPF: " + cpfClienteApoio + ").", tipoApoio.substring(0, 1).toUpperCase() + tipoApoio.substring(1), JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(this, "Cliente não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
-            }
-            break;
-
         }
+        return null;
+     }
+    
+    public AvaliarCredito() {
+        setTitle("Avaliar Crédito");
+        setSize(400, 200);
+        setLocationRelativeTo(null);
 
-        // Salva os dados da operação na persistência utilizando PersistenciaGerente
-        PersistenciaGerente persistenciaGerente = new PersistenciaGerente();
-        persistenciaGerente.salvarDados(listaGerentes);  // Chama a classe PersistenciaGerente
-        
+        JPanel painel = new JPanel(new GridLayout(2, 2, 20, 20));
+        JTextField campoCPF = new JTextField();
+        JTextField campoValor = new JTextField();
+        JButton botaoConfirmar = new JButton("Confirmar Avaliação");
+
+        painel.add(new JLabel("CPF do Cliente: "));
+        painel.add(campoCPF);
+        painel.add(new JLabel("Valor do Crédito: "));
+        painel.add(campoValor);
+
+        botaoConfirmar.addActionListener(e -> {
+            String cpf = campoCPF.getText();
+            double valor = Double.parseDouble(campoValor.getText());
+            Gerente gerente = new Gerente("Gerente", "", "", "", "", 0);
+            Usuario cliente = encontrarUsuarioPorCPF(cpf);
+
+            gerente.avaliarCredito(cliente, valor);
+        });
+
+        add(painel, BorderLayout.CENTER);
+        add(botaoConfirmar, BorderLayout.SOUTH);
+        setVisible(true);
+    }
+}
+
+
+class ApoiarMovimentacao extends JFrame {
+    
+    public static Usuario encontrarUsuarioPorCPF(String cpf) { 
+        for (Usuario usuario : usuarios) { 
+            if (usuario.getCpf().equals(cpf)) {
+                return usuario;
+            }
+        }
+        return null;
+     }
+    
+    public ApoiarMovimentacao() {
+        setTitle("Apoiar Movimentação");
+        setSize(400, 200);
+        setLocationRelativeTo(null);
+
+        JPanel painel = new JPanel(new GridLayout(3, 2, 20, 20));
+        JTextField campoCPF = new JTextField();
+        JTextField campoValor = new JTextField();
+        JTextField campoTipo = new JTextField();
+        JButton botaoConfirmar = new JButton("Confirmar Apoio");
+
+        painel.add(new JLabel("CPF do Cliente: "));
+        painel.add(campoCPF);
+        painel.add(new JLabel("Valor: "));
+        painel.add(campoValor);
+        painel.add(new JLabel("Tipo (saque/transferência): "));
+        painel.add(campoTipo);
+
+        botaoConfirmar.addActionListener(e -> {
+            String cpf = campoCPF.getText();
+            double valor = Double.parseDouble(campoValor.getText());
+            String tipo = campoTipo.getText();
+            Gerente gerente = new Gerente("Gerente", "", "", "", "", 0);
+            Usuario cliente = encontrarUsuarioPorCPF(cpf);
+
+            gerente.apoiarMovimentacao(cliente, valor, tipo);
+        });
+
+        add(painel, BorderLayout.CENTER);
+        add(botaoConfirmar, BorderLayout.SOUTH);
+        setVisible(true);
     }
     
-    private Usuario encontrarUsuarioPorCPF(String cpf) {
-    for (Usuario usuario : usuarios) { // onde usuarios é uma lista ou array com todos os usuários
-        if (usuario.getCpf().equals(cpf)) {
-            return usuario; // Retorna o usuário com o CPF correspondente
-        }
-    }
-    return null; // Se não encontrar, retorna null
+    
   }
-
-
-    public static void main(String[] args) {
-        new AcessoGerente();
-    }
-  }
+  
+    

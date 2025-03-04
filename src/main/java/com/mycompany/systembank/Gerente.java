@@ -33,7 +33,7 @@ public class Gerente extends Usuario {
                 JOptionPane.showMessageDialog(null, "Senha incorreta! Operação cancelada.", "Erro", JOptionPane.ERROR_MESSAGE);
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Apoio de movimentação não permitido para este tipo de operação.", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Movimentação não permitida.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 
