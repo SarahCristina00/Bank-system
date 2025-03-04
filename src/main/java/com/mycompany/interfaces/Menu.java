@@ -116,6 +116,7 @@ class MenuCriarUsuario extends JFrame {
         painelCliente.add(criarCampo("Número: ",campoNumero));
         painelCliente.add(criarCampo("Bairro: ",campoBairro));
         painelCliente.add(criarCampo("Cidade: ",campoCidade));
+        painelCliente.add(criarCampo("Estado: ",campoEstado));
         painelCliente.add(criarCampo("Complemento: ",campoComplemento));
         painelCliente.add(criarCampo("CEP: ",campoCEP));
         painelCliente.setVisible(false);
