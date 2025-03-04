@@ -1,4 +1,5 @@
-    /**
+
+/**
     @author Lara da Silva Dias (202376010)
     @author Sarah Cristina (202376034)
     @author Wilian Santos (202276040)
@@ -20,8 +21,11 @@
             botaoConsultaExtrato = new JButton("Consultar Extrato"),
             botaoConsultaInvestimento = new JButton("Consultar Investimentos"),
             botaoConsultaCredito = new JButton("Consultar Empréstimo/Financiamento");
+            
+        private Cliente cliente; 
 
-        public AcessoCliente() {
+        public AcessoCliente(Cliente cliente) {
+            this.cliente = cliente;
             setTitle("Sistema Bancário - Área do Cliente");
             setSize(500, 500);
             setLocationRelativeTo(null);
@@ -33,7 +37,7 @@
 
             botaoTransferencia.addActionListener(e -> new Transferencia());
             botaoConsultaSaldo.addActionListener(e-> new Menu());
-            botaoConsultaExtrato.addActionListener(e-> new Menu());
+           botaoConsultaExtrato.addActionListener(e -> new ExtratoCliente(cliente).exibirExtrato());
             botaoConsultaInvestimento.addActionListener(e-> new Menu());
             botaoConsultaCredito.addActionListener(e-> new Menu());
 
@@ -49,6 +53,7 @@
         }
 
     }
+     
 
     class Transferencia extends JFrame {
         public Transferencia() {
@@ -56,10 +61,10 @@
             setSize(500, 500);
             setLocationRelativeTo(null);
 
-            // cria painel
+            
             JPanel painelInformacoes = new JPanel(new GridLayout(3, 2, 20, 20));
 
-            // campos
+            
             JTextField campoOrigem = new JTextField();
             JTextField campoDestino = new JTextField();
             JTextField campoValor = new JTextField();

@@ -11,15 +11,19 @@ import java.util.*;
 public class ContaBancaria {
     private static int agencia = 001;
     private static int proximaConta = 1000;
-     private int conta;
+    private int conta;
     private double saldo;
     private List<Transacao> extrato;
 
-
-    public ContaBancaria (){
+    public ContaBancaria() {
         this.conta = proximaConta++; // Atribui o próximo número de conta e incrementa
         this.saldo = 0;
         this.extrato = new ArrayList<>();
+    }
+
+    // Método para retornar a lista de transações
+    public List<Transacao> getExtrato() {
+        return extrato;
     }
     
     public int  getAgencia() { return agencia; } 
