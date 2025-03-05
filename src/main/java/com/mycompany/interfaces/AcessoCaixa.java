@@ -1,17 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+/**
+@author Lara da Silva Dias (202376010)
+@author Sarah Cristina (202376034)
+@author Wilian Santos (202276040)
  */
 package com.mycompany.interfaces;
+
+import java.text.NumberFormat;
+import java.util.Locale;
 import static com.mycompany.interfaces.Login.criarCampo;
 import com.mycompany.systembank.*;
 import java.awt.*;
 import javax.swing.*;
 
-/**
- *
- * @author Wilian
- */
 public class AcessoCaixa extends JFrame {
 
     private JButton botaoSaque = new JButton("Realizar Saque"),
@@ -51,7 +51,9 @@ class Saque extends JFrame {
 
         JPanel painel = new JPanel(new GridLayout(2, 2, 20, 20));
         JTextField campoConta = new JTextField();
-        JTextField campoValor = new JTextField();
+        NumberFormat formatoMoeda = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+        JFormattedTextField campoValor = new JFormattedTextField(formatoMoeda);
+        campoValor.setValue(0);
         JButton botaoConfirmar = new JButton("Confirmar Saque");
 
         painel.add(criarCampo("Conta do Cliente: ", campoConta));
@@ -59,7 +61,8 @@ class Saque extends JFrame {
         
         botaoConfirmar.addActionListener(e -> {
             int conta = Integer.parseInt(campoConta.getText());
-            double valor = Double.parseDouble(campoValor.getText());
+            Number valorNumero = (Number) campoValor.getValue();
+            double valor =valorNumero.doubleValue();
             Cliente cliente = BankSystem.getCliente(conta);
             Caixa caixa = new Caixa("Caixa", "", "", "", "", 0);
             caixa.processarSaque(cliente, valor);
@@ -79,18 +82,27 @@ class Deposito extends JFrame {
 
         JPanel painel = new JPanel(new GridLayout(2, 2, 20, 20));
         JTextField campoConta = new JTextField();
-        JTextField campoValor = new JTextField();
+        NumberFormat formatoMoeda = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+        JFormattedTextField campoValor = new JFormattedTextField(formatoMoeda);
+        campoValor.setValue(0);
         JButton botaoConfirmar = new JButton("Confirmar Depósito");
 
         painel.add(criarCampo("Conta do Cliente: ", campoConta));
         painel.add(criarCampo("Valor: ", campoValor));
         
         botaoConfirmar.addActionListener(e -> {
-            int conta = Integer.parseInt(campoConta.getText());
-            double valor = Double.parseDouble(campoValor.getText());
-            Cliente cliente = BankSystem.getCliente(conta);
-            Caixa caixa = new Caixa("Caixa", "", "", "", "", 0);
-            caixa.processarDeposito(cliente, valor);
+            try{
+                int conta = Integer.parseInt(campoConta.getText());
+                //converte valor informado na tela
+                Number valorNumero = (Number) campoValor.getValue();
+                double valor =valorNumero.doubleValue();
+                Cliente cliente = BankSystem.getCliente(conta);
+                Caixa caixa = new Caixa("Caixa", "", "", "", "", 0);
+                caixa.processarDeposito(cliente, valor);
+            }catch(Exception ex){
+                ex.printStackTrace();
+            }
+            
         });
 
         add(painel, BorderLayout.CENTER);
@@ -108,7 +120,9 @@ class TransferenciaCaixa extends JFrame {
         JPanel painel = new JPanel(new GridLayout(3, 2, 20, 20));
         JTextField campoOrigem = new JTextField();
         JTextField campoDestino = new JTextField();
-        JTextField campoValor = new JTextField();
+        NumberFormat formatoMoeda = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+        JFormattedTextField campoValor = new JFormattedTextField(formatoMoeda);
+        campoValor.setValue(0);
         JButton botaoConfirmar = new JButton("Confirmar Transferência");
 
         painel.add(criarCampo("Conta de Origem: ", campoOrigem));
@@ -118,7 +132,8 @@ class TransferenciaCaixa extends JFrame {
         botaoConfirmar.addActionListener(e -> {
             int contaOrigem = Integer.parseInt(campoOrigem.getText());
             int contaDestino = Integer.parseInt(campoDestino.getText());
-            double valor = Double.parseDouble(campoValor.getText());
+            Number valorNumero = (Number) campoValor.getValue();
+            double valor =valorNumero.doubleValue();
             Cliente clienteOrigem = BankSystem.getCliente(contaOrigem);
             Cliente clienteDestino = BankSystem.getCliente(contaDestino);
             Caixa caixa = new Caixa("Caixa", "", "", "", "", 0);
