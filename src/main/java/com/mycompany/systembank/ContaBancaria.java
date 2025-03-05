@@ -34,6 +34,7 @@ public class ContaBancaria {
     public void registraTransacao(String tipo, double valor, ContaBancaria origem, ContaBancaria destino){
         Transacao transacao = new Transacao(tipo, valor, origem, destino);
         extrato.add(transacao);
+        this.saldo = transacao.getSaldoFinal();
     }
     
     public boolean transfereSaldo(double valor, ContaBancaria destino){

@@ -70,6 +70,9 @@ class Saque extends JFrame {
             Cliente cliente = BankSystem.getCliente(conta);
             Caixa caixa = new Caixa("Caixa", "", "", "", "", 0);
             caixa.processarSaque(cliente, valor);
+            // salva os dados após a transação
+                    Login.persistenciaContas.salvarDados(BankSystem.contasBancarias);
+               
         });
 
         add(painel, BorderLayout.CENTER);
@@ -103,6 +106,9 @@ class Deposito extends JFrame {
                 Cliente cliente = BankSystem.getCliente(conta);
                 Caixa caixa = new Caixa("Caixa", "", "", "", "", 0);
                 caixa.processarDeposito(cliente, valor);
+                // salva os dados após a transação
+                    Login.persistenciaContas.salvarDados(BankSystem.contasBancarias);
+               
             }catch(Exception ex){
                 ex.printStackTrace();
             }
@@ -140,8 +146,19 @@ class TransferenciaCaixa extends JFrame {
             double valor =valorNumero.doubleValue();
             Cliente clienteOrigem = BankSystem.getCliente(contaOrigem);
             Cliente clienteDestino = BankSystem.getCliente(contaDestino);
-            Caixa caixa = new Caixa("Caixa", "", "", "", "", 0);
-            caixa.processarTransferencia(clienteOrigem, clienteDestino.getConta(), valor);
+            // se as contas de origem e destino existem
+            if (clienteOrigem != null && clienteDestino != null) {
+                // realiza a transferência e registra a transação
+                if (clienteOrigem.getConta().transfereSaldo(valor, clienteDestino.getConta())) {
+                    JOptionPane.showMessageDialog(this, "Transferência realizada com sucesso!");
+                    // salva os dados após a transação
+                    Login.persistenciaContas.salvarDados(BankSystem.contasBancarias);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Saldo insuficiente para a transferência.");
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Uma das contas de destino ou origem não existe.");
+            }
         });
 
         add(painel, BorderLayout.CENTER);
