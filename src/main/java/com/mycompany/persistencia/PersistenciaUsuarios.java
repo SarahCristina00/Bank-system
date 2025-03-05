@@ -37,24 +37,24 @@ public class PersistenciaUsuarios implements Persistencia<Usuario>{
 
         String json = PersistenciaArquivo.leArquivo(PATH);
 
-    List<Usuario> usuarios = new ArrayList<>();
+        List<Usuario> usuarios = new ArrayList<>();
             if (json != null && !json.trim().equals("")) {
                 Type tipoLista = new TypeToken<List<Usuario>>() {}.getType();
                 usuarios = gson.fromJson(json, tipoLista);  
 
                 // verificação dos tipos de usu
                 for (int i = 0; i < usuarios.size(); i++) {
-                    Usuario usuario = usuarios.get(i);
+                    Usuario usuario = usuarios.get(i);               
                     if ("cliente".equalsIgnoreCase(usuario.getTipoUsuario())) {
-                        // converte cliente
-                        usuarios.set(i, gson.fromJson(gson.toJson(usuario), Cliente.class));
-                    } else if ("gerente".equalsIgnoreCase(usuario.getTipoUsuario())) {
-                        // converte cliente
-                        usuarios.set(i, gson.fromJson(gson.toJson(usuario), Gerente.class));
-                    } else if ("caixa".equalsIgnoreCase(usuario.getTipoUsuario())) {
-                        // converte cliente
-                        usuarios.set(i, gson.fromJson(gson.toJson(usuario), Caixa.class));
-                    }
+                    // para cliente
+                    usuarios.set(i, gson.fromJson(gson.toJson(usuario), Cliente.class));
+                } else if ("gerente".equalsIgnoreCase(usuario.getTipoUsuario())) {
+                    //  para gerente
+                    usuarios.set(i, gson.fromJson(gson.toJson(usuario), Gerente.class));
+                } else if ("caixa".equalsIgnoreCase(usuario.getTipoUsuario())) {
+                    //  para caixa
+                    usuarios.set(i, gson.fromJson(gson.toJson(usuario), Caixa.class));
+                }
                 }
             }
 
