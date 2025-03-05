@@ -41,7 +41,7 @@ public class PersistenciaContas implements Persistencia<ContaBancaria>{
         List<ContaBancaria> contas = new ArrayList<>();
         if(json!=null && !json.trim().equals("")) {
 
-            Type tipoLista = new TypeToken<List<Usuario>>() {
+            Type tipoLista = new TypeToken<List<ContaBancaria>>() {
             }.getType();
         contas = gson.fromJson(json, tipoLista);
 
