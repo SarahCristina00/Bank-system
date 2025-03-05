@@ -9,10 +9,12 @@ import java.util.List;
 import com.mycompany.persistencia.PersistenciaGerente;
 
 public class AcessoGerente extends JFrame {
-    private JButton botaoCadastrarRendaVariavel = new JButton("Cadastro Renda Variável");
-    private JButton botaoCadastrarRendaFixa = new JButton("Cadastro Renda Fixa");
-    private JButton botaoAvaliarCredito = new JButton("Avaliar Crédito");
-    private JButton botaoApoiarMovimentacao = new JButton("Apoiar Movimentação");
+    private JButton botaoCadastrarRendaVariavel = new JButton("Cadastro Renda Variável"),
+            botaoCadastrarRendaFixa = new JButton("Cadastro Renda Fixa"),
+            botaoAvaliarCredito = new JButton("Avaliar Crédito"), 
+            botaoApoiarMovimentacao = new JButton("Apoiar Movimentação"),
+            botaoSair = new JButton("Sair");
+            
     
    // private List<Gerente> listaGerentes;
 
@@ -32,11 +34,13 @@ public class AcessoGerente extends JFrame {
         botaoCadastrarRendaFixa.addActionListener(e -> new CadastroRendaFixa());
         botaoAvaliarCredito.addActionListener(e -> new AvaliarCredito());
         botaoApoiarMovimentacao.addActionListener(e -> new ApoiarMovimentacao());
+        botaoSair.addActionListener(e -> new Login());
         
         painelMenu.add(botaoCadastrarRendaVariavel);
         painelMenu.add(botaoCadastrarRendaFixa);
         painelMenu.add(botaoAvaliarCredito);
         painelMenu.add(botaoApoiarMovimentacao);
+        painelMenu.add(botaoSair);
         
         add(painelMenu);
         setVisible(true);

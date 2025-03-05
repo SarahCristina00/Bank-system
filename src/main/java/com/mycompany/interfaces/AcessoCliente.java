@@ -14,13 +14,12 @@
 
     public class AcessoCliente extends JFrame {
         
-        
-
             private JButton botaoTransferencia = new JButton("Realizar Transferência"),
             botaoConsultaSaldo = new JButton("Consultar Saldo"),
             botaoConsultaExtrato = new JButton("Consultar Extrato"),
             botaoConsultaInvestimento = new JButton("Consultar Investimentos"),
-            botaoConsultaCredito = new JButton("Consultar Empréstimo/Financiamento");
+            botaoConsultaCredito = new JButton("Consultar Empréstimo/Financiamento"),
+            botaoSair = new JButton("Sair");
             
 
         public AcessoCliente(Cliente cliente) {
@@ -31,7 +30,7 @@
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             
             
-            JPanel painelMenu = new JPanel(new GridLayout(5,1,20,20));
+            JPanel painelMenu = new JPanel(new GridLayout(6,1,20,20));
             painelMenu.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 
 
@@ -40,6 +39,7 @@
             botaoConsultaExtrato.addActionListener(e -> new ExtratoCliente(cliente).exibirExtrato());
             botaoConsultaInvestimento.addActionListener(e-> new Menu());
             botaoConsultaCredito.addActionListener(e-> new Menu());
+            botaoSair.addActionListener(e -> new Login());
 
 
             painelMenu.add(botaoTransferencia);
@@ -47,6 +47,7 @@
             painelMenu.add(botaoConsultaExtrato);
             painelMenu.add(botaoConsultaInvestimento);
             painelMenu.add(botaoConsultaCredito);
+            painelMenu.add(botaoSair);
 
             add(painelMenu);
             setVisible(true);

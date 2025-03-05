@@ -16,7 +16,8 @@ public class AcessoCaixa extends JFrame {
 
     private JButton botaoSaque = new JButton("Realizar Saque"),
             botaoDeposito = new JButton("Realizar Depósito"),
-            botaoTransferencia = new JButton("Processar Transferência");
+            botaoTransferencia = new JButton("Processar Transferência"),
+            botaoSair = new JButton("Sair");
            
 
     public AcessoCaixa() {
@@ -31,11 +32,14 @@ public class AcessoCaixa extends JFrame {
         botaoSaque.addActionListener(e -> new Saque());
         botaoDeposito.addActionListener(e -> new Deposito());
         botaoTransferencia.addActionListener(e -> new TransferenciaCaixa());
+         botaoSair.addActionListener(e -> new Login());
        
 
         painelMenu.add(botaoSaque);
         painelMenu.add(botaoDeposito);
         painelMenu.add(botaoTransferencia);
+        painelMenu.add(botaoSair);
+        
         
 
         add(painelMenu);
