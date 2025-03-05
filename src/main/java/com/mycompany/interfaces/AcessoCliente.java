@@ -8,9 +8,7 @@
     package com.mycompany.interfaces;
 
     import static com.mycompany.interfaces.Login.criarCampo;
-    import com.mycompany.persistencia.PersistenciaUsuarios;
     import com.mycompany.systembank.*;
-    import static com.mycompany.systembank.BankSystem.usuarios;
     import java.awt.*;
     import javax.swing.*;
 
@@ -22,10 +20,9 @@
             botaoConsultaInvestimento = new JButton("Consultar Investimentos"),
             botaoConsultaCredito = new JButton("Consultar Empréstimo/Financiamento");
             
-        private Cliente cliente; 
 
         public AcessoCliente(Cliente cliente) {
-            this.cliente = cliente;
+            
             setTitle("Sistema Bancário - Área do Cliente");
             setSize(500, 500);
             setLocationRelativeTo(null);
@@ -51,10 +48,6 @@
             add(painelMenu);
             setVisible(true);
         }
-
-    AcessoCliente() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
     }
      

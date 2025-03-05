@@ -28,6 +28,20 @@ public class BankSystem {
     }
     return null; 
 }
+ 
+  public static Cliente getClienteCpf(String cpf) {
+     //percorre lista para encontrar cliente
+    for (Usuario usuario : usuarios) {
+        if(!(usuario instanceof Cliente)) {
+        } else {
+            Cliente cliente = (Cliente) usuario;
+            if(cliente.getCpf().equals(cpf)) {
+                return cliente;
+            }
+        }
+    }
+    return null; 
+}
    
     public static void main(String[] args) {
 

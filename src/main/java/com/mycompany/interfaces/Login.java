@@ -9,7 +9,7 @@ package com.mycompany.interfaces;
 
 import com.mycompany.persistencia.*;
 import com.mycompany.systembank.*;
-import static com.mycompany.systembank.BankSystem.usuarios;
+import static com.mycompany.systembank.BankSystem.*;
 import java.awt.*;
 import javax.swing.*;
 
@@ -46,11 +46,12 @@ public class Login extends JFrame {
            //verificacao dos dados informados
            boolean loginValido = false;
            String tipoUsuario = null;
+           Usuario usuarioValido = null;
            for(Usuario usuario:usuarios){
                if(usuario.getCpf().equals(cpf) && usuario.getSenha() ==senha){
                    loginValido = true;
                    tipoUsuario = usuario.getTipoUsuario();
-                   
+                   usuarioValido = usuario;
                    break;
                }
            }
@@ -72,7 +73,8 @@ public class Login extends JFrame {
                       SwingUtilities.invokeLater(()->new AcessoCaixa());
                       break;
                 case "cliente":
-                     SwingUtilities.invokeLater(()->new AcessoCliente());
+                    Cliente cliente = BankSystem.getClienteCpf(usuarioValido.getCpf());
+                     SwingUtilities.invokeLater(()->new AcessoCliente(cliente));
                       break;
                   default:
                       JOptionPane.showMessageDialog(this, "Tipo de usuário inválido.", "Erro", JOptionPane.INFORMATION_MESSAGE);

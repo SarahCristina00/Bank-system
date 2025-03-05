@@ -7,7 +7,6 @@
 package com.mycompany.interfaces;
 
 import static com.mycompany.interfaces.Login.criarCampo;
-import com.mycompany.persistencia.PersistenciaUsuarios;
 import com.mycompany.systembank.*;
 import static com.mycompany.systembank.BankSystem.usuarios;
 import java.awt.*;
@@ -148,50 +147,62 @@ class MenuCriarUsuario extends JFrame {
         
         //evento que será acionado ao clicar no botão criar chamando o construtor do usuário
        criarBtn.addActionListener(e -> {
-    if (botaoCliente.isSelected()) {
-        Endereco endereco = new Endereco(
-            campoRua.getText(),
-            Integer.parseInt(campoNumero.getText()),
-            campoBairro.getText(),
-            campoCidade.getText(),
-            campoEstado.getText(),
-            campoComplemento.getText(),
-            campoCEP.getText()
-        );
+           if (campoNome.getText().isEmpty() || campoCPF.getText().isEmpty() ||
+                campoDataNascimento.getText().isEmpty() || campoTelefone.getText().isEmpty() ||
+                campoEmail.getText().isEmpty() || campoSenha.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Por favor, preencha todos os campos obrigatórios", "Erro", JOptionPane.ERROR_MESSAGE);
+          } else {
+                if (botaoCliente.isSelected()) {
+                    if (campoRua.getText().isEmpty() || campoNumero.getText().isEmpty() ||
+                    campoBairro.getText().isEmpty() || campoCidade.getText().isEmpty() ||
+                    campoEstado.getText().isEmpty() || campoCEP.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Por favor, preencha todos os campos obrigatórios de cliente.", "Erro", JOptionPane.ERROR_MESSAGE);
+                     } else {
+                        Endereco endereco = new Endereco(
+                            campoRua.getText(),
+                            Integer.parseInt(campoNumero.getText()),
+                            campoBairro.getText(),
+                            campoCidade.getText(),
+                            campoEstado.getText(),
+                            campoComplemento.getText(),
+                            campoCEP.getText()
+                        );
 
-        Cliente novoUsuario = new Cliente(
-            campoNome.getText(),
-            campoCPF.getText(),
-            campoDataNascimento.getText(),
-            campoTelefone.getText(),
-            campoEmail.getText(),
-            Integer.parseInt(new String(campoSenha.getPassword())),
-            endereco
-        );
+                        Cliente novoUsuario = new Cliente(
+                            campoNome.getText(),
+                            campoCPF.getText(),
+                            campoDataNascimento.getText(),
+                            campoTelefone.getText(),
+                            campoEmail.getText(),
+                            Integer.parseInt(new String(campoSenha.getPassword())),
+                            endereco
+                        );
 
-        // Adiciona o novo usuário à lista de usuários
-        usuarios.add(novoUsuario);
+                    // Adiciona o novo usuário à lista de usuários
+                    usuarios.add(novoUsuario);
 
-        // Salva os usuários no arquivo usuarios.json
-        Login.persistenciaUsuarios.salvarDados(usuarios);
+                    // Salva os usuários no arquivo usuarios.json
+                    Login.persistenciaUsuarios.salvarDados(usuarios);
 
-        // Salva as contas no arquivo contas.json
-        List<ContaBancaria> contas = new ArrayList<>();
-        for (Usuario usuario : usuarios) {
-            if (usuario instanceof Cliente) {
-                Cliente cliente = (Cliente) usuario;
-                contas.add(cliente.getConta());
-            }
-        }
-        Login.persistenciaContas.salvarDados(contas);
+                    // Salva as contas no arquivo contas.json
+                    List<ContaBancaria> contas = new ArrayList<>();
+                    for (Usuario usuario : usuarios) {
+                        if (usuario instanceof Cliente) {
+                            Cliente cliente = (Cliente) usuario;
+                            contas.add(cliente.getConta());
+                        }
+                    }
+                    Login.persistenciaContas.salvarDados(contas);
 
-        JOptionPane.showMessageDialog(this, "Usuário cliente criado com sucesso! " +
-            "Agência: " + novoUsuario.getConta().getAgencia() + 
-            " Conta: " + novoUsuario.getConta().getConta(),  
-            "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-        setVisible(false);
-    }
-  });
+                    JOptionPane.showMessageDialog(this, "Usuário cliente criado com sucesso! " +
+                        "Agência: " + novoUsuario.getConta().getAgencia() + 
+                        " Conta: " + novoUsuario.getConta().getConta(),  
+                        "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                    setVisible(false);
+                  }
+                }
+           }
+         });
         
         setVisible(true);
     }
@@ -254,13 +265,14 @@ class MenuEditarUsuario extends JFrame {
         add(botaoEditar, BorderLayout.SOUTH);
 
         //caixa de seleção de usuários para editar
-        JComboBox<Usuario> comboBoxUsuarios = new JComboBox<>(usuarios.toArray(new Usuario[0]));
+        JComboBox <Object> comboBoxUsuarios = new JComboBox<>(usuarios.toArray(new Object[0]));
         add(comboBoxUsuarios, BorderLayout.NORTH);
 
         // retorna os campos de acordo com usuario selecionado
         comboBoxUsuarios.addActionListener(e -> {
-            Usuario usuarioSelecionado = (Usuario) comboBoxUsuarios.getSelectedItem();
-            if (usuarioSelecionado != null) {
+            
+            if (comboBoxUsuarios.getSelectedItem() != null) {
+                Usuario usuarioSelecionado = (Usuario) comboBoxUsuarios.getSelectedItem();
                 painelCliente.setVisible(false);
                 campoNome.setText(usuarioSelecionado.getNome());
                 campoCPF.setText(usuarioSelecionado.getCpf());
@@ -268,11 +280,11 @@ class MenuEditarUsuario extends JFrame {
                 campoTelefone.setText(usuarioSelecionado.getTelefone());
                 campoEmail.setText(usuarioSelecionado.getEmail());
                 campoSenha.setText(String.valueOf(usuarioSelecionado.getSenha()));
-
+                
                 //caso seja um Cliente
                 if(usuarioSelecionado.getTipoUsuario().equals("cliente")) {
                     painelCliente.setVisible(true);
-                    Cliente cliente = (Cliente) usuarioSelecionado;
+                    Cliente cliente = (Cliente) comboBoxUsuarios.getSelectedItem();
                     Endereco endereco = cliente.getEndereco();
                     campoRua.setText(endereco.getRua());
                     campoNumero.setText(String.valueOf(cliente.getEndereco().getNumero()));
@@ -281,8 +293,7 @@ class MenuEditarUsuario extends JFrame {
                     campoEstado.setText(cliente.getEndereco().getEstado());
                     campoComplemento.setText(cliente.getEndereco().getComplemento());
                     campoCEP.setText(cliente.getEndereco().getCep());
-                    ContaBancaria conta = cliente.getConta();
-                    painelCliente.add(new JLabel("Conta: " + conta));
+                    painelCliente.add(new JLabel("Conta: " + cliente.getConta().getConta()));
                 }
             }
         });
@@ -291,8 +302,9 @@ class MenuEditarUsuario extends JFrame {
 
         // Evento ao clicar no botão de editar
         botaoEditar.addActionListener(e -> {
-            Usuario usuarioSelecionado = (Usuario) comboBoxUsuarios.getSelectedItem();
-            if(usuarioSelecionado != null) {
+            
+            if(comboBoxUsuarios.getSelectedItem() != null) {
+                Usuario usuarioSelecionado = (Usuario) comboBoxUsuarios.getSelectedItem();
                 // Edita os dados do usuário selecionado
                 usuarioSelecionado.setNome(campoNome.getText());
                 usuarioSelecionado.setCpf(campoCPF.getText());
@@ -302,14 +314,20 @@ class MenuEditarUsuario extends JFrame {
                 usuarioSelecionado.setSenha(Integer.parseInt(new String(campoSenha.getPassword())));
 
                 if(usuarioSelecionado.getTipoUsuario().equals("cliente")) {
-                    Cliente cliente =  (Cliente) comboBoxUsuarios.getSelectedItem();
-                    cliente.getEndereco().setRua(campoRua.getText());
-                    cliente.getEndereco().setNumero(Integer.parseInt(campoNumero.getText()));
-                    cliente.getEndereco().setBairro(campoBairro.getText());
-                    cliente.getEndereco().setCidade(campoCidade.getText());
-                    cliente.getEndereco().setEstado(campoEstado.getText());
-                    cliente.getEndereco().setComplemento(campoComplemento.getText());
-                    cliente.getEndereco().setCep(campoCEP.getText());
+                    if (campoRua.getText().isEmpty() || campoNumero.getText().isEmpty() ||
+                        campoBairro.getText().isEmpty() || campoCidade.getText().isEmpty() ||
+                        campoEstado.getText().isEmpty() || campoCEP.getText().isEmpty()) {
+                        JOptionPane.showMessageDialog(this, "Por favor, preencha todos os campos obrigatórios de cliente.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        Cliente cliente =  (Cliente) comboBoxUsuarios.getSelectedItem();
+                        cliente.getEndereco().setRua(campoRua.getText());
+                        cliente.getEndereco().setNumero(Integer.parseInt(campoNumero.getText()));
+                        cliente.getEndereco().setBairro(campoBairro.getText());
+                        cliente.getEndereco().setCidade(campoCidade.getText());
+                        cliente.getEndereco().setEstado(campoEstado.getText());
+                        cliente.getEndereco().setComplemento(campoComplemento.getText());
+                        cliente.getEndereco().setCep(campoCEP.getText());
+                     }
                 }
 
                 // att os dados após a edição
@@ -388,8 +406,8 @@ class MenuListarUsuarios extends JFrame {
             
             setVisible(true);
        
+        }
     }
-}
 
 
 
