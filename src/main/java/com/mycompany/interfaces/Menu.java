@@ -168,6 +168,8 @@ class MenuCriarUsuario extends JFrame {
                             campoComplemento.getText(),
                             campoCEP.getText()
                         );
+                        
+                        ContaBancaria conta = new ContaBancaria(); 
 
                         Cliente novoUsuario = new Cliente(
                             campoNome.getText(),
@@ -176,7 +178,8 @@ class MenuCriarUsuario extends JFrame {
                             campoTelefone.getText(),
                             campoEmail.getText(),
                             Integer.parseInt(new String(campoSenha.getPassword())),
-                            endereco
+                            endereco,
+                            conta
                         );
 
                     // Adiciona o novo usuário à lista de usuários
