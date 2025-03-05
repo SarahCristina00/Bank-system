@@ -37,16 +37,26 @@ public class PersistenciaUsuarios implements Persistencia<Usuario>{
 
         String json = PersistenciaArquivo.leArquivo(PATH);
 
-        List<Usuario> usuarios = new ArrayList<>();
-        if(json!=null && !json.trim().equals("")) {
+    List<Usuario> usuarios = new ArrayList<>();
+            if (json != null && !json.trim().equals("")) {
+                Type tipoLista = new TypeToken<List<Usuario>>() {}.getType();
+                usuarios = gson.fromJson(json, tipoLista);  
 
-            Type tipoLista = new TypeToken<List<Usuario>>() {
-            }.getType();
-        usuarios = gson.fromJson(json, tipoLista);
-
-            if (usuarios == null)
-                usuarios = new ArrayList<>();
-        }
+                // verificação dos tipos de usu
+                for (int i = 0; i < usuarios.size(); i++) {
+                    Usuario usuario = usuarios.get(i);
+                    if ("cliente".equalsIgnoreCase(usuario.getTipoUsuario())) {
+                        // converte cliente
+                        usuarios.set(i, gson.fromJson(gson.toJson(usuario), Cliente.class));
+                    } else if ("gerente".equalsIgnoreCase(usuario.getTipoUsuario())) {
+                        // converte cliente
+                        usuarios.set(i, gson.fromJson(gson.toJson(usuario), Gerente.class));
+                    } else if ("caixa".equalsIgnoreCase(usuario.getTipoUsuario())) {
+                        // converte cliente
+                        usuarios.set(i, gson.fromJson(gson.toJson(usuario), Caixa.class));
+                    }
+                }
+            }
 
         return usuarios;
     }
