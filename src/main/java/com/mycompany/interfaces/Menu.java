@@ -59,6 +59,7 @@ public class Menu extends JFrame {
     
 
 class MenuCriarUsuario extends JFrame {
+    public List<ContaBancaria> contas = new ArrayList<>();
     public MenuCriarUsuario() {
         setTitle("Sistema Bancário - Criar Usuário");
         setSize(500, 500);
@@ -185,7 +186,6 @@ class MenuCriarUsuario extends JFrame {
                     Login.persistenciaUsuarios.salvarDados(usuarios);
 
                     // Salva as contas no arquivo contas.json
-                    List<ContaBancaria> contas = new ArrayList<>();
                     for (Usuario usuario : usuarios) {
                         if (usuario instanceof Cliente) {
                             Cliente cliente = (Cliente) usuario;

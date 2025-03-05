@@ -13,6 +13,8 @@
     import javax.swing.*;
 
     public class AcessoCliente extends JFrame {
+        
+        
 
             private JButton botaoTransferencia = new JButton("Realizar Transferência"),
             botaoConsultaSaldo = new JButton("Consultar Saldo"),
@@ -27,14 +29,15 @@
             setSize(500, 500);
             setLocationRelativeTo(null);
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+            
+            
             JPanel painelMenu = new JPanel(new GridLayout(5,1,20,20));
             painelMenu.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 
 
-            botaoTransferencia.addActionListener(e -> new Transferencia());
-            botaoConsultaSaldo.addActionListener(e-> new Menu());
-           botaoConsultaExtrato.addActionListener(e -> new ExtratoCliente(cliente).exibirExtrato());
+            botaoTransferencia.addActionListener(e -> new Transferencia(cliente));
+            botaoConsultaSaldo.addActionListener(e-> JOptionPane.showMessageDialog(this, "Saldo: R$ " + cliente.getConta().getSaldo()));
+            botaoConsultaExtrato.addActionListener(e -> new ExtratoCliente(cliente).exibirExtrato());
             botaoConsultaInvestimento.addActionListener(e-> new Menu());
             botaoConsultaCredito.addActionListener(e-> new Menu());
 
@@ -53,7 +56,7 @@
      
 
     class Transferencia extends JFrame {
-        public Transferencia() {
+        public Transferencia(Cliente cliente) {
             setTitle("Área do Cliente - Realizar Transferência");
             setSize(500, 500);
             setLocationRelativeTo(null);
@@ -62,25 +65,29 @@
             JPanel painelInformacoes = new JPanel(new GridLayout(3, 2, 20, 20));
 
             
-            JTextField campoOrigem = new JTextField();
             JTextField campoDestino = new JTextField();
             JTextField campoValor = new JTextField();
             JButton botaoRealizarTransferencia = new JButton("Realizar Transferência");
 
             //adicao dos campos ao painel
-            painelInformacoes.add(criarCampo("Informe a Conta de Origem: ", campoOrigem));
             painelInformacoes.add(criarCampo("Informe a Conta de Destino: ", campoDestino));
             painelInformacoes.add(criarCampo("Informe o valor a ser transferido: ", campoValor));
 
             botaoRealizarTransferencia.addActionListener(e -> {
-                int contaOrigem = Integer.parseInt(campoOrigem.getText());
                 int contaDestino = Integer.parseInt(campoDestino.getText());
                 double valor = Double.parseDouble(campoValor.getText());
 
-                Cliente clienteOrigem = BankSystem.getCliente(contaOrigem);
                 Cliente clienteDestino = BankSystem.getCliente(contaDestino);
-
-                clienteOrigem.transferir(valor, clienteDestino);
+                 if (clienteDestino != null && valor > 0) {
+                        if (cliente.getConta().transfereSaldo(valor, clienteDestino.getConta())) {
+                                JOptionPane.showMessageDialog(this, "Transferência realizada com sucesso!");
+                                Login.persistenciaContas.salvarDados(BankSystem.contasBancarias);
+                        } else {
+                                JOptionPane.showMessageDialog(this, "Saldo insuficiente para a transferência.");
+                        }
+                   } else {
+                            JOptionPane.showMessageDialog(this, "Conta de destino inválida.");
+                   }
             });
 
             // Adiciona os componentes na tela

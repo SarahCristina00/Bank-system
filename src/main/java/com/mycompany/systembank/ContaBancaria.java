@@ -37,6 +37,10 @@ public class ContaBancaria {
     }
     
     public boolean transfereSaldo(double valor, ContaBancaria destino){
+       //verifica saldo
+       if (saldo < valor || saldo<0) {
+           return false;
+       }
         //retira valor da conta
         this.saldo -= valor;
         //adiciona valor na conta origem
