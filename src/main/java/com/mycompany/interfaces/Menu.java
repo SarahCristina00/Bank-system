@@ -11,8 +11,6 @@ import com.mycompany.systembank.*;
 import static com.mycompany.systembank.BankSystem.usuarios;
 import java.awt.*;
 import javax.swing.*;
-import java.util.List;
-import java.util.ArrayList;
 
 public class Menu extends JFrame {
     private JButton botaoCriarUsuario = new JButton("Criar Usuário"),
@@ -59,7 +57,6 @@ public class Menu extends JFrame {
     
 
 class MenuCriarUsuario extends JFrame {
-    public List<ContaBancaria> contas = new ArrayList<>();
     public MenuCriarUsuario() {
         setTitle("Sistema Bancário - Criar Usuário");
         setSize(500, 500);
@@ -190,12 +187,12 @@ class MenuCriarUsuario extends JFrame {
 
                     // Salva as contas no arquivo contas.json
                     for (Usuario usuario : usuarios) {
-                        if (usuario instanceof Cliente) {
+                        if(usuario instanceof Cliente) {
                             Cliente cliente = (Cliente) usuario;
-                            contas.add(cliente.getConta());
+                            BankSystem.contasBancarias.add(cliente.getConta());
                         }
                     }
-                    Login.persistenciaContas.salvarDados(contas);
+                    Login.persistenciaContas.salvarDados(BankSystem.contasBancarias);
 
                     JOptionPane.showMessageDialog(this, "Usuário cliente criado com sucesso! " +
                         "Agência: " + novoUsuario.getConta().getAgencia() + 

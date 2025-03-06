@@ -12,8 +12,8 @@ import com.mycompany.interfaces.*;
 public class BankSystem {
      
 //inicializa
- public static List<Usuario> usuarios = Login.persistenciaUsuarios.carregarDados();
  public static List<ContaBancaria> contasBancarias = Login.persistenciaContas.carregarDados();
+ public static List<Usuario> usuarios = Login.persistenciaUsuarios.carregarDados();
  
  public static Cliente getCliente(int numeroConta) {
      //percorre lista para encontrar cliente
@@ -41,7 +41,8 @@ public class BankSystem {
         }
     }
     return null; 
-}
+  }
+  
    
     public static void main(String[] args) {
 

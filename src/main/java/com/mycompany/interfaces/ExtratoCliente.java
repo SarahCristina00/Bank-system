@@ -1,15 +1,10 @@
-
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
 /**
- * sarah cristina
- * Lara Dias
- * Willian Santos
- * 
+@author Lara da Silva Dias (202376010)
+@author Sarah Cristina (202376034)
+@author Wilian Santos (202276040)
  */
+
+
 package com.mycompany.interfaces;
 
 import com.mycompany.systembank.Cliente;

@@ -15,17 +15,22 @@ public class Transacao {
     private double valor;
     private double saldoFinal;
     private Calendar data;
-    private ContaBancaria origem;
-    private ContaBancaria destino;
-
-    public Transacao(String tipo, double valor, ContaBancaria contaOrigem, ContaBancaria contaDestino) {
+    private int origem;
+    private int destino;
+    
+    public Transacao(){}
+    public Transacao(String tipo, double valor, double saldoInicial, ContaBancaria contaOrigem, ContaBancaria contaDestino) {
         id++;
         this.tipo = tipo;
         this.valor = valor;
-        this.saldoFinal = contaOrigem.getSaldo() + valor;
         this.data = Calendar.getInstance();
-        this.origem = contaOrigem;
-        this.destino = contaDestino;
+        this.origem = (contaOrigem != null) ? contaOrigem.getConta() : 0;
+        this.destino = (contaDestino != null) ? contaDestino.getConta() : 0;
+        if(tipo.equals("Transferência enviada") || tipo.equals("Saque")){
+            this.saldoFinal = saldoInicial - valor;
+        }else if (tipo.equals("Transferência recebida") || tipo.equals("Deposito")) {
+            this.saldoFinal = saldoInicial + valor;
+        }
     }
 
     // Método para formatar a data como string
@@ -35,15 +40,22 @@ public class Transacao {
     }
 
     // Getters para os atributos
-    public String getTipo() {
-        return tipo;
-    }
+    public String getTipo() {return tipo;}
 
-    public double getValor() {
-        return valor;
-    }
+    public double getValor() {return valor;}
 
-    public double getSaldoFinal() {
-        return saldoFinal;
+    public double getSaldoFinal() {return saldoFinal;}
+    
+    @Override
+    public String toString() {
+        return "Transacao{" +
+                "tipo='" + tipo + '\'' +
+                ", valor=" + valor +
+                ", saldoFinal=" + saldoFinal +
+                ", dataFormatada='" + getDataFormatada() + '\'' +
+                ", origem=" + origem +
+                ", destino=" + destino +
+                '}';
     }
 }
+

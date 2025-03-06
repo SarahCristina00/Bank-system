@@ -32,20 +32,19 @@ public class ContaBancaria {
     public void setSaldo(double saldo) { this.saldo = saldo; }
      
     public void registraTransacao(String tipo, double valor, ContaBancaria origem, ContaBancaria destino){
-        Transacao transacao = new Transacao(tipo, valor, origem, destino);
+        Transacao transacao = new Transacao(tipo, valor, this.saldo, origem, destino);
         extrato.add(transacao);
         this.saldo = transacao.getSaldoFinal();
+        System.out.println("Transacao registrada: " + transacao);
+        imprimeExtrato();
     }
     
     public boolean transfereSaldo(double valor, ContaBancaria destino){
        //verifica saldo
-       if (saldo < valor || saldo<0) {
+       if (saldo < valor) {
            return false;
        }
-        //retira valor da conta
-        this.saldo -= valor;
-        //adiciona valor na conta origem
-        destino.saldo += valor;
+        
         //registra a transferencia nos extratos das duas contas
         this.registraTransacao("Transferência enviada", valor, this, destino);
         destino.registraTransacao("Transferência recebida", valor, this, destino);
@@ -53,7 +52,7 @@ public class ContaBancaria {
     }
         
     public void imprimeExtrato(){
-        System.out.println("=======Extrato de Transações=======");
+        System.out.println("=======Extrato de Transaçoes=======");
         for(int i=0; i<extrato.size(); i++){
             Transacao transacao = extrato.get(i);
             System.out.println(transacao);

@@ -104,10 +104,14 @@ class Deposito extends JFrame {
                 Number valorNumero = (Number) campoValor.getValue();
                 double valor =valorNumero.doubleValue();
                 Cliente cliente = BankSystem.getCliente(conta);
-                Caixa caixa = new Caixa("Caixa", "", "", "", "", 0);
-                caixa.processarDeposito(cliente, valor);
-                // salva os dados após a transação
-                    Login.persistenciaContas.salvarDados(BankSystem.contasBancarias);
+                if (cliente!= null){
+                    Caixa caixa = new Caixa("Caixa", "", "", "", "", 0);
+                    caixa.processarDeposito(cliente, valor);
+                    // salva os dados após a transação
+                        Login.persistenciaContas.salvarDados(BankSystem.contasBancarias);
+                }else{
+                  JOptionPane.showMessageDialog(this, "Conta do cliente não existe.");  
+                }
                
             }catch(Exception ex){
                 ex.printStackTrace();

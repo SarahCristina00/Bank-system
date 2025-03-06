@@ -20,9 +20,8 @@ public class Cliente extends Usuario{
          super.setTipoUsuario("cliente");
     }
     
-   public ContaBancaria getConta() {
-        return conta;
-    }
+   public ContaBancaria getConta() {return conta;}
+   public void setConta(ContaBancaria conta) {this.conta = conta;}
     
      public Endereco getEndereco() {
         return endereco;
