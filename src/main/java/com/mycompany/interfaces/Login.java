@@ -66,13 +66,15 @@ public class Login extends JFrame {
                       SwingUtilities.invokeLater(()->new Menu());
                       break;
                   case "gerente":
-                      SwingUtilities.invokeLater(()->new AcessoGerente());
+                      Gerente gerente = BankSystem.getUsuario(usuarioValido.getCpf(),Gerente.class);
+                      SwingUtilities.invokeLater(()->new AcessoGerente(gerente));
                       break;
                 case "caixa":
-                      SwingUtilities.invokeLater(()->new AcessoCaixa());
+                    Caixa caixa = BankSystem.getUsuario(usuarioValido.getCpf(),Caixa.class);
+                      SwingUtilities.invokeLater(()->new AcessoCaixa(caixa));
                       break;
                 case "cliente":
-                    Cliente cliente = BankSystem.getClienteCpf(usuarioValido.getCpf());
+                    Cliente cliente = BankSystem.getUsuario(usuarioValido.getCpf(),Cliente.class);
                      SwingUtilities.invokeLater(()->new AcessoCliente(cliente));
                       break;
                   default:

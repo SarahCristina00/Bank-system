@@ -31,15 +31,11 @@ public class BankSystem {
     return null; 
 }
  
-  public static Cliente getClienteCpf(String cpf) {
+  public static <T extends Usuario> T getUsuario(String cpf, Class<T> tipoUsuario) {
      //percorre lista para encontrar cliente
     for (Usuario usuario : usuarios) {
-        if(!(usuario instanceof Cliente)) {
-        } else {
-            Cliente cliente = (Cliente) usuario;
-            if(cliente.getCpf().equals(cpf)) {
-                return cliente;
-            }
+        if (usuario.getCpf().equals(cpf) && tipoUsuario.isInstance(usuario)) {
+            return tipoUsuario.cast(usuario);
         }
     }
     return null; 

@@ -62,7 +62,7 @@ public class Caixa extends Usuario {
     }
 }
 
-    public void processarTransferencia(Cliente cliente, ContaBancaria destino, Double valor) {
+    public void processarTransferencia(Cliente cliente, Cliente destino, Double valor) {
     if (cliente.getConta().getSaldo() >= valor) {  // Verifica saldo atual do cliente se é maior que o valor da transferência
         // Solicitar senha para validar a operação
         String senhaInserida = solicitarSenha();
@@ -71,7 +71,7 @@ public class Caixa extends Usuario {
             cliente.getConta().setSaldo(cliente.getConta().getSaldo() - valor); // Retira o valor de transferência da conta do cliente
              
 // Aqui, você acessa o nome do cliente de destino
-            Cliente clienteDestino = BankSystem.getCliente(destino.getConta());
+            Cliente clienteDestino = BankSystem.getCliente(destino.getConta().getConta());
             cliente.getConta().registraTransacao("Transferencia", valor, cliente.getConta(), clienteDestino.getConta());
             JOptionPane.showMessageDialog(null, 
                 "Transferência de R$" + valor + 
