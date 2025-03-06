@@ -13,22 +13,22 @@ import com.mycompany.interfaces.Login;
 
 public class Caixa extends Usuario {
     
-    // Construtor 
+  
     public Caixa(String nome, String cpf, String dataNascimento, String telefone, 
                  String email, int senha) {
         super(nome, cpf, dataNascimento, telefone, email, senha);
          super.setTipoUsuario("caixa");
     }
 
-    //CAIXA APOS FAZER LOGIN NO SISTEMA
+
     public void processarSaque(Cliente cliente, Double valor) {
-    if (cliente.getConta().getSaldo() >= valor) {  // Acessando saldo pela conta para verificar se o cliente tem saldo suficiente para o saque
+    if (cliente.getConta().getSaldo() >= valor) {  
         
-        // Solicitar senha para validar a operação
+        
         String senhaInserida = solicitarSenha();
         if (senhaInserida != null && Integer.parseInt(senhaInserida) == cliente.getSenha()) {
-            // Senha correta, proceder com o saque
-            cliente.getConta().setSaldo(cliente.getConta().getSaldo() - valor); // Atualização do saldo do cliente após o saque
+         
+            cliente.getConta().setSaldo(cliente.getConta().getSaldo() - valor); 
             JOptionPane.showMessageDialog(null, 
                 "Saque de R$" + valor + " realizado com sucesso para o cliente: " + cliente.getNome(), 
                 "Operação Realizada", 
@@ -48,9 +48,22 @@ public class Caixa extends Usuario {
 }
 
 
-    public void processarDeposito(Cliente cliente, Double valor) {
-    if (valor > 0) {  // Se o valor do depósito for maior que 0 
-        cliente.getConta().setSaldo(cliente.getConta().getSaldo() + valor); // Obtém o saldo atual do cliente e adiciona o valor do depósito 
+ public void processarDeposito(Cliente cliente, Double valor) {
+    if (cliente == null) {
+        System.out.println("Erro: Cliente não encontrado.");
+        return;
+    }
+
+    System.out.println("Valor do depósito: " + valor); 
+
+    if (valor > 0) {
+        double saldoAnterior = cliente.getConta().getSaldo(); 
+        cliente.getConta().setSaldo(saldoAnterior + valor); 
+        double saldoAtual = cliente.getConta().getSaldo(); 
+        System.out.println("Saldo anterior: " + saldoAnterior);
+        System.out.println("Saldo atual: " + saldoAtual);
+
+
         JOptionPane.showMessageDialog(null, 
             "Depósito de R$" + valor + " realizado com sucesso para o cliente: " + cliente.getNome(), 
             "Operação Realizada", 
@@ -64,16 +77,16 @@ public class Caixa extends Usuario {
 }
 
     public void processarTransferencia(Cliente cliente, ContaBancaria destino, Double valor) {
-    if (cliente.getConta().getSaldo() >= valor) {  // Verifica saldo atual do cliente se é maior que o valor da transferência
-        // Solicitar senha para validar a operação
+    if (cliente.getConta().getSaldo() >= valor) {  
+      
         String senhaInserida = solicitarSenha();
         if (senhaInserida != null && Integer.parseInt(senhaInserida) == cliente.getSenha()) {
-            // Senha correta, proceder com a transferência
-            cliente.getConta().setSaldo(cliente.getConta().getSaldo() - valor); // Retira o valor de transferência da conta do cliente
+            
+            cliente.getConta().setSaldo(cliente.getConta().getSaldo() - valor); 
              
-// Aqui, você acessa o nome do cliente de destino
+
             Cliente clienteDestino = BankSystem.getCliente(destino.getConta());
-         // Destino.receberTransferencia(valor); // Para onde transferir?
+        
             JOptionPane.showMessageDialog(null, 
                 "Transferência de R$" + valor + 
                 " realizada com sucesso de " + cliente.getNome() + 

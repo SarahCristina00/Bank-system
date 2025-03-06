@@ -9,49 +9,50 @@ package com.mycompany.systembank;
 import java.util.*;
 import javax.swing.*;
 import com.mycompany.interfaces.*;
+
 public class BankSystem {
-     
-//inicializa
- public static List<Usuario> usuarios = Login.persistenciaUsuarios.carregarDados();
- public static List<ContaBancaria> contasBancarias = Login.persistenciaContas.carregarDados();
- 
- public static Cliente getCliente(int numeroConta) {
-     //percorre lista para encontrar cliente
-    for (Usuario usuario : usuarios) {
-        if(!(usuario instanceof Cliente)) {
-        } else {
-            Cliente cliente = (Cliente) usuario;
-            if (cliente.getConta().getConta() == numeroConta) {
-                return cliente;
-            }
-        }
-    }
-    return null; 
-}
- 
-  public static Cliente getClienteCpf(String cpf) {
-     //percorre lista para encontrar cliente
-    for (Usuario usuario : usuarios) {
-        if(!(usuario instanceof Cliente)) {
-        } else {
-            Cliente cliente = (Cliente) usuario;
-            if(cliente.getCpf().equals(cpf)) {
-                return cliente;
-            }
-        }
-    }
-    return null; 
-}
-   
-    public static void main(String[] args) {
 
-       System.out.println("Iniciando o Sistema Bancario...");
-       
-       //chama construtor de tela do login
-       
-       SwingUtilities.invokeLater(()->new Login());
-       
-    }
+    public static List<Usuario> usuarios = Login.persistenciaUsuarios.carregarDados();
+    public static List<ContaBancaria> contasBancarias = Login.persistenciaContas.carregarDados();
+
     
-}
+    public static Cliente getCliente(int numeroConta) {
+        for (Usuario usuario : usuarios) {
+            if (usuario instanceof Cliente) {
+                Cliente cliente = (Cliente) usuario;
+                ContaBancaria conta = cliente.getConta();
+                if (conta != null && conta.getConta() == numeroConta) {
+                    return cliente;
+                }
+            }
+        }
+        return null; 
+    }
 
+  
+    public static Cliente getClienteCpf(String cpf) {
+        for (Usuario usuario : usuarios) {
+            if (usuario instanceof Cliente) {
+                Cliente cliente = (Cliente) usuario;
+                if (cliente.getCpf().equals(cpf)) {
+                    return cliente;
+                }
+            }
+        }
+        return null; 
+    }
+
+    public static void main(String[] args) {
+        System.out.println("Iniciando o Sistema Bancário...");
+
+        
+        if (usuarios == null || contasBancarias == null) {
+            System.err.println("Erro ao carregar dados de usuários ou contas.");
+            return;
+        }
+
+   
+       
+        SwingUtilities.invokeLater(() -> new Login());
+    }
+}
