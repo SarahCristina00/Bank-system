@@ -3,10 +3,8 @@ package com.mycompany.interfaces;
 import com.mycompany.systembank.*;
 import javax.swing.*;
 import java.awt.*;
-import static com.mycompany.systembank.BankSystem.usuarios;
-import java.util.List;
+import java.util.Map;
 
-import com.mycompany.persistencia.PersistenciaGerente;
 
 public class AcessoGerente extends JFrame {
     private JButton botaoCadastrarRendaVariavel = new JButton("Cadastro Renda Variável"),
@@ -18,7 +16,7 @@ public class AcessoGerente extends JFrame {
     
    // private List<Gerente> listaGerentes;
 
-    public AcessoGerente() {
+    public AcessoGerente(Gerente gerente) {
         setTitle("Área do Gerente");
         setSize(500, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -30,10 +28,10 @@ public class AcessoGerente extends JFrame {
         JPanel painelMenu = new JPanel(new GridLayout(4, 1, 20, 20));
         painelMenu.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 
-        botaoCadastrarRendaVariavel.addActionListener(e -> new CadastroRendaVariavel());
-        botaoCadastrarRendaFixa.addActionListener(e -> new CadastroRendaFixa());
-        botaoAvaliarCredito.addActionListener(e -> new AvaliarCredito());
-        botaoApoiarMovimentacao.addActionListener(e -> new ApoiarMovimentacao());
+        botaoCadastrarRendaVariavel.addActionListener(e -> new CadastroRendaVariavel(gerente));
+        botaoCadastrarRendaFixa.addActionListener(e -> new CadastroRendaFixa(gerente));
+        botaoAvaliarCredito.addActionListener(e -> new AvaliarCredito(gerente));
+        botaoApoiarMovimentacao.addActionListener(e -> new ApoiarMovimentacao(gerente));
         botaoSair.addActionListener(e -> new Login());
         
         painelMenu.add(botaoCadastrarRendaVariavel);
@@ -48,7 +46,7 @@ public class AcessoGerente extends JFrame {
 }
 
 class CadastroRendaVariavel extends JFrame {
-    public CadastroRendaVariavel() {
+    public CadastroRendaVariavel(Gerente gerente) {
         setTitle("Cadastro Renda Variável");
         setSize(400, 300);
         setLocationRelativeTo(null);
@@ -63,14 +61,13 @@ class CadastroRendaVariavel extends JFrame {
         painel.add(campoDescricao);
         painel.add(new JLabel("Risco: "));
         painel.add(campoRisco);
-        painel.add(new JLabel("Rentabilidade: "));
+        painel.add(new JLabel("Rentabilidade (%): "));
         painel.add(campoRentabilidade);
 
         botaoConfirmar.addActionListener(e -> {
             String descricao = campoDescricao.getText();
             double risco = Double.parseDouble(campoRisco.getText());
             double rentabilidade = Double.parseDouble(campoRentabilidade.getText());
-            Gerente gerente = new Gerente("Gerente", "", "", "", "", 0);
             gerente.cadastrarOpcaoRendaVariavel(descricao, risco, rentabilidade);
         });
 
@@ -81,7 +78,7 @@ class CadastroRendaVariavel extends JFrame {
 }
 
 class CadastroRendaFixa extends JFrame {
-    public CadastroRendaFixa() {
+    public CadastroRendaFixa(Gerente gerente) {
         setTitle("Cadastro Renda Fixa");
         setSize(400, 300);
         setLocationRelativeTo(null);
@@ -96,13 +93,13 @@ class CadastroRendaFixa extends JFrame {
 
         painel.add(new JLabel("Descrição: "));
         painel.add(campoDescricao);
-        painel.add(new JLabel("Taxa: "));
+        painel.add(new JLabel("Taxa (%): "));
         painel.add(campoTaxa);
-        painel.add(new JLabel("Rentabilidade: "));
+        painel.add(new JLabel("Rentabilidade (%): "));
         painel.add(campoRentabilidade);
-        painel.add(new JLabel("Prazo Mínimo: "));
+        painel.add(new JLabel("Prazo Mínimo (em meses): "));
         painel.add(campoPrazoMinimo);
-        painel.add(new JLabel("Prazo Máximo: "));
+        painel.add(new JLabel("Prazo Máximo(em meses): "));
         painel.add(campoPrazoMaximo);
 
         botaoConfirmar.addActionListener(e -> {
@@ -111,7 +108,6 @@ class CadastroRendaFixa extends JFrame {
             double rentabilidade = Double.parseDouble(campoRentabilidade.getText());
             int prazoMinimo = Integer.parseInt(campoPrazoMinimo.getText());
             int prazoMaximo = Integer.parseInt(campoPrazoMaximo.getText());
-            Gerente gerente = new Gerente("Gerente", "", "", "", "", 0);
             gerente.cadastrarOpcaoRendaFixa(descricao, taxa, rentabilidade, prazoMinimo, prazoMaximo);
         });
 
@@ -122,59 +118,70 @@ class CadastroRendaFixa extends JFrame {
 }
 
 class AvaliarCredito extends JFrame {
-    
-    public static Usuario encontrarUsuarioPorCPF(String cpf) { 
-        for (Usuario usuario : usuarios) { 
-            if (usuario.getCpf().equals(cpf)) {
-                return usuario;
-            }
-        }
-        return null;
-     }
-    
-    public AvaliarCredito() {
+
+    private JList<String> listaSolicitacoes;
+    private DefaultListModel<String> modeloLista;
+
+    public AvaliarCredito(Gerente gerente) {
         setTitle("Avaliar Crédito");
-        setSize(400, 200);
+        setSize(600, 400);
         setLocationRelativeTo(null);
 
-        JPanel painel = new JPanel(new GridLayout(2, 2, 20, 20));
-        JTextField campoCPF = new JTextField();
-        JTextField campoValor = new JTextField();
-        JButton botaoConfirmar = new JButton("Confirmar Avaliação");
+        JPanel painelPrincipal = new JPanel(new BorderLayout());
 
-        painel.add(new JLabel("CPF do Cliente: "));
-        painel.add(campoCPF);
-        painel.add(new JLabel("Valor do Crédito: "));
-        painel.add(campoValor);
+        modeloLista = new DefaultListModel<>();
+        listaSolicitacoes = new JList<>(modeloLista);
+        JScrollPane scrollPane = new JScrollPane(listaSolicitacoes);
 
-        botaoConfirmar.addActionListener(e -> {
-            String cpf = campoCPF.getText();
-            double valor = Double.parseDouble(campoValor.getText());
-            Gerente gerente = new Gerente("Gerente", "", "", "", "", 0);
-            Usuario cliente = encontrarUsuarioPorCPF(cpf);
+        JPanel painelBotoes = new JPanel(new FlowLayout());
+        JButton botaoAprovar = new JButton("Aprovar");
+        JButton botaoNegar = new JButton("Negar");
 
-            gerente.avaliarCredito(cliente, valor);
+        botaoAprovar.addActionListener(e -> {
+            int indiceSelecionado = listaSolicitacoes.getSelectedIndex();
+            if (indiceSelecionado != -1) {
+                gerente.analisarSolicitacoes(indiceSelecionado, "Aprovado");
+            }
+            exibirSolicitacoes();
+        });
+        botaoNegar.addActionListener(e -> {
+            int indiceSelecionado = listaSolicitacoes.getSelectedIndex();
+            if (indiceSelecionado != -1) {
+                gerente.analisarSolicitacoes(indiceSelecionado, "Negado");
+            }
+            exibirSolicitacoes();
         });
 
-        add(painel, BorderLayout.CENTER);
-        add(botaoConfirmar, BorderLayout.SOUTH);
+        painelBotoes.add(botaoAprovar);
+        painelBotoes.add(botaoNegar);
+        
+        painelPrincipal.add(scrollPane, BorderLayout.CENTER);
+        painelPrincipal.add(painelBotoes, BorderLayout.SOUTH);
+
+        add(painelPrincipal);
         setVisible(true);
+
+        exibirSolicitacoes(); // Exibe as solicitações ao abrir a janela
+    }
+
+    private void exibirSolicitacoes() {
+        modeloLista.clear();
+        for (Map<String, Object> solicitacao : BankSystem.solicitacoes) {
+            if (solicitacao.get("tipo").equals("credito")) {
+                String cpfCliente = (String) solicitacao.get("cpfCliente");
+                Cliente cliente = BankSystem.getUsuario(cpfCliente, Cliente.class);
+                if (cliente != null) {
+                    modeloLista.addElement("Cliente: " + cliente.getNome() + ", Valor: R$" + solicitacao.get("valor")+", Status: " +solicitacao.get("status"));
+                }
+            }
+        }
     }
 }
 
 
 class ApoiarMovimentacao extends JFrame {
-    
-    public static Usuario encontrarUsuarioPorCPF(String cpf) { 
-        for (Usuario usuario : usuarios) { 
-            if (usuario.getCpf().equals(cpf)) {
-                return usuario;
-            }
-        }
-        return null;
-     }
-    
-    public ApoiarMovimentacao() {
+        
+    public ApoiarMovimentacao(Gerente gerente) {
         setTitle("Apoiar Movimentação");
         setSize(400, 200);
         setLocationRelativeTo(null);
@@ -196,8 +203,7 @@ class ApoiarMovimentacao extends JFrame {
             String cpf = campoCPF.getText();
             double valor = Double.parseDouble(campoValor.getText());
             String tipo = campoTipo.getText();
-            Gerente gerente = new Gerente("Gerente", "", "", "", "", 0);
-            Usuario cliente = encontrarUsuarioPorCPF(cpf);
+            Usuario cliente = BankSystem.getUsuario(cpf,Cliente.class);
 
             gerente.apoiarMovimentacao(cliente, valor, tipo);
         });

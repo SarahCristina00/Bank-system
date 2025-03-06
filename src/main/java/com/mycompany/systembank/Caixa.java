@@ -93,7 +93,7 @@ public class Caixa extends Usuario {
     }
 }
     
-    private String solicitarSenha() {
+    public static String solicitarSenha() {
         JPasswordField campoSenha = new JPasswordField();
         int option = JOptionPane.showConfirmDialog(null, campoSenha, "Digite sua Senha Pessoal", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
         

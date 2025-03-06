@@ -7,18 +7,14 @@
 package com.mycompany.persistencia;
 
 import com.google.gson.*;
-import com.mycompany.interfaces.Login;
 import com.mycompany.systembank.*;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class PersistenciaUsuarios implements Persistencia<Usuario> {
 
     private static final String PATH = Persistencia.DIRECTORY + File.separator + "usuarios.json";
-    private static Map<Integer, ContaBancaria> mapaContas = new HashMap<>();
 
     @Override
     public void salvarDados(List<Usuario> usuarios) {

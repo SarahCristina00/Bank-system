@@ -6,6 +6,11 @@
 
 package com.mycompany.systembank;
 
+import static com.mycompany.interfaces.Login.persistenciaSolicitacoes;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.JOptionPane;
+
 public class Cliente extends Usuario{
     private Endereco endereco;
     private ContaBancaria conta;
@@ -39,6 +44,20 @@ public class Cliente extends Usuario{
     public void consultarExtrato(){
         conta.imprimeExtrato();
     }
+    
+    public void solicitarCredito(double valor) {
+        Map<String, Object> solicitacao = new HashMap<>();
+        solicitacao.put("tipo", "credito");
+        solicitacao.put("nomeCliente", this.getNome());
+        solicitacao.put("cpfCliente", this.getCpf());
+        solicitacao.put("contaCliente", this.getConta().getConta());
+        solicitacao.put("valor", valor);
+        solicitacao.put("status", "pendente");
+        BankSystem.solicitacoes.add(solicitacao);
+        persistenciaSolicitacoes.salvarDados(BankSystem.solicitacoes);        
+        JOptionPane.showMessageDialog(null, "Solicitação de crédito de R$" + valor + " enviada para análise.");
+    }
+
     
     public void investirRendaFixa(String opcao,Double valor){
             if(conta.getSaldo()<valor){

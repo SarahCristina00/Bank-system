@@ -9,13 +9,16 @@ package com.mycompany.systembank;
 import java.util.*;
 import javax.swing.*;
 import com.mycompany.interfaces.*;
-import static com.mycompany.interfaces.Login.persistenciaUsuarios;
+import static com.mycompany.interfaces.Login.*;
 
 
 public class BankSystem {
      
 //inicializa
  public static List<Usuario> usuarios = Login.persistenciaUsuarios.carregarDados();
+ public static List<Map<String, Object>> solicitacoes = Login.persistenciaSolicitacoes.carregarDados();
+
+
  
  public static Cliente getCliente(int numeroConta) {
      //percorre lista para encontrar cliente
@@ -58,6 +61,7 @@ public class BankSystem {
 
        System.out.println("Iniciando o Sistema Bancario...");
        persistenciaUsuarios.carregarDados();
+       persistenciaSolicitacoes.carregarDados();
        //chama construtor de tela do login
        
        SwingUtilities.invokeLater(()->new Login());

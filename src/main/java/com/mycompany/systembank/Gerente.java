@@ -1,5 +1,7 @@
 package com.mycompany.systembank;
 
+import static com.mycompany.interfaces.Login.persistenciaSolicitacoes;
+import java.util.Map;
 import javax.swing.JOptionPane;
 
 public class Gerente extends Usuario {
@@ -51,15 +53,13 @@ public class Gerente extends Usuario {
                 " | Rentabilidade esperada: " + rentabilidade + "%", "Cadastro de Renda Variável", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public void avaliarCredito(Usuario usuario, Double valor) {
-        JOptionPane.showMessageDialog(null, "Gerente avaliando crédito de R$" + valor + " para o cliente: " + usuario.getNome(), "Avaliação de Crédito", JOptionPane.INFORMATION_MESSAGE);
-        
-        // Solicita a senha do cliente para confirmar a aprovação do crédito
-        int senhaCliente = Integer.parseInt(JOptionPane.showInputDialog("Digite a senha do cliente para confirmar:"));
-        if (senhaCliente == usuario.getSenha()) {
-            JOptionPane.showMessageDialog(null, "Crédito aprovado! O cliente pode utilizar este valor.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(null, "Senha incorreta! Operação cancelada.", "Erro", JOptionPane.ERROR_MESSAGE);
+    public void analisarSolicitacoes(int indice, String status) {
+           Map<String, Object> solicitacao = BankSystem.solicitacoes.get(indice);
+            if (solicitacao.get("tipo").equals("credito") && solicitacao.get("status").equals("pendente")) {
+                solicitacao.put("status", status);
+                System.out.println("Solicitação atualizada: " + solicitacao);
+            }
+            persistenciaSolicitacoes.salvarDados(BankSystem.solicitacoes);
         }
     }
-}
+
