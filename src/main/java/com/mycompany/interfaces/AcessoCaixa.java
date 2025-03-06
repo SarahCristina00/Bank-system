@@ -8,6 +8,7 @@ package com.mycompany.interfaces;
 import java.text.NumberFormat;
 import java.util.Locale;
 import static com.mycompany.interfaces.Login.criarCampo;
+import static com.mycompany.interfaces.Login.persistenciaUsuarios;
 import com.mycompany.systembank.*;
 import java.awt.*;
 import javax.swing.*;
@@ -18,7 +19,8 @@ public class AcessoCaixa extends JFrame {
             botaoDeposito = new JButton("Realizar Depósito"),
             botaoTransferencia = new JButton("Processar Transferência"),
             botaoSair = new JButton("Sair");
-           
+    
+    
 
     public AcessoCaixa() {
         setTitle("Sistema Bancário - Área do Caixa");
@@ -71,7 +73,8 @@ class Saque extends JFrame {
             Caixa caixa = new Caixa("Caixa", "", "", "", "", 0);
             caixa.processarSaque(cliente, valor);
             // salva os dados após a transação
-                    Login.persistenciaContas.salvarDados(BankSystem.contasBancarias);
+            persistenciaUsuarios.salvarDados(BankSystem.usuarios);
+            persistenciaUsuarios.carregarDados();
                
         });
 
@@ -108,7 +111,8 @@ class Deposito extends JFrame {
                     Caixa caixa = new Caixa("Caixa", "", "", "", "", 0);
                     caixa.processarDeposito(cliente, valor);
                     // salva os dados após a transação
-                        Login.persistenciaContas.salvarDados(BankSystem.contasBancarias);
+                    persistenciaUsuarios.salvarDados(BankSystem.usuarios);
+                    persistenciaUsuarios.carregarDados();
                 }else{
                   JOptionPane.showMessageDialog(this, "Conta do cliente não existe.");  
                 }
@@ -156,7 +160,8 @@ class TransferenciaCaixa extends JFrame {
                 if (clienteOrigem.getConta().transfereSaldo(valor, clienteDestino.getConta())) {
                     JOptionPane.showMessageDialog(this, "Transferência realizada com sucesso!");
                     // salva os dados após a transação
-                    Login.persistenciaContas.salvarDados(BankSystem.contasBancarias);
+                    persistenciaUsuarios.salvarDados(BankSystem.usuarios);
+                    persistenciaUsuarios.carregarDados();
                 } else {
                     JOptionPane.showMessageDialog(this, "Saldo insuficiente para a transferência.");
                 }

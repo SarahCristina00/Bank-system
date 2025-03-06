@@ -31,8 +31,7 @@ public class PersistenciaUsuarios implements Persistencia<Usuario> {
         }
 
         PersistenciaArquivo.salvaArquivo(PATH, json);
-        // Salva as contas após salvar os usuários
-        Login.persistenciaContas.salvarDados(new ArrayList<>(mapaContas.values()));
+        
     }
 
     @Override
@@ -42,11 +41,6 @@ public class PersistenciaUsuarios implements Persistencia<Usuario> {
         List<Usuario> usuarios = new ArrayList<>();
 
         if (json != null && !json.trim().equals("")) {
-            // Carrega as contas e cria o mapa de contas
-            List<ContaBancaria> contas = Login.persistenciaContas.carregarDados();
-            for (ContaBancaria conta : contas) {
-                mapaContas.put(conta.getConta(), conta);
-            }
 
             JsonArray jsonArray = JsonParser.parseString(json).getAsJsonArray();
 
@@ -57,13 +51,7 @@ public class PersistenciaUsuarios implements Persistencia<Usuario> {
                 if ("usuario".equalsIgnoreCase(tipoUsuario)) {
                     usuarios.add(gson.fromJson(element, Usuario.class));
                 } else if ("cliente".equalsIgnoreCase(tipoUsuario)) {
-                    Cliente cliente = gson.fromJson(element, Cliente.class);
-                    // Atualiza a conta do cliente com a conta do mapa de contas
-                    ContaBancaria conta = mapaContas.get(cliente.getConta().getConta());
-                    if (conta != null) {
-                        cliente.setConta(conta);
-                    }
-                    usuarios.add(cliente);
+                    usuarios.add(gson.fromJson(element, Cliente.class));
                 } else if ("gerente".equalsIgnoreCase(tipoUsuario)) {
                     usuarios.add(gson.fromJson(element, Gerente.class));
                 } else if ("caixa".equalsIgnoreCase(tipoUsuario)) {
@@ -72,9 +60,5 @@ public class PersistenciaUsuarios implements Persistencia<Usuario> {
             }
         }
         return usuarios;
-    }
-
-    public static void atualizarConta(ContaBancaria conta) {
-        mapaContas.put(conta.getConta(), conta);
     }
 }

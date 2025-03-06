@@ -8,6 +8,7 @@
     package com.mycompany.interfaces;
 
     import static com.mycompany.interfaces.Login.criarCampo;
+import static com.mycompany.interfaces.Login.persistenciaUsuarios;
     import com.mycompany.systembank.*;
     import java.awt.*;
     import javax.swing.*;
@@ -82,7 +83,8 @@
                  if (clienteDestino != null && valor > 0) {
                         if (cliente.getConta().transfereSaldo(valor, clienteDestino.getConta())) {
                                 JOptionPane.showMessageDialog(this, "Transferência realizada com sucesso!");
-                                Login.persistenciaContas.salvarDados(BankSystem.contasBancarias);
+                                persistenciaUsuarios.salvarDados(BankSystem.usuarios);
+                                persistenciaUsuarios.carregarDados();
                         } else {
                                 JOptionPane.showMessageDialog(this, "Saldo insuficiente para a transferência.");
                         }

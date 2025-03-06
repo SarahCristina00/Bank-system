@@ -185,14 +185,6 @@ class MenuCriarUsuario extends JFrame {
                     // Salva os usuários no arquivo usuarios.json
                     Login.persistenciaUsuarios.salvarDados(usuarios);
 
-                    // Salva as contas no arquivo contas.json
-                    for (Usuario usuario : usuarios) {
-                        if(usuario instanceof Cliente) {
-                            Cliente cliente = (Cliente) usuario;
-                            BankSystem.contasBancarias.add(cliente.getConta());
-                        }
-                    }
-                    Login.persistenciaContas.salvarDados(BankSystem.contasBancarias);
 
                     JOptionPane.showMessageDialog(this, "Usuário cliente criado com sucesso! " +
                         "Agência: " + novoUsuario.getConta().getAgencia() + 

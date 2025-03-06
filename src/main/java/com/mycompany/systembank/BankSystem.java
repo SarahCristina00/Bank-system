@@ -9,11 +9,12 @@ package com.mycompany.systembank;
 import java.util.*;
 import javax.swing.*;
 import com.mycompany.interfaces.*;
-import com.mycompany.persistencia.PersistenciaUsuarios;
+import static com.mycompany.interfaces.Login.persistenciaUsuarios;
+
+
 public class BankSystem {
      
 //inicializa
- public static List<ContaBancaria> contasBancarias = Login.persistenciaContas.carregarDados();
  public static List<Usuario> usuarios = Login.persistenciaUsuarios.carregarDados();
  
  public static Cliente getCliente(int numeroConta) {
@@ -44,7 +45,7 @@ public class BankSystem {
     return null; 
   }
 
-      public static void limparExtratos() {
+      /*public static void limparExtratos() {
         for (Usuario usuario : usuarios) {
             if (usuario instanceof Cliente) {
                 Cliente cliente = (Cliente) usuario;
@@ -55,12 +56,12 @@ public class BankSystem {
         PersistenciaUsuarios persistenciaUsuarios = new PersistenciaUsuarios(); // Cria uma instância
         persistenciaUsuarios.salvarDados(usuarios); // Chama o método de instância
         System.out.println("Extratos de todas as contas limpos.");
-    }
+    }*/
        
     public static void main(String[] args) {
 
        System.out.println("Iniciando o Sistema Bancario...");
-       limparExtratos();
+       persistenciaUsuarios.carregarDados();
        //chama construtor de tela do login
        
        SwingUtilities.invokeLater(()->new Login());

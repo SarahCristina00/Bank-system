@@ -19,7 +19,6 @@ public class Login extends JFrame {
     private JPasswordField campoSenha = new JPasswordField();
     private JButton botaoEntrar = new JButton("Entrar");
     public static PersistenciaUsuarios persistenciaUsuarios = new PersistenciaUsuarios();
-    public static PersistenciaContas persistenciaContas = new PersistenciaContas();
     
     @SuppressWarnings("null")
     public Login(){

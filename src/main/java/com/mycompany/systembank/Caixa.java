@@ -5,7 +5,6 @@
  */
 
 package com.mycompany.systembank;
-import com.mycompany.interfaces.Login;
 import javax.swing.JPasswordField;
 import javax.swing.JOptionPane;
 
@@ -28,9 +27,7 @@ public class Caixa extends Usuario {
         String senhaInserida = solicitarSenha();
         if (senhaInserida != null && Integer.parseInt(senhaInserida) == cliente.getSenha()) {
             // Senha correta, proceder com o saque
-            cliente.getConta().setSaldo(cliente.getConta().getSaldo() - valor); // Atualização do saldo do cliente após o saque
             cliente.getConta().registraTransacao("Saque", valor, cliente.getConta(), null); // Registra a transação de saque
-            Login.persistenciaContas.salvarDados(BankSystem.contasBancarias);
             JOptionPane.showMessageDialog(null, 
                 "Saque de R$" + valor + " realizado com sucesso para o cliente: " + cliente.getNome(), 
                 "Operação Realizada", 
@@ -52,9 +49,7 @@ public class Caixa extends Usuario {
 
     public void processarDeposito(Cliente cliente, Double valor) {
     if (valor > 0) {  // Se o valor do depósito for maior que 0 
-        cliente.getConta().setSaldo(cliente.getConta().getSaldo() + valor); // Obtém o saldo atual do cliente e adiciona o valor do depósito 
         cliente.getConta().registraTransacao("Deposito", valor, null, cliente.getConta()); // Registra a transação de saque
-        Login.persistenciaContas.salvarDados(BankSystem.contasBancarias);
         JOptionPane.showMessageDialog(null, 
             "Depósito de R$" + valor + " realizado com sucesso para o cliente: " + cliente.getNome(), 
             "Operação Realizada", 
@@ -78,7 +73,6 @@ public class Caixa extends Usuario {
 // Aqui, você acessa o nome do cliente de destino
             Cliente clienteDestino = BankSystem.getCliente(destino.getConta());
             cliente.getConta().registraTransacao("Transferencia", valor, cliente.getConta(), clienteDestino.getConta());
-            Login.persistenciaContas.salvarDados(BankSystem.contasBancarias);
             JOptionPane.showMessageDialog(null, 
                 "Transferência de R$" + valor + 
                 " realizada com sucesso de " + cliente.getNome() + 
