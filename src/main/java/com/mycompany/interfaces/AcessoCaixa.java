@@ -15,9 +15,10 @@ import javax.swing.*;
 public class AcessoCaixa extends JFrame {
 
     private JButton botaoSaque = new JButton("Realizar Saque"),
-                   botaoDeposito = new JButton("Realizar Depósito"),
-                   botaoTransferencia = new JButton("Processar Transferência"),
-                   botaoSair = new JButton("Sair");
+            botaoDeposito = new JButton("Realizar Depósito"),
+            botaoTransferencia = new JButton("Processar Transferência"),
+            botaoSair = new JButton("Sair");
+           
 
     public AcessoCaixa() {
         setTitle("Sistema Bancário - Área do Caixa");
@@ -31,12 +32,15 @@ public class AcessoCaixa extends JFrame {
         botaoSaque.addActionListener(e -> new Saque());
         botaoDeposito.addActionListener(e -> new Deposito());
         botaoTransferencia.addActionListener(e -> new TransferenciaCaixa());
-        botaoSair.addActionListener(e -> new Login());
+         botaoSair.addActionListener(e -> new Login());
+       
 
         painelMenu.add(botaoSaque);
         painelMenu.add(botaoDeposito);
         painelMenu.add(botaoTransferencia);
         painelMenu.add(botaoSair);
+        
+        
 
         add(painelMenu);
         setVisible(true);
@@ -58,29 +62,17 @@ class Saque extends JFrame {
 
         painel.add(criarCampo("Conta do Cliente: ", campoConta));
         painel.add(criarCampo("Valor: ", campoValor));
-
+        
         botaoConfirmar.addActionListener(e -> {
-            try {
-                int conta = Integer.parseInt(campoConta.getText());
-                Number valorNumero = (Number) campoValor.getValue();
-                double valor = valorNumero.doubleValue();
-                Cliente cliente = BankSystem.getCliente(conta);
-
-                if (cliente == null) {
-                    JOptionPane.showMessageDialog(this, "Cliente não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-
-                Caixa caixa = new Caixa("Caixa", "", "", "", "", 0);
-                caixa.processarSaque(cliente, valor);
-
-                // Salva os dados após a transação
-                Login.persistenciaContas.salvarDados(BankSystem.contasBancarias);
-                JOptionPane.showMessageDialog(this, "Saque realizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                JOptionPane.showMessageDialog(this, "Erro ao processar saque: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-            }
+            int conta = Integer.parseInt(campoConta.getText());
+            Number valorNumero = (Number) campoValor.getValue();
+            double valor =valorNumero.doubleValue();
+            Cliente cliente = BankSystem.getCliente(conta);
+            Caixa caixa = new Caixa("Caixa", "", "", "", "", 0);
+            caixa.processarSaque(cliente, valor);
+            // salva os dados após a transação
+                    Login.persistenciaContas.salvarDados(BankSystem.contasBancarias);
+               
         });
 
         add(painel, BorderLayout.CENTER);
@@ -104,33 +96,23 @@ class Deposito extends JFrame {
 
         painel.add(criarCampo("Conta do Cliente: ", campoConta));
         painel.add(criarCampo("Valor: ", campoValor));
-
+        
         botaoConfirmar.addActionListener(e -> {
-            try {
+            try{
                 int conta = Integer.parseInt(campoConta.getText());
+                //converte valor informado na tela
                 Number valorNumero = (Number) campoValor.getValue();
-                double valor = valorNumero.doubleValue();
-                System.out.println("Valor do depósito: " + valor); // Log de depuração
-
+                double valor =valorNumero.doubleValue();
                 Cliente cliente = BankSystem.getCliente(conta);
-                if (cliente == null) {
-                    System.out.println("Erro: Cliente não encontrado."); // Log de depuração
-                    JOptionPane.showMessageDialog(this, "Cliente não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-
                 Caixa caixa = new Caixa("Caixa", "", "", "", "", 0);
                 caixa.processarDeposito(cliente, valor);
-
-                // Salva os dados após a transação
-                Login.persistenciaContas.salvarDados(BankSystem.contasBancarias);
-                System.out.println("Dados salvos com sucesso."); // Log de depuração
-
-                JOptionPane.showMessageDialog(this, "Depósito realizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-            } catch (Exception ex) {
+                // salva os dados após a transação
+                    Login.persistenciaContas.salvarDados(BankSystem.contasBancarias);
+               
+            }catch(Exception ex){
                 ex.printStackTrace();
-                JOptionPane.showMessageDialog(this, "Erro ao processar depósito: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             }
+            
         });
 
         add(painel, BorderLayout.CENTER);
@@ -158,31 +140,24 @@ class TransferenciaCaixa extends JFrame {
         painel.add(criarCampo("Valor: ", campoValor));
 
         botaoConfirmar.addActionListener(e -> {
-            try {
-                int contaOrigem = Integer.parseInt(campoOrigem.getText());
-                int contaDestino = Integer.parseInt(campoDestino.getText());
-                Number valorNumero = (Number) campoValor.getValue();
-                double valor = valorNumero.doubleValue();
-                Cliente clienteOrigem = BankSystem.getCliente(contaOrigem);
-                Cliente clienteDestino = BankSystem.getCliente(contaDestino);
-
-                // Verifica se as contas de origem e destino existem
-                if (clienteOrigem == null || clienteDestino == null) {
-                    JOptionPane.showMessageDialog(this, "Uma das contas de destino ou origem não existe.", "Erro", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-
-                // Realiza a transferência e registra a transação
+            int contaOrigem = Integer.parseInt(campoOrigem.getText());
+            int contaDestino = Integer.parseInt(campoDestino.getText());
+            Number valorNumero = (Number) campoValor.getValue();
+            double valor =valorNumero.doubleValue();
+            Cliente clienteOrigem = BankSystem.getCliente(contaOrigem);
+            Cliente clienteDestino = BankSystem.getCliente(contaDestino);
+            // se as contas de origem e destino existem
+            if (clienteOrigem != null && clienteDestino != null) {
+                // realiza a transferência e registra a transação
                 if (clienteOrigem.getConta().transfereSaldo(valor, clienteDestino.getConta())) {
-                    JOptionPane.showMessageDialog(this, "Transferência realizada com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-                    // Salva os dados após a transação
+                    JOptionPane.showMessageDialog(this, "Transferência realizada com sucesso!");
+                    // salva os dados após a transação
                     Login.persistenciaContas.salvarDados(BankSystem.contasBancarias);
                 } else {
-                    JOptionPane.showMessageDialog(this, "Saldo insuficiente para a transferência.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Saldo insuficiente para a transferência.");
                 }
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                JOptionPane.showMessageDialog(this, "Erro ao processar transferência: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Uma das contas de destino ou origem não existe.");
             }
         });
 
