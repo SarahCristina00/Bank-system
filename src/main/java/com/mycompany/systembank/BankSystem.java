@@ -17,6 +17,8 @@ public class BankSystem {
 //inicializa
  public static List<Usuario> usuarios = Login.persistenciaUsuarios.carregarDados();
  public static List<Map<String, Object>> solicitacoes = Login.persistenciaSolicitacoes.carregarDados();
+ public static List<Map<String, Object>> opcoesInvestimento = Login.persistenciaInvestimentos.carregarDados();
+
 
 
  
@@ -62,6 +64,7 @@ public class BankSystem {
        System.out.println("Iniciando o Sistema Bancario...");
        persistenciaUsuarios.carregarDados();
        persistenciaSolicitacoes.carregarDados();
+       persistenciaInvestimentos.carregarDados();
        //chama construtor de tela do login
        
        SwingUtilities.invokeLater(()->new Login());

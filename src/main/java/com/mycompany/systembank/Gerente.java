@@ -1,10 +1,13 @@
 package com.mycompany.systembank;
 
 import static com.mycompany.interfaces.Login.persistenciaSolicitacoes;
+import com.mycompany.persistencia.PersistenciaInvestimentos;
+import java.util.*;
 import java.util.Map;
 import javax.swing.JOptionPane;
 
 public class Gerente extends Usuario {
+    
 
     // Construtor 
     public Gerente(String nome, String cpf, String dataNascimento, String telefone, String email, int senha) {
@@ -51,6 +54,15 @@ public class Gerente extends Usuario {
         JOptionPane.showMessageDialog(null, "Opção de renda variável cadastrada: " + descricao +
                 " | Risco: " + risco +
                 " | Rentabilidade esperada: " + rentabilidade + "%", "Cadastro de Renda Variável", JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    public void cadastrarOpcaoInvestimento(Map<String, Object> opcao) {
+        BankSystem.opcoesInvestimento.add(opcao);
+        PersistenciaInvestimentos.salvarDados(BankSystem.opcoesInvestimento);
+    }
+
+    public static List<Map<String, Object>> getOpcoesInvestimento() {
+        return BankSystem.opcoesInvestimento;
     }
 
     public void analisarSolicitacoes(int indice, String status) {

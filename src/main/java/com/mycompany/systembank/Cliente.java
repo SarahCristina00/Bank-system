@@ -59,22 +59,14 @@ public class Cliente extends Usuario{
     }
 
     
-    public void investirRendaFixa(String opcao,Double valor){
-            if(conta.getSaldo()<valor){
-                System.out.println("Saldo insuficiente para investimento");
-                return;
-            }
-            conta.registraTransacao(opcao, valor, conta, conta);
-    }
-    
-     public void investirRendaVariavel(String opcao, Double valor){
-            if(conta.getSaldo()<valor){
-                System.out.println("Saldo insuficiente para investimento");
-                return;
-            }
-            conta.registraTransacao(opcao, valor, conta, conta);
+    public void investir(Map<String, Object> opcao, Double valor) {
+        if (conta.getSaldo() < valor) {
+            JOptionPane.showMessageDialog(null, "Saldo insuficiente para investimento.");
+            return;
+        }
+        conta.registraTransacao("Investimento: " + opcao.get("descricao"), valor, conta, conta);
+        JOptionPane.showMessageDialog(null, "Investimento realizado com sucesso!");
     }
      
-
 }
 

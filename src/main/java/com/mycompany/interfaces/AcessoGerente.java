@@ -3,6 +3,7 @@ package com.mycompany.interfaces;
 import com.mycompany.systembank.*;
 import javax.swing.*;
 import java.awt.*;
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -12,7 +13,7 @@ public class AcessoGerente extends JFrame {
             botaoAvaliarCredito = new JButton("Avaliar Crédito"), 
             botaoApoiarMovimentacao = new JButton("Apoiar Movimentação"),
             botaoSair = new JButton("Sair");
-            
+       
     
    // private List<Gerente> listaGerentes;
 
@@ -46,44 +47,81 @@ public class AcessoGerente extends JFrame {
 }
 
 class CadastroRendaVariavel extends JFrame {
+    private JList<String> listaOpcoes = new JList<>();
+    private DefaultListModel<String> modeloLista = new DefaultListModel<>();
     public CadastroRendaVariavel(Gerente gerente) {
         setTitle("Cadastro Renda Variável");
-        setSize(400, 300);
+        setSize(600, 400); // Aumentando o tamanho para acomodar a lista
         setLocationRelativeTo(null);
 
-        JPanel painel = new JPanel(new GridLayout(3, 2, 20, 20));
+        JPanel painelPrincipal = new JPanel(new BorderLayout());
+
+        // Painel para os campos de cadastro
+        JPanel painelCampos = new JPanel(new GridLayout(3, 2, 20, 20));
         JTextField campoDescricao = new JTextField();
         JTextField campoRisco = new JTextField();
         JTextField campoRentabilidade = new JTextField();
         JButton botaoConfirmar = new JButton("Confirmar Cadastro");
 
-        painel.add(new JLabel("Descrição: "));
-        painel.add(campoDescricao);
-        painel.add(new JLabel("Risco: "));
-        painel.add(campoRisco);
-        painel.add(new JLabel("Rentabilidade (%): "));
-        painel.add(campoRentabilidade);
+        painelCampos.add(new JLabel("Descrição: "));
+        painelCampos.add(campoDescricao);
+        painelCampos.add(new JLabel("Risco: "));
+        painelCampos.add(campoRisco);
+        painelCampos.add(new JLabel("Rentabilidade (%): "));
+        painelCampos.add(campoRentabilidade);
 
         botaoConfirmar.addActionListener(e -> {
-            String descricao = campoDescricao.getText();
-            double risco = Double.parseDouble(campoRisco.getText());
-            double rentabilidade = Double.parseDouble(campoRentabilidade.getText());
-            gerente.cadastrarOpcaoRendaVariavel(descricao, risco, rentabilidade);
+            Map<String, Object> opcao = new HashMap<>();
+            opcao.put("tipo", "renda variável");
+            opcao.put("descricao", campoDescricao.getText());
+            opcao.put("risco", Double.valueOf(campoRisco.getText()));
+            opcao.put("rentabilidade", Double.valueOf(campoRentabilidade.getText()));
+            gerente.cadastrarOpcaoInvestimento(opcao);
+            atualizarListaOpcoes(listaOpcoes); 
         });
 
-        add(painel, BorderLayout.CENTER);
-        add(botaoConfirmar, BorderLayout.SOUTH);
+        // Painel para a lista de opções cadastradas
+        JPanel painelLista = new JPanel(new BorderLayout());
+        atualizarListaOpcoes(listaOpcoes); // Inicializa a lista
+        JScrollPane scrollPane = new JScrollPane(listaOpcoes);
+        painelLista.add(new JLabel("Opções Cadastradas:"), BorderLayout.NORTH);
+        painelLista.add(scrollPane, BorderLayout.CENTER);
+
+        // Adiciona os painéis ao painel principal
+        painelPrincipal.add(painelCampos, BorderLayout.NORTH);
+        painelPrincipal.add(painelLista, BorderLayout.CENTER);
+        painelPrincipal.add(botaoConfirmar, BorderLayout.SOUTH);
+
+        add(painelPrincipal);
         setVisible(true);
+    }
+
+    private void atualizarListaOpcoes(JList<String> lista) {
+        modeloLista.clear();
+        for (Map<String, Object> opcao : Gerente.getOpcoesInvestimento()) {
+            if (opcao.get("tipo").equals("renda variável")) {
+                String descricao = (String) opcao.get("descricao");
+                double risco = (double) opcao.get("risco");
+                double rentabilidade = (double) opcao.get("rentabilidade");
+                modeloLista.addElement(descricao + " (Risco: " + risco + ", Rentabilidade: " + rentabilidade + "%)");
+            }
+        }
+        lista.setModel(modeloLista);
     }
 }
 
 class CadastroRendaFixa extends JFrame {
+    private JList<String> listaOpcoes = new JList<>();
+    private DefaultListModel<String> modeloLista = new DefaultListModel<>();
     public CadastroRendaFixa(Gerente gerente) {
         setTitle("Cadastro Renda Fixa");
-        setSize(400, 300);
+        setSize(600, 400); // Aumentando o tamanho para acomodar a lista
         setLocationRelativeTo(null);
 
-        JPanel painel = new JPanel(new GridLayout(5, 2, 20, 20));
+        JPanel painelPrincipal = new JPanel(new BorderLayout());
+
+        // Painel para os campos de cadastro
+        JPanel painelCampos = new JPanel(new GridLayout(5, 2, 20, 20));
         JTextField campoDescricao = new JTextField();
         JTextField campoTaxa = new JTextField();
         JTextField campoRentabilidade = new JTextField();
@@ -91,29 +129,71 @@ class CadastroRendaFixa extends JFrame {
         JTextField campoPrazoMaximo = new JTextField();
         JButton botaoConfirmar = new JButton("Confirmar Cadastro");
 
-        painel.add(new JLabel("Descrição: "));
-        painel.add(campoDescricao);
-        painel.add(new JLabel("Taxa (%): "));
-        painel.add(campoTaxa);
-        painel.add(new JLabel("Rentabilidade (%): "));
-        painel.add(campoRentabilidade);
-        painel.add(new JLabel("Prazo Mínimo (em meses): "));
-        painel.add(campoPrazoMinimo);
-        painel.add(new JLabel("Prazo Máximo(em meses): "));
-        painel.add(campoPrazoMaximo);
+        painelCampos.add(new JLabel("Descrição: "));
+        painelCampos.add(campoDescricao);
+        painelCampos.add(new JLabel("Taxa (%): "));
+        painelCampos.add(campoTaxa);
+        painelCampos.add(new JLabel("Rentabilidade (%): "));
+        painelCampos.add(campoRentabilidade);
+        painelCampos.add(new JLabel("Prazo Mínimo (em meses): "));
+        painelCampos.add(campoPrazoMinimo);
+        painelCampos.add(new JLabel("Prazo Máximo(em meses): "));
+        painelCampos.add(campoPrazoMaximo);
 
         botaoConfirmar.addActionListener(e -> {
-            String descricao = campoDescricao.getText();
-            double taxa = Double.parseDouble(campoTaxa.getText());
-            double rentabilidade = Double.parseDouble(campoRentabilidade.getText());
-            int prazoMinimo = Integer.parseInt(campoPrazoMinimo.getText());
-            int prazoMaximo = Integer.parseInt(campoPrazoMaximo.getText());
-            gerente.cadastrarOpcaoRendaFixa(descricao, taxa, rentabilidade, prazoMinimo, prazoMaximo);
+            Map<String, Object> opcao = new HashMap<>();
+            opcao.put("tipo", "renda fixa");
+            opcao.put("descricao", campoDescricao.getText());
+            opcao.put("taxa", Double.valueOf(campoTaxa.getText()));
+            opcao.put("rentabilidade", Double.valueOf(campoRentabilidade.getText()));
+            opcao.put("prazoMinimo", Integer.valueOf(campoPrazoMinimo.getText()));
+            opcao.put("prazoMaximo", Integer.valueOf(campoPrazoMaximo.getText()));
+            gerente.cadastrarOpcaoInvestimento(opcao);
+            atualizarListaOpcoes(listaOpcoes); 
         });
 
-        add(painel, BorderLayout.CENTER);
-        add(botaoConfirmar, BorderLayout.SOUTH);
+        // Painel para a lista de opções cadastradas
+        JPanel painelLista = new JPanel(new BorderLayout());
+        atualizarListaOpcoes(listaOpcoes); 
+        JScrollPane scrollPane = new JScrollPane(listaOpcoes);
+        painelLista.add(new JLabel("Opções Cadastradas:"), BorderLayout.NORTH);
+        painelLista.add(scrollPane, BorderLayout.CENTER);
+
+        // Adiciona os painéis ao painel principal
+        painelPrincipal.add(painelCampos, BorderLayout.NORTH);
+        painelPrincipal.add(painelLista, BorderLayout.CENTER);
+        painelPrincipal.add(botaoConfirmar, BorderLayout.SOUTH);
+
+        add(painelPrincipal);
         setVisible(true);
+    }
+
+    private void atualizarListaOpcoes(JList<String> lista) {
+        modeloLista.clear();
+        for(Map<String, Object> opcao : Gerente.getOpcoesInvestimento()) {
+            if (opcao.get("tipo").equals("renda fixa")) {
+                String descricao = (String) opcao.get("descricao");
+                double taxa = (double) opcao.get("taxa");
+                double rentabilidade = (double) opcao.get("rentabilidade");
+                int prazoMinimo = 0; // Valor padrão em caso de erro
+                if(!(opcao.get("prazoMinimo") instanceof Double)) {
+                    if (opcao.get("prazoMinimo") instanceof Integer) {
+                        prazoMinimo = (int) opcao.get("prazoMinimo");
+                    } 
+                }else{
+                    prazoMinimo = ((Double) opcao.get("prazoMinimo")).intValue();
+                }
+
+                int prazoMaximo = 0; // Valor padrão em caso de erro
+                if(opcao.get("prazoMaximo") instanceof Double aDouble) {
+                    prazoMaximo = aDouble.intValue(); 
+                }else if(opcao.get("prazoMaximo")instanceof Integer) {
+                    prazoMaximo =(int)opcao.get("prazoMaximo"); 
+                }
+                modeloLista.addElement(descricao + " (Taxa: " + taxa + "%, Rentabilidade: " + rentabilidade + "%, Prazo: " + prazoMinimo + "-" + prazoMaximo + " meses)");
+            }
+        }
+        lista.setModel(modeloLista);
     }
 }
 

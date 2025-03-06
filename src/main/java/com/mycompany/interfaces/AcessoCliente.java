@@ -14,6 +14,7 @@ import com.mycompany.systembank.*;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.*;
 import java.util.*;
 import java.util.stream.Collectors;
 import javax.swing.*;
@@ -43,7 +44,7 @@ import javax.swing.*;
             botaoTransferencia.addActionListener(e -> new Transferencia(cliente));
             botaoConsultaSaldo.addActionListener(e-> JOptionPane.showMessageDialog(this, "Saldo: R$ " + cliente.getConta().getSaldo()));
             botaoConsultaExtrato.addActionListener(e -> new ExtratoCliente(cliente).exibirExtrato());
-            botaoConsultaInvestimento.addActionListener(e-> new Menu());
+            botaoConsultaInvestimento.addActionListener(e->{exibirInvestimentos(cliente);});
             botaoConsultaCredito.addActionListener(e -> {exibirCreditos(cliente);});
             botaoSair.addActionListener(e -> new Login());
 
@@ -133,7 +134,84 @@ import javax.swing.*;
             janelaCreditos.add(painelPrincipal);
             janelaCreditos.setVisible(true);
         }
+        
+    private void exibirInvestimentos(Cliente cliente) {
+        List<Map<String, Object>> opcoes = Gerente.getOpcoesInvestimento();
+        if (opcoes.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nenhuma opção de investimento disponível.");
+            return;
+        }
 
+        JComboBox<String> comboOpcoesInvestimento = new JComboBox<>();
+        JTextArea areaDetalhesInvestimento = new JTextArea();
+        areaDetalhesInvestimento.setEditable(false);
+        JScrollPane scrollPaneDetalhes = new JScrollPane(areaDetalhesInvestimento);
+
+        for (Map<String, Object> opcao : opcoes) {
+            comboOpcoesInvestimento.addItem((String) opcao.get("descricao"));
+        }
+
+        JPanel painelInvestimentos = new JPanel(new BorderLayout());
+        painelInvestimentos.add(comboOpcoesInvestimento, BorderLayout.NORTH);
+        painelInvestimentos.add(scrollPaneDetalhes, BorderLayout.CENTER);
+
+        comboOpcoesInvestimento.addActionListener((ActionEvent e) -> {
+            String opcaoEscolhida = (String) comboOpcoesInvestimento.getSelectedItem();
+            if (opcaoEscolhida != null) {
+                Map<String, Object> opcaoSelecionada = opcoes.stream().filter(opcao -> opcao.get("descricao").equals(opcaoEscolhida)).findFirst().orElse(null);
+                if (opcaoSelecionada != null) {
+                    StringBuilder detalhes = new StringBuilder();
+                    detalhes.append("Descrição: ").append(opcaoSelecionada.get("descricao")).append("\n");
+                    detalhes.append("Tipo: ").append(opcaoSelecionada.get("tipo")).append("\n");
+                    
+                    if (opcaoSelecionada.get("tipo").equals("renda fixa")) {
+                        detalhes.append("Taxa: ").append(opcaoSelecionada.get("taxa")).append("%\n");
+                        detalhes.append("Rentabilidade: ").append(opcaoSelecionada.get("rentabilidade")).append("%\n");
+                        detalhes.append("Prazo Mínimo: ").append(opcaoSelecionada.get("prazoMinimo")).append(" meses\n");
+                        detalhes.append("Prazo Máximo: ").append(opcaoSelecionada.get("prazoMaximo")).append(" meses\n");
+                    } else {
+                        detalhes.append("Risco: ").append(opcaoSelecionada.get("risco")).append("\n");
+                        detalhes.append("Rentabilidade: ").append(opcaoSelecionada.get("rentabilidade")).append("%\n");
+                    }
+                    
+                    areaDetalhesInvestimento.setText(detalhes.toString());
+                }
+            }
+        });
+
+        // Exibe os detalhes da primeira opção inicialmente
+        if (0 <= opcoes.size()) {
+            Map<String, Object> opcaoSelecionada = opcoes.get(0);
+            StringBuilder detalhes = new StringBuilder();
+            detalhes.append("Descrição: ").append(opcaoSelecionada.get("descricao")).append("\n");
+            detalhes.append("Tipo: ").append(opcaoSelecionada.get("tipo")).append("\n");
+
+            if (opcaoSelecionada.get("tipo").equals("renda fixa")) {
+                detalhes.append("Taxa: ").append(opcaoSelecionada.get("taxa")).append("%\n");
+                detalhes.append("Rentabilidade: ").append(opcaoSelecionada.get("rentabilidade")).append("%\n");
+                detalhes.append("Prazo Mínimo: ").append(opcaoSelecionada.get("prazoMinimo")).append(" meses\n");
+                detalhes.append("Prazo Máximo: ").append(opcaoSelecionada.get("prazoMaximo")).append(" meses\n");
+            } else {
+                detalhes.append("Risco: ").append(opcaoSelecionada.get("risco")).append("\n");
+                detalhes.append("Rentabilidade: ").append(opcaoSelecionada.get("rentabilidade")).append("%\n");
+            }
+
+            areaDetalhesInvestimento.setText(detalhes.toString());
+        }
+
+        JOptionPane.showMessageDialog(this, painelInvestimentos, "Investimentos", JOptionPane.PLAIN_MESSAGE);
+
+        String valor = JOptionPane.showInputDialog("Digite o valor do investimento:");
+        if (valor != null && !valor.isEmpty()) {
+            String opcaoEscolhida = (String) comboOpcoesInvestimento.getSelectedItem();
+            if (opcaoEscolhida != null) {
+                Map<String, Object> opcaoSelecionada = opcoes.stream().filter(opcao -> opcao.get("descricao").equals(opcaoEscolhida)).findFirst().orElse(null);
+                if (opcaoSelecionada != null) {
+                    cliente.investir(opcaoSelecionada, Double.valueOf(valor));
+                }
+            }
+        }
+    }
 
     }
      
