@@ -42,6 +42,7 @@ public class AcessoGerente extends JFrame {
         painelMenu.add(botaoSair);
         
         add(painelMenu);
+        BankSystem.janelasAbertas.add(this);
         setVisible(true);
     }
 }
@@ -93,6 +94,7 @@ class CadastroRendaVariavel extends JFrame {
         painelPrincipal.add(botaoConfirmar, BorderLayout.SOUTH);
 
         add(painelPrincipal);
+        BankSystem.janelasAbertas.add(this);
         setVisible(true);
     }
 
@@ -165,6 +167,7 @@ class CadastroRendaFixa extends JFrame {
         painelPrincipal.add(botaoConfirmar, BorderLayout.SOUTH);
 
         add(painelPrincipal);
+        BankSystem.janelasAbertas.add(this);
         setVisible(true);
     }
 
@@ -239,6 +242,7 @@ class AvaliarCredito extends JFrame {
         painelPrincipal.add(painelBotoes, BorderLayout.SOUTH);
 
         add(painelPrincipal);
+        BankSystem.janelasAbertas.add(this);
         setVisible(true);
 
         exibirSolicitacoes(); // Exibe as solicitações ao abrir a janela
@@ -290,6 +294,7 @@ class ApoiarMovimentacao extends JFrame {
 
         add(painel, BorderLayout.CENTER);
         add(botaoConfirmar, BorderLayout.SOUTH);
+        BankSystem.janelasAbertas.add(this);
         setVisible(true);
     }
     

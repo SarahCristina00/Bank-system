@@ -89,6 +89,10 @@ public class Login extends JFrame {
         });
         
         add(painel);
+        for (JFrame janela : BankSystem.janelasAbertas) {
+            janela.dispose();
+        }
+        BankSystem.janelasAbertas.clear();
         setVisible(true);
         
     }

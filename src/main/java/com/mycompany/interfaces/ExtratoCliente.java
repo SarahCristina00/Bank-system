@@ -7,6 +7,7 @@
 
 package com.mycompany.interfaces;
 
+import com.mycompany.systembank.BankSystem;
 import com.mycompany.systembank.Cliente;
 import com.mycompany.systembank.Transacao;
 import java.util.List;
@@ -56,6 +57,7 @@ public class ExtratoCliente extends JFrame {
 
        
             frameExtrato.add(scrollPane, BorderLayout.CENTER);
+            BankSystem.janelasAbertas.add(this);
             frameExtrato.setVisible(true);
         } catch (Exception e) {
             e.printStackTrace(); 

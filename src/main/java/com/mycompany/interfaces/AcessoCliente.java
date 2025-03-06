@@ -57,6 +57,7 @@ import javax.swing.*;
             painelMenu.add(botaoSair);
 
             add(painelMenu);
+            BankSystem.janelasAbertas.add(this);
             setVisible(true);
         }
         
@@ -133,6 +134,7 @@ import javax.swing.*;
 
             janelaCreditos.add(painelPrincipal);
             janelaCreditos.setVisible(true);
+            BankSystem.janelasAbertas.add(this);
         }
         
     private void exibirInvestimentos(Cliente cliente) {
@@ -143,7 +145,7 @@ import javax.swing.*;
         }
 
         JComboBox<String> comboOpcoesInvestimento = new JComboBox<>();
-        JTextArea areaDetalhesInvestimento = new JTextArea();
+        JTextField areaDetalhesInvestimento = new JTextField();
         areaDetalhesInvestimento.setEditable(false);
         JScrollPane scrollPaneDetalhes = new JScrollPane(areaDetalhesInvestimento);
 
@@ -259,7 +261,7 @@ import javax.swing.*;
 
             add(painelPrincipal);
             add(botaoRealizarTransferencia, BorderLayout.SOUTH);
-
+            BankSystem.janelasAbertas.add(this);
             setVisible(true);
         }
     }

@@ -26,7 +26,7 @@ public class Transacao {
         this.data = Calendar.getInstance();
         this.origem = (contaOrigem != null) ? contaOrigem.getConta() : 0;
         this.destino = (contaDestino != null) ? contaDestino.getConta() : 0;
-        if(tipo.equals("Transferência enviada") || tipo.equals("Saque")){
+        if(tipo.equals("Transferência enviada") || tipo.equals("Saque") || tipo.contains("Investimento")){
             this.saldoFinal = saldoInicial - valor;
         }else if (tipo.equals("Transferência recebida") || tipo.equals("Deposito")) {
             this.saldoFinal = saldoInicial + valor;

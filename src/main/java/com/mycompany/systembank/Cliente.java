@@ -7,6 +7,8 @@
 package com.mycompany.systembank;
 
 import static com.mycompany.interfaces.Login.persistenciaSolicitacoes;
+import static com.mycompany.interfaces.Login.persistenciaUsuarios;
+import static com.mycompany.systembank.Caixa.solicitarSenha;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
@@ -60,12 +62,31 @@ public class Cliente extends Usuario{
 
     
     public void investir(Map<String, Object> opcao, Double valor) {
-        if (conta.getSaldo() < valor) {
-            JOptionPane.showMessageDialog(null, "Saldo insuficiente para investimento.");
-            return;
+        if(getConta().getSaldo() >= valor) {  
+       
+        // Solicitar senha para validar a operação
+        String senhaInserida = solicitarSenha();
+            if(senhaInserida != null && Integer.parseInt(senhaInserida) == getSenha()) {
+                // Senha correta, proceder com o saque
+                getConta().registraTransacao("Investimento "+opcao.get("descricao"), valor, getConta(), null);
+                JOptionPane.showMessageDialog(null, 
+                    "Investimento de R$" + valor + " realizado com sucesso para o cliente: " + getNome(), 
+                    "Operação Realizada", 
+                    JOptionPane.INFORMATION_MESSAGE);
+                persistenciaUsuarios.salvarDados(BankSystem.usuarios);
+                persistenciaUsuarios.carregarDados();
+            }else{
+                JOptionPane.showMessageDialog(null, 
+                    "Senha incorreta! A operação foi cancelada.", 
+                    "Erro", 
+                    JOptionPane.ERROR_MESSAGE);
+            }
+        }else{
+        JOptionPane.showMessageDialog(null, 
+            "Saldo insuficiente para investimento do cliente: " + getNome(), 
+            "Erro", 
+            JOptionPane.ERROR_MESSAGE);
         }
-        conta.registraTransacao("Investimento: " + opcao.get("descricao"), valor, conta, conta);
-        JOptionPane.showMessageDialog(null, "Investimento realizado com sucesso!");
     }
      
 }

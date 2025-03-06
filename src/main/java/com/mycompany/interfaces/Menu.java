@@ -51,6 +51,7 @@ public class Menu extends JFrame {
        
         
         add(painelMenu);
+        BankSystem.janelasAbertas.add(this);
         setVisible(true);
     }
 }
@@ -195,7 +196,7 @@ class MenuCriarUsuario extends JFrame {
                 }
            }
          });
-        
+        BankSystem.janelasAbertas.add(this);
         setVisible(true);
     }
 }
@@ -328,7 +329,7 @@ class MenuEditarUsuario extends JFrame {
                 setVisible(false);
             }
         });
-
+        BankSystem.janelasAbertas.add(this);
         setVisible(true);
     }
 }
@@ -370,6 +371,7 @@ class MenuRemoverUsuario extends JFrame{
             
         
         add(painelRemocao);
+        BankSystem.janelasAbertas.add(this);
         setVisible(true);
     }
 }
@@ -395,7 +397,7 @@ class MenuListarUsuarios extends JFrame {
             lista.add(new JScrollPane(jlUsuarios), BorderLayout.CENTER);
             
             add(lista);
-            
+            BankSystem.janelasAbertas.add(this);
             setVisible(true);
        
         }

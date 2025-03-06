@@ -32,9 +32,16 @@ public class ContaBancaria {
     public void setSaldo(double saldo) { this.saldo = saldo; }
      
     public void registraTransacao(String tipo, double valor, ContaBancaria origem, ContaBancaria destino){
-        Transacao transacao = new Transacao(tipo, valor, this.saldo, origem, destino);
+        double saldoInicial = this.saldo;
+        System.out.println("Registrando transação: Tipo = " + tipo + ", Valor = " + valor + ", Saldo Inicial = " + saldoInicial);
+        if(tipo.equals("Transferência enviada") || tipo.equals("Saque") || tipo.contains("Investimento")){
+            this.saldo -= valor;
+        }else if (tipo.equals("Transferência recebida") || tipo.equals("Deposito")) {
+            this.saldo += valor;
+        }
+        System.out.println("Saldo após atualização = " + this.saldo);
+        Transacao transacao = new Transacao(tipo, valor, saldoInicial, origem, destino);
         extrato.add(transacao);
-        this.saldo = transacao.getSaldoFinal();
         System.out.println("Transacao registrada: " + transacao);
         imprimeExtrato();
     }

@@ -18,6 +18,7 @@ public class BankSystem {
  public static List<Usuario> usuarios = Login.persistenciaUsuarios.carregarDados();
  public static List<Map<String, Object>> solicitacoes = Login.persistenciaSolicitacoes.carregarDados();
  public static List<Map<String, Object>> opcoesInvestimento = Login.persistenciaInvestimentos.carregarDados();
+public static List<JFrame> janelasAbertas = new ArrayList<>();
 
 
 

@@ -45,6 +45,7 @@ public class AcessoCaixa extends JFrame{
         
 
         add(painelMenu);
+        BankSystem.janelasAbertas.add(this);
         setVisible(true);
     }
 }
@@ -79,6 +80,7 @@ class Saque extends JFrame {
 
         add(painel, BorderLayout.CENTER);
         add(botaoConfirmar, BorderLayout.SOUTH);
+        BankSystem.janelasAbertas.add(this);
         setVisible(true);
     }
 }
@@ -123,6 +125,7 @@ class Deposito extends JFrame {
 
         add(painel, BorderLayout.CENTER);
         add(botaoConfirmar, BorderLayout.SOUTH);
+        BankSystem.janelasAbertas.add(this);
         setVisible(true);
     }
 }
@@ -166,6 +169,7 @@ class TransferenciaCaixa extends JFrame {
 
         add(painel, BorderLayout.CENTER);
         add(botaoConfirmar, BorderLayout.SOUTH);
+        BankSystem.janelasAbertas.add(this);
         setVisible(true);
         
     }
