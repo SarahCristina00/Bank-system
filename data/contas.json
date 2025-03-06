@@ -1,54 +1,8 @@
 [
   {
     "conta": 1001,
-    "saldo": -100.0,
-    "extrato": [
-      {
-        "tipo": "Deposito",
-        "valor": 100.0,
-        "saldoFinal": 200.0,
-        "data": {
-          "year": 2025,
-          "month": 2,
-          "dayOfMonth": 6,
-          "hourOfDay": 12,
-          "minute": 48,
-          "second": 14
-        },
-        "origem": 0,
-        "destino": 1001
-      },
-      {
-        "tipo": "Saque",
-        "valor": 50.0,
-        "saldoFinal": 100.0,
-        "data": {
-          "year": 2025,
-          "month": 2,
-          "dayOfMonth": 6,
-          "hourOfDay": 12,
-          "minute": 49,
-          "second": 15
-        },
-        "origem": 1001,
-        "destino": 0
-      },
-      {
-        "tipo": "Transferência enviada",
-        "valor": 100.0,
-        "saldoFinal": -100.0,
-        "data": {
-          "year": 2025,
-          "month": 2,
-          "dayOfMonth": 6,
-          "hourOfDay": 12,
-          "minute": 50,
-          "second": 0
-        },
-        "origem": 1001,
-        "destino": 1002
-      }
-    ]
+    "saldo": 0.0,
+    "extrato": []
   },
   {
     "conta": 1002,
