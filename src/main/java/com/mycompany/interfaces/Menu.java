@@ -286,7 +286,19 @@ class MenuEditarUsuario extends JFrame {
                     campoEstado.setText(cliente.getEndereco().getEstado());
                     campoComplemento.setText(cliente.getEndereco().getComplemento());
                     campoCEP.setText(cliente.getEndereco().getCep());
+                    for (Component component : painelCliente.getComponents()) {
+                        if (component instanceof JLabel && ((JLabel) component).getText().startsWith("Conta: ")) {
+                            painelCliente.remove(component);
+                            break; 
+                        }
+                    }
+
+                    
                     painelCliente.add(new JLabel("Conta: " + cliente.getConta().getConta()));
+
+                    
+                    painelCliente.revalidate();
+                    painelCliente.repaint();
                 }
             }
         });

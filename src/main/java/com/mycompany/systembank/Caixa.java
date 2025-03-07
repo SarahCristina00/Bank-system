@@ -62,21 +62,19 @@ public class Caixa extends Usuario {
     }
 }
 
-    public void processarTransferencia(Cliente cliente, Cliente destino, Double valor) {
-    if (cliente.getConta().getSaldo() >= valor) {  // Verifica saldo atual do cliente se é maior que o valor da transferência
-        String senhaInserida = solicitarSenha();
-        if (senhaInserida != null && Integer.parseInt(senhaInserida) == cliente.getSenha()) {
-            cliente.getConta().setSaldo(cliente.getConta().getSaldo() - valor); // Retira o valor de transferência da conta do cliente
-             
-            Cliente clienteDestino = BankSystem.getCliente(destino.getConta().getConta());
-            destino.getConta().setSaldo(cliente.getConta().getSaldo() + valor);
-            cliente.getConta().registraTransacao("Transferencia", valor, cliente.getConta(), clienteDestino.getConta());
-            JOptionPane.showMessageDialog(null, 
-                "Transferência de R$" + valor + 
-                " realizada com sucesso de " + cliente.getNome() + 
-                " para " + clienteDestino.getNome(),
-                "Operação Realizada", 
-                JOptionPane.INFORMATION_MESSAGE);
+ public void processarTransferencia(Cliente cliente, Cliente destino, Double valor) {
+    if (cliente.getConta().getSaldo() >= valor) {
+            String senhaInserida = solicitarSenha();
+            if (senhaInserida != null && Integer.parseInt(senhaInserida) == cliente.getSenha()) {
+                cliente.getConta().setSaldo(cliente.getConta().getSaldo() - valor);
+                destino.getConta().setSaldo(destino.getConta().getSaldo() + valor);
+                cliente.getConta().registraTransacao("Transferencia", valor, cliente.getConta(), destino.getConta());
+                JOptionPane.showMessageDialog(null,
+                        "Transferência de R$" + valor +
+                                " realizada com sucesso de " + cliente.getNome() +
+                                " para " + destino.getNome(),
+                        "Operação Realizada",
+                        JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(null, 
                 "Senha incorreta! A operação foi cancelada.", 
