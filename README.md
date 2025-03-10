@@ -37,10 +37,10 @@ sistema-bancario-java/
 ├── src/
 │   ├── com.mycompany.systembank/       # Classes principais (Cliente, Conta, Usuário, etc.)
 │   ├── com.mycompany.interfaces/       # Telas e interfaces gráficas
-│   ├── com.mycompany.persistencia/     # Persistência de dados (JSON)
+│   ├── com.mycompany.persistencia/     # Persistência de dados (JSON/XML)
 │   └── com.mycompany.tests/            # Testes de unidade
 ├── data/                               # Arquivos de dados (usuarios.json, contas.json)
-└── README.md                           # Apresentação e documentação do projeto
+└── README.md                           # Documentação do projeto
 
 
 
