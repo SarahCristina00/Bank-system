@@ -1,6 +1,6 @@
-# Sistema Bancário em Java 🏦
+# Olá٩(◕‿◕)۶, sejam bem - vindos ao System Bank  🏦
 
-Este projeto é um **sistema bancário** desenvolvido em Java, como parte de um trabalho prático da disciplina de **Orientação a Objetos**. O sistema permite a gestão de clientes, contas bancárias e operações financeiras, como depósitos, saques, transferências e investimentos. O projeto foi desenvolvido seguindo os princípios de **Orientação a objetos**, com foco em boas práticas de organização de código.
+<p>Este projeto é um **sistema bancário** desenvolvido em Java, como um trabalho prático da disciplina de **Orientação a Objetos**, do curso de Sistemas de INformação da UFJF. O sistema permite a gestão de clientes, contas bancárias e operações financeiras, como depósitos, saques, transferências e investimentos. O projeto foi desenvolvido seguindo os princípios de **Orientação a objetos**, com foco em boas práticas de organização de código.</p>
 
 ---
 ## Tecnologias e Conceitos Utilizados 💻
@@ -30,20 +30,6 @@ Compile e execute a classe BankSystem para iniciar o sistema.
 
 Somente o administrador pode acessar a tela de cadastro através de seu login que definiu-se como CPF: 000.000.000-00, Senha: 123.
 
-
-## Estrutura do Projeto 📂
-
-sistema-bancario-java/
-├── src/
-│   ├── com.mycompany.systembank/       # Classes principais (Cliente, Conta, Usuário, etc.)
-│   ├── com.mycompany.interfaces/       # Telas e interfaces gráficas
-│   ├── com.mycompany.persistencia/     # Persistência de dados (JSON/XML)
-│   └── com.mycompany.tests/            # Testes de unidade
-├── data/                               # Arquivos de dados (usuarios.json, contas.json)
-└── README.md                           # Documentação do projeto
-
-
-
 ### Desafios e Aprendizados 🧠
 Durante o desenvolvimento, enfrentamos desafios como:
 
@@ -71,3 +57,11 @@ Durante o desenvolvimento, enfrentamos desafios como:
 <p>✩ Lara Dias (https://github.com/Lara-Dias)</p>
 <p>✩ Sarah Cristina (https://github.com/SarahCristina00)</p>
 <p>✩ Wilian Santos (https://github.com/Wilian2012)</p>
+
+---
+## Nossos contatos:
+<p>✩ Lara Dias (https://github.com/Lara-Dias)</p>
+<p>✩ Sarah Cristina (https://github.com/SarahCristina00)</p>
+<p>✩ Wilian Santos (https://github.com/Wilian2012)</p>
+---
+# Agradecemos a atenção e o interesse. Abraços!( ˘▽˘)っ♨
