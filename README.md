@@ -35,7 +35,10 @@ sistema-bancario-java/
 │   └── com.mycompany.tests/            # Testes de unidade
 ├── data/                               # Arquivos de dados (usuarios.json, contas.json)
 └── README.md                           # Documentação do projeto
-Desafios e Aprendizados 🧠
+
+
+
+### Desafios e Aprendizados 🧠
 Durante o desenvolvimento, enfrentamos desafios como:
 
 Associação entre Cliente e Conta: Garantir que a conta fosse corretamente vinculada ao cliente após o carregamento dos dados.
@@ -46,7 +49,7 @@ Persistência de Dados: Garantir que os dados fossem corretamente salvos e carre
 
 Esses desafios foram superados com a aplicação de conceitos de Orientação a Objetos e boas práticas de programação.
 
-Próximos Passos 🚧
+### Próximos Passos 🚧
 Melhorar a Interface: Adotar JavaFX para uma experiência de usuário mais moderna.
 
 Reforçar a Segurança: Implementar criptografia para senhas e dados sensíveis.
@@ -56,16 +59,3 @@ Integrar Banco de Dados: Migrar para um banco de dados relacional (MySQL/Postgre
 Adicionar Funcionalidades: Incluir gerenciamento de cartões de crédito, notificações e mais opções de investimento.
 
 Expandir Testes: Aumentar a cobertura de testes automatizados.
-
-Contribuição 🤝
-Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou enviar pull requests com melhorias, correções ou novas funcionalidades.
-
-Licença 📜
-Este projeto está licenciado sob a MIT License. Veja o arquivo LICENSE para mais detalhes.
-
-Contato 📧
-Se tiver dúvidas ou sugestões, entre em contato:
-
-Email: seu-email@exemplo.com
-
-GitHub: seu-usuario
