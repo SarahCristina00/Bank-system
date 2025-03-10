@@ -1,13 +1,13 @@
 # Sistema Bancário em Java 🏦
 
-Este projeto é um **sistema bancário** desenvolvido em Java, como parte de um trabalho prático da disciplina de **Orientação a Objetos**. O sistema permite a gestão de clientes, contas bancárias e operações financeiras, como depósitos, saques, transferências e investimentos. O projeto foi desenvolvido seguindo os princípios de **POO (Programação Orientada a Objetos)**, com foco em boas práticas de design e organização de código.
+Este projeto é um **sistema bancário** desenvolvido em Java, como parte de um trabalho prático da disciplina de **Orientação a Objetos**. O sistema permite a gestão de clientes, contas bancárias e operações financeiras, como depósitos, saques, transferências e investimentos. O projeto foi desenvolvido seguindo os princípios de **Orientação a objetos**, com foco em boas práticas de organização de código.
 
 ---
 ## Tecnologias e Conceitos Utilizados 💻
 
 - **Linguagem:** Java
 - **Paradigma:** Orientação a Objetos (Herança, Polimorfismo, Encapsulamento, Abstração)
-- **Persistência:** JSON e XML (usando a biblioteca **Gson**)
+- **Persistência:** JSON  (usando a biblioteca **Gson**)
 - **Interface Gráfica:** Java Swing
 - **Testes:** JUnit para testes de unidade
 - **Versionamento:** Git e GitHub
@@ -18,7 +18,7 @@ Este projeto é um **sistema bancário** desenvolvido em Java, como parte de um 
 
 ### Pré-requisitos:
 - Java Development Kit (JDK) 11 ou superior.
-- IDE de sua preferência (Eclipse, IntelliJ, VS Code, etc.).
+- IDE de sua preferência (NetBeans, Eclipse, IntelliJ, VS Code, etc.).
 
 ### Passos para Execução:
 1. Clone o repositório:
@@ -28,18 +28,19 @@ Abra o projeto na sua IDE.
 
 Compile e execute a classe BankSystem para iniciar o sistema.
 
-Utilize as credenciais de teste ou cadastre novos usuários para interagir com o sistema.
+Somente o administrador pode acessar a tela de cadastro através de seu login que definiu-se como CPF: 000.000.000-00, Senha: 123.
 
-Estrutura do Projeto 📂
-Copy
+
+## Estrutura do Projeto 📂
+
 sistema-bancario-java/
 ├── src/
 │   ├── com.mycompany.systembank/       # Classes principais (Cliente, Conta, Usuário, etc.)
 │   ├── com.mycompany.interfaces/       # Telas e interfaces gráficas
-│   ├── com.mycompany.persistencia/     # Persistência de dados (JSON/XML)
+│   ├── com.mycompany.persistencia/     # Persistência de dados (JSON)
 │   └── com.mycompany.tests/            # Testes de unidade
 ├── data/                               # Arquivos de dados (usuarios.json, contas.json)
-└── README.md                           # Documentação do projeto
+└── README.md                           # Apresentação e documentação do projeto
 
 
 
@@ -50,12 +51,12 @@ Associação entre Cliente e Conta: Garantir que a conta fosse corretamente vinc
 
 Validação de Dados: Implementar verificações robustas para CPF, saldo e campos obrigatórios.
 
-Persistência de Dados: Garantir que os dados fossem corretamente salvos e carregados em JSON/XML.
+Persistência de Dados: Garantir que os dados fossem corretamente salvos e carregados em JSON utilizando Gson do Google.
 
-Esses desafios foram superados com a aplicação de conceitos de Orientação a Objetos e boas práticas de programação.
+Esses desafios foram superados com a aplicação de conceitos de Orientação a Objetos e boas práticas de programação, além de diversas revisões feitas.
 
 ### Próximos Passos 🚧
-Melhorar a Interface: Adotar JavaFX para uma experiência de usuário mais moderna.
+Melhorar a Interface: Melhorar a interface para uma experiência de usuário mais moderna.
 
 Reforçar a Segurança: Implementar criptografia para senhas e dados sensíveis.
 
@@ -64,3 +65,4 @@ Integrar Banco de Dados: Migrar para um banco de dados relacional (MySQL/Postgre
 Adicionar Funcionalidades: Incluir gerenciamento de cartões de crédito, notificações e mais opções de investimento.
 
 Expandir Testes: Aumentar a cobertura de testes automatizados.
+
