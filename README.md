@@ -68,6 +68,6 @@ Durante o desenvolvimento, enfrentamos desafios como:
 
 ---
 ## Autores do projeto
-<p> *Lara Dias (https://github.com/Lara-Dias)</p>
-<p> *Sarah Cristina (https://github.com/SarahCristina00)</p>
-<p> *Wilian Santos (https://github.com/Wilian2012)</p>
+<p>✩ Lara Dias (https://github.com/Lara-Dias)</p>
+<p>✩ Sarah Cristina (https://github.com/SarahCristina00)</p>
+<p>✩ Wilian Santos (https://github.com/Wilian2012)</p>
