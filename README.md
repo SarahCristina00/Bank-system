@@ -1,3 +1,8 @@
+# Sistema Bancário em Java 🏦
+
+Este projeto é um **sistema bancário** desenvolvido em Java, como parte de um trabalho prático da disciplina de **Orientação a Objetos**. O sistema permite a gestão de clientes, contas bancárias e operações financeiras, como depósitos, saques, transferências e investimentos. O projeto foi desenvolvido seguindo os princípios de **POO (Programação Orientada a Objetos)**, com foco em boas práticas de design e organização de código.
+
+---
 ## Tecnologias e Conceitos Utilizados 💻
 
 - **Linguagem:** Java
