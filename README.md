@@ -1,4 +1,4 @@
-# Olá٩(◕‿◕)۶, sejam bem - vindos ao `System Bank´  🏦
+# Olá٩(◕‿◕)۶, sejam bem - vindos ao `System Bank`   🏦
 
 Este projeto é um **sistema bancário** desenvolvido em Java, como um trabalho prático da disciplina de **Orientação a Objetos**, do curso de Sistemas de INformação da UFJF. O sistema permite a gestão de clientes, contas bancárias e operações financeiras, como depósitos, saques, transferências e investimentos. O projeto foi desenvolvido seguindo os princípios de **Orientação a objetos**, com foco em boas práticas de organização de código.
 
