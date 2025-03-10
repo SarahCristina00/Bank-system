@@ -61,8 +61,8 @@ Durante o desenvolvimento, enfrentamos desafios como:
 ---
 ## Nossos contatos:
 <p>✩ Lara Dias (https://github.com/Lara-Dias)</p>
-<p>✩ Sarah Cristina (https://github.com/SarahCristina00)</p>
+<p>✩ Sarah Cristina: sarahsilva34567@gmail.com</p>
 <p>✩ Wilian Santos (https://github.com/Wilian2012)</p>
----
 
+---
 # Agradecemos pela atenção e pelo interesse em nosso projeto! Até mais! ( ˘▽˘)っ♨
