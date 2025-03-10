@@ -66,3 +66,10 @@ Adicionar Funcionalidades: Incluir gerenciamento de cartões de crédito, notifi
 
 Expandir Testes: Aumentar a cobertura de testes automatizados.
 
+---
+## Autores do projeto
+Lara Dias(https://github.com/Lara-Dias)
+Sarah Cristina(https://github.com/SarahCristina00)
+Wilian Santos(https://github.com/Wilian2012)
+
+GitHub: seu-usuario
