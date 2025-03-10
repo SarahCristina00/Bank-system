@@ -64,4 +64,5 @@ Durante o desenvolvimento, enfrentamos desafios como:
 <p>✩ Sarah Cristina (https://github.com/SarahCristina00)</p>
 <p>✩ Wilian Santos (https://github.com/Wilian2012)</p>
 ---
-# Agradecemos a atenção e o interesse. Abraços!( ˘▽˘)っ♨
+
+# Agradecemos pela atenção e pelo interesse em nosso projeto! Até mais! ( ˘▽˘)っ♨
